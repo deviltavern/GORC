@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function getNow(s) {
+            return s < 10 ? '0' + s: s;
+        }
+        function getNowTime()
+        {
+            var myDate = new Date();
+            var year=myDate.getFullYear();        //获取当前年
+            var month=myDate.getMonth()+1;   //获取当前月
+            var date=myDate.getDate();            //获取当前日
+            var h=myDate.getHours();              //获取当前小时数(0-23)
+            var m=myDate.getMinutes();          //获取当前分钟数(0-59)
+            var s=myDate.getSeconds();
+            var now=year+'-'+getNow(month)+"-"+getNow(date);
+            return now;
+        }
+
+        $(document).ready(function(){
+
+            console.info("hello world");
+
+            //
+            console.info("system_site = "+localStorage.getItem('system_site'));
+            $.post("http://localhost:8099/getUserModel?user_acc=123",function(data){
+
+                $("#push_master").attr("value",data.user_name);
+
+            });
+
+            $("#task_begin_time").val(getNowTime());
+
+
+        });
+
+
+    </script>
+</head>
+<body>
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+<form class="layui-form" action="">
+<div class="layui-layout layui-layout-admin">
+    <!--导航栏-->
+    <div class="layui-header ">
+        <div class="layui-logo">发布日志</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-left">
+            <li class="layui-nav-item"><a href="">首页</a></li>
+            <li class="layui-nav-item"><a href="">用户</a></li>
+        </ul>
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                    Vency
+                </a>
+                <dl class="layui-nav-child">
+                    <dd><a href="">基本资料</a></dd>
+                    <dd><a href="">安全设置</a></dd>
+                </dl>
+            </li>
+            <li class="layui-nav-item"><a href="">退出</a></li>
+        </ul>
+    </div>
+
+    <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+        <legend>发布日志</legend>
+    </fieldset>
+
+    <div class="lay-col-xs12 layui-bg-gray"style="margin-left: 40px; margin-right: 40px;padding: 40px">
+        <!-- 发布人 -->
+        <div class="lay-col-xs12">
+            <label> 发布人：</label>
+            <div class="lay-col-xs12" >
+                <input name="push_master"  id="push_master" value="" style="margin-top: 5px;padding: 10px;">
+            </div>
+        </div>
+
+        <!-- 解决时间 -->
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label > 解决时间：</label>
+            <div class="lay-col-xs12">
+                <input id="task_begin_time" type="text" name="task_begin_time" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" >
+            </div>
+        </div>
+
+        <!-- 问题描述 -->
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label >问题描述：</label>
+            <input name="describe" id = "log_detail_input" placeholder="请输入内容" class="layui-textarea" style="margin-top: 5px;padding: 10px"></input>
+        </div>
+
+
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label >解决策略</label>
+            <input name="solve_strategy" id = "log_solve_input" placeholder="请输入内容" class="layui-textarea" style="margin-top: 5px;padding: 10px"></input>
+        </div>
+        <!-- 难度 -->
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label >难度：</label>
+            <div class="lay-col-xs12">
+                <select name="difficult_level">
+                    <option value="3"></option>
+                    <option value="细节级">细节级</option>
+                    <option value="任务级">任务级</option>
+                    <option value="子系统级">子系统级</option>
+                    <option value="系统级">系统级</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 类型 -->
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label >类型：</label>
+            <div class="lay-col-xs12">
+                <select name="type"  lay-filter = "select_log_type">
+                    <option value="算法">算法</option>
+                    <option value="web前端">web前端</option>
+                    <option value="web后端">web后端</option>
+                </select>
+            </div>
+
+            <div class="lay-col-xs12"  style="display:none" id="algorithm_select">
+                <select name="sub_type"  lay-filter = "select_log_type">
+                    <option value="信息隐藏">信息隐藏</option>
+                    <option value="深度学习">深度学习</option>
+                </select>
+            </div>
+            <div class="lay-col-xs12"  style="display:none" id="web_front_select">
+                <select name="sub_type"  lay-filter = "select_log_type">
+                    <option value="layui">layui</option>
+                    <option value="js">js</option>
+                    <option value="css">css</option>
+                    <option value="html">html</option>
+                </select>
+            </div>
+            <div class="lay-col-xs12"  style="display:none" id="web_back_select">
+                <select name="sub_type"  lay-filter = "select_log_type">
+                    <option value="springboot">springboot</option>
+                    <option value="springmvc">springmvc</option>
+                    <option value="serverlet">serverlet</option>
+                    <option value="dataSource">dataSource</option>
+                    <option value="netty">netty</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- 悬赏 -->
+        <div class="lay-col-xs12" style="margin-top: 10px">
+            <label >悬赏：</label>
+            <div class="lay-col-xs12">
+                <select name="reward">
+                    <option value="0"></option>
+                    <option value="5">5积分</option>
+                    <option value="10">10积分</option>
+                </select>
+            </div>
+        </div>
+
+        <button class="layui-btn" lay-submit="" lay-filter="demo1"style="margin-top: 20px">立即提交</button>
+</div>
+</div>
+</form>
+
+<script src="../../layui/layui.js"></script>
+
+<script>
+    //form表单
+    layui.use('form', function(){
+        var form = layui.form;
+        //监听提交
+        var tmp = "";
+
+        form.on('submit(demo1)', function(data){
+            console.info(JSON.stringify(data.field));
+            var c = data.field;
+
+            console.info(data.field);
+            c.sub_type = tmp;
+            console.info(c);
+            $.post("http://localhost:8099/receiveLogValue",c,function(d){
+                alert('上传完毕！');
+            });
+            return false;
+        });
+
+        var selectArray = new Array();
+        selectArray[0] = $("#web_front_select");
+
+        selectArray[1] = $("#web_back_select");
+        selectArray[2] = $("#algorithm_select");
+
+
+
+        form.on('select(select_log_type)', function(data){
+
+            for(selectObject in selectArray){
+                selectArray[selectObject].attr("style","display:none")
+            }
+            console.info(data.elem.name);
+            if (data.elem.name == "sub_type"){
+
+                tmp = data.elem.value;
+                console.info("添加了data.value="+tmp);
+
+            }
+
+            switch (data.value) {
+
+                case "web前端":
+
+                    $("#web_front_select").attr("style","");
+
+                    break;
+                case "web后端":
+                    $("#web_back_select").attr("style","");
+                    break;
+
+                case "算法":
+                    $("#algorithm_select").attr("style","");
+
+                    break;
+
+            }
+            form.render('select');
+        });
+
+    });
+
+
+
+</script>
+<scrip>
+
+
+
+</scrip>
+</body>
+
+</html>

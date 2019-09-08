@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function seriValue2JSON(value) {
+            var tmpDic={};
+            for(var i in value.split("&")){
+                var row=value.split("&")[i];
+                tmpDic[row.split("=")[0]]=decodeURIComponent(row.split("=")[1]);
+            }
+
+            return tmpDic;
+
+        }
+
+    </script>>
+
+</head>
+<body>
+
+<form id="testForm">
+
+    <h1>账号输入：</h1>
+    <input name="user_acc" type="text" style="width: 200px;height: 25px "  value="222222"/>
+    <h1>密码输入：</h1>
+    <input name="user_pwd" type="text" style="width: 200px;height: 25px" value="333"/>
+
+</form>
+
+
+
+<input type="submit"  style="width: 200px;height: 25px" id="testInput"/>
+<script>
+
+    $("#testInput").click(function () {
+        var a = $('#testForm').serialize();
+        var aJson = seriValue2JSON(a);
+        console.info(aJson);
+        $.post("http://localhost:8099/register",aJson,function (data) {
+
+            alert(JSON.stringify(data));
+
+        });
+    });
+
+    //jsonObject
+
+
+
+
+
+</script>>
+</body>
+</html>
