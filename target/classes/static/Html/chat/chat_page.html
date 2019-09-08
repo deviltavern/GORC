@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../../js/CommonTool.js"></script>
+
+    <script>
+        $(document).ready(function() {
+
+            var chat_id = localStorage.getItem("chat_id");
+            var user_acc = localStorage.getItem("user_acc");
+
+            $("#user_acc").attr("value",user_acc);
+            $("#chat_id").attr("value",chat_id);
+
+            console.info(chat_id);
+            console.info(user_acc);
+
+
+        });
+
+    </script>
+</head>
+<body>
+
+账号：
+<input id = "user_acc" name="user_acc" style="width: 200px;height: 25px;"><br>
+聊室：
+<input id = "chat_id" name="chat_id"style="width: 200px;height: 25px;"><br>
+输入：
+<input id = "valueInput" name="valueInput" style="width: 400px;height: 25px;">
+
+<p id="textViewer" style="width: 800px;height: 400px;background: #00FF00">123</p>
+<input type="submit"  style="width: 200px;height: 25px;" id="submitBtn">
+
+<script>
+
+    $("#submitBtn").click(function () {
+        var uploadValue = {};
+        uploadValue.chat_id = $("#chat_id").val();
+        uploadValue.message = $("#valueInput").val();
+        uploadValue.user_acc = $("#user_acc").val();
+
+        $("#textViewer").html("");
+       $.get("http://localhost:8099/onreceive",uploadValue,function (data) {
+
+            console.info(data);
+
+            var dataArray = data.split("&");
+            for (var key in dataArray){
+
+                $("#textViewer").append(dataArray[key]+"<br>");
+            }
+
+       });
+
+
+       });
+
+
+</script>
+</body>
+</html>

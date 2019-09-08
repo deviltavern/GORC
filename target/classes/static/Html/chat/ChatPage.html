@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="../../js/CommonTool.js"></script>
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+        $(document).ready(function(){
+
+            $("#emailBtn").click(function(){
+               $("#testLabel").html("email");
+
+            });
+             $("#scoreBtn").click(function(){
+               $("#testLabel").html("score");
+
+
+            });
+
+             $("#taskBtn").click(function(){
+               $("#testLabel").html("task");
+
+
+            });
+
+
+
+
+
+            var chat_user_id = "";
+
+        });
+
+
+    </script>
+</head>
+
+
+
+<div class="layui-bg-orange" style="width:250px;height:600px">
+
+
+    <div class="layui-bg-cyan"  style="width:250px;height:100px">
+            <div  style="float:right">
+
+                <button id = "emailBtn" type="button"class="layui-btn layui-btn-xs layui-btn-radius">邮件</button>
+                <button id = "scoreBtn" type="button"class="layui-btn layui-btn-xs layui-btn-radius">积分</button>
+                <button id = "taskBtn" type="button"class="layui-btn layui-btn-xs layui-btn-radius" >任务</button>
+            </div>
+
+
+        </div>
+    <div class="layui-row layui-bg-blue" style="width:250px;height:500px">
+
+        <div class="layui-bg-orange" style="width:250px;height:20px" id="w2mz" >
+            <img  style="width:20px;height:20px;float: left" src="https://hbimg.huabanimg.com/9f30116ac5bf22939a564dc9787ea996d119a06874d01-nuVoFp_fw658"/>
+            <h3 style="float: right">王二麻子</h3>
+        </div>
+
+
+
+        <p id="testLabel"></p>
+
+
+    </div>
+    </div>
+
+用户账号：
+<input type="text" id="user_acc"  style="width: 400px;height: 25px;"><br>
+<input type="submit"id="login_btn" value="登录">
+<br>
+用户朋友：
+<input type="text" id ="user_friend"  style="width: 400px;height: 25px;">
+<br>
+<input type="submit" id="create_chat_btn" value="创建聊天房间"/>
+
+<script>
+    //----------用户登录------------------//
+    $("#login_btn").click(function () {
+
+            var loginJSON = {};
+
+            var value = $("#user_acc").val();
+            loginJSON.user_acc = value;
+            loginJSON.mode = "test";
+            //loginNoneHtml
+            $.post("http://localhost:8099/loginNoneHtml",loginJSON,function (data) {
+               alert(data.toString());
+
+
+
+            });
+
+
+
+        });
+
+    //----------用户创建房间------------------//
+
+    $("#create_chat_btn").click(function () {
+
+        var initChat = {};
+        initChat.user_acc = $("#user_acc").val();
+        initChat.user_friend = $("#user_friend").val();
+
+
+        $.get("http://localhost:8099/initChat",initChat,function (data) {
+
+                console.info(data);
+            localStorage.setItem("chat_id",data.reValue);
+            localStorage.setItem("user_acc", $("#user_acc").val());
+            window.location.href = "chat_page.html";
+        });
+
+    });
+
+
+</script>
+</body>
+</html>

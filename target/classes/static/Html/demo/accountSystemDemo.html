@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../js/CommonTool.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../js/AccountSystem.js"></script>
+    <script>
+
+
+        $(document).ready(function () {
+
+            $("#testbtn").click(function () {
+
+                deductSocreWithWindow("123",40,function (data) {
+                      console.info("扣除积分接口返回的信息："+JSON.stringify(data));
+                });
+
+            });
+            $("#getScore").click(function () {
+
+                addSocre("123",20,function (data) {
+                    console.info("获得积分接口返回的信息："+JSON.stringify(data));
+                });
+            });
+        });
+
+    </script>>
+</head>
+<body>
+
+<input id="testbtn" type="submit" style="width:250px;height: 30px" value="扣除积分demo"/>
+<input id="getScore" type="submit" style="width:250px;height: 30px" value="获得积分demo"/>
+</body>
+</html>

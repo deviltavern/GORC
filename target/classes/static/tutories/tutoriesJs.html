@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+        function helloWorld(){
+
+            alert("hello World");
+        }
+
+        function fresh(time){
+            setTimeout(function (){
+
+	            window.location.reload();
+
+             }, time);
+        }
+
+        function getImage(){
+
+
+            if(localStorage.getItem("dbs")== null){
+                var  arrayObject = new Array();
+                arrayObject[0] = 'https://hbimg.huabanimg.com/4778f5f1b53fdc55f2144faf0ec05c03741ae5181c8c32-bnlnxG_fw658'
+                arrayObject[1] = 'https://hbimg.huabanimg.com/a940419c2d391b6447892a8d1e8bb3b6cb96fed22385da-Pebr1I_fw658'
+                arrayObject[2] = 'https://hbimg.huabanimg.com/852800762e420ca09c4ab583d88040c16b0e63c9e783-xaDoe6_fw658'
+                localStorage.setItem("dbs",JSON.stringify(arrayObject));
+                //默认选择第一张图片
+                dbsIndex =  0;
+                var repath=JSON.parse( localStorage.getItem("dbs"));
+                var repath2 = repath[0];
+                dbsIndex = dbsIndex+1;
+                localStorage.setItem("dbsIndex",dbsIndex+"");
+                console.info("没有执行另外一种装填！");
+                return repath2;
+
+
+            }
+
+
+            var dbsIndex = localStorage.getItem("dbsIndex");
+            var dbsIndex_int = parseInt(dbsIndex);
+            var repath = JSON.parse(localStorage.getItem("dbs"))[dbsIndex_int]
+
+            dbsIndex_int += 1;
+
+            if(dbsIndex_int >=3){
+                dbsIndex_int = 0;
+            }
+
+            localStorage.setItem("dbsIndex",dbsIndex_int+"");
+            console.info(dbsIndex_int);
+
+            return repath;
+        }
+
+
+    </script>
+</head>
+<body>
+
+<p id = "ptest"></p>
+<img id="itest" src="https://hbimg.huabanimg.com/75ba3a864bca9113be20572f7bbc9904ab13c27ee60ab-kYoxd7_fw658"/>
+
+<script>
+    //你的html已经就是说：已经loadover
+
+
+
+    fresh(1000);
+
+
+    $("#ptest").html("hello world");
+
+    //延时程序
+   // fresh(3000)
+
+    var c = getImage();
+    console.info(c)
+    $("#itest").attr("src",c)
+
+
+
+</script>
+</body>
+</html>
