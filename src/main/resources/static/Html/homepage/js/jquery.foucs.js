@@ -6,7 +6,7 @@
             , $leftBtn = $container.find('a.prev')
             , $rightBtn = $container.find('a.next')
             , config = {
-                interval: con && con.interval || 3500,
+                interval: con && con.interval || 2500,
                 animateTime: con && con.animateTime || 500,
                 direction: con && (con.direction === 'right'),
                 _imgLen: $imgs.length
