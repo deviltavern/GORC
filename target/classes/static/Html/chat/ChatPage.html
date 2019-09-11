@@ -7,11 +7,8 @@
     <script src="../../js/CommonTool.js"></script>
 
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-<<<<<<< HEAD
-=======
 
     <script src="../../js/Config.js"></script>
->>>>>>> 0c52c782c9e854cdb4f60597b52ad92e57e53acb
     <script>
 
         $(document).ready(function(){
@@ -93,14 +90,6 @@
             loginJSON.user_acc = value;
             loginJSON.mode = "test";
             //loginNoneHtml
-<<<<<<< HEAD
-            $.post("http://localhost:8099/loginNoneHtml",loginJSON,function (data) {
-               alert(data.toString());
-
-
-
-            });
-=======
 
 
             requestServer( "/loginNoneHtml",function (ip) {
@@ -113,7 +102,6 @@
 
             );
 
->>>>>>> 0c52c782c9e854cdb4f60597b52ad92e57e53acb
 
 
 
