@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-
-function getServer() {
-
-    return "localhost:8099";
-}
-
-function getURL(url) {
-     var c =  "http://"+getServer()+url;
-     return c;
-}
-=======
 function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
     //compatibility for firefox and chrome
     var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
@@ -49,7 +37,7 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
 }
 function requestServer(url,func) {
 
-    var sip = "ssssssss";
+    var sip = "";
     getUserIP(function(ip){
         sip  = ip;
         console.info(ip);
@@ -69,4 +57,3 @@ function getURL(url) {
      return c;
 }
 
->>>>>>> 0c52c782c9e854cdb4f60597b52ad92e57e53acb

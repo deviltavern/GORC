@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+<!--    <script src="https://raw.github.com/mrdoob/three.js/master/build/three.js"></script>-->
+
+    <script src="../ThreeJSLib/three.js"></script>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <style>canvas { width: 100%; height: 100% }</style>
+<!--    <script src="Treedemo.js"></script>-->
+    <script src="WebglManager.js"></script>
+    <script src="BasicElementCreater.js"></script>
+    <script src="PlayerMove.js"></script>
+    <script src="stats.js"></script>
+
+</head>
+<body>
+
+<div id="Stats-output"></div>
+
+<div id="ca" style="width: 800px;height: 800px;
+margin-top: 100px;
+background: #aa5500">
+
+</div>
+<script>
+    var stats = new Stats();
+    //设置统计模式
+    stats.setMode(0); // 0: fps, 1: ms
+    //统计信息显示在左上角
+    stats.domElement.style.position = 'absolute';
+    stats.domElement.style.left = '0px';
+    stats.domElement.style.top = '0px';
+    //将统计对象添加到对应的<div>元素中
+    document.getElementById("Stats-output").appendChild(stats.domElement);
+    animate();
+
+    function animate() {
+
+        stats.begin();
+
+        stats.end();
+
+        requestAnimationFrame(animate);
+
+    }
+
+
+</script>
+<script>
+
+    context(document.getElementById("ca"));
+
+
+</script>
+</body>
+</html>
