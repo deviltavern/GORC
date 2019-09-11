@@ -28,6 +28,7 @@ function setMaterial(object,material) {
 }
 
 
+
 function setViewport(z) {
     opView.camera.position.z = z;
 
@@ -51,6 +52,12 @@ function getPosition(object) {
 function getSelectObject() {
     return selectObject;
 }
+
+
+
+
+
+
 //创建View
 function create(div) {
 
@@ -94,6 +101,17 @@ function Vector3(x,y,z) {
 
     return vector3;
 }
+
+function screenConvertToWorld(mouseInput) {
+    var a = Vector3(mouseInput.x*opView.position.x*Math.cos(45),
+        mouseInput.y*opView.position.x*Math.cos(45),
+        mouseInput.z*opView.position.x*Math.cos(45)
+
+    );
+    return a;
+
+}
+
 
 function frame() {
 

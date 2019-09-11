@@ -47,19 +47,6 @@ public class UserActionForHtml {
     }
 
 
-    @PostMapping("/register")
-    public String reigster( HttpServletRequest request) throws Exception {
-
-
-        JqueryRequestTool tool = new JqueryRequestTool(request);
-
-        DataBaseOP.requestNoReturn(tool.getInsertSql("user_info",JqueryRequestTool.flushList()));
-
-        System.out.println("欢迎注册");
-        return "success";
-
-    }
-
 
 
 }

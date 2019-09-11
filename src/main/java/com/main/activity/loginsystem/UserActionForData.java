@@ -1,6 +1,7 @@
 package com.main.activity.loginsystem;
 
 
+import com.main.Tool.JqueryRequestTool;
 import com.main.dao.DataBaseOP;
 import com.main.dao.UserInfoDBOP;
 import com.main.DynamicLayer.User;
@@ -9,6 +10,7 @@ import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
@@ -81,6 +83,21 @@ public class UserActionForData {
         return "222";
 
     }
+
+
+    @PostMapping("/register")
+    public String reigster( HttpServletRequest request) throws Exception {
+
+
+        JqueryRequestTool tool = new JqueryRequestTool(request);
+
+        DataBaseOP.requestNoReturn(tool.getInsertSql("user_info",JqueryRequestTool.flushList()));
+
+        System.out.println("欢迎注册");
+        return "success";
+
+    }
+
     @PostMapping("/getUserModel")
     public JSONObject getUserModel(String user_acc) throws Exception {
 

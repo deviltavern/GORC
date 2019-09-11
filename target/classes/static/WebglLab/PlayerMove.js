@@ -82,6 +82,8 @@ function context(div) {
     //----------
 
     var raycaster = new THREE.Raycaster();
+
+
     div.onclick = function(){
         raycaster.setFromCamera(mouse, opView.camera);
         var intersects = raycaster.intersectObjects(opView.scene.children);
@@ -92,6 +94,9 @@ function context(div) {
             select(intersects[0].object);
             console.info(getSelectObject().position);
         }
+        var mouseVector3 = Vector3(mouse.x,mouse.y,0);
+
+        console.info(screenConvertToWorld(mouseVector3));
 
     }
 
