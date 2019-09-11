@@ -2,13 +2,37 @@
 
 var op;
 var opView;
+var selectObject;
+function setPosition(object,vector3) {
+    object.position.x = vector3.x;
+    object.position.y = vector3.y;
+    object.position.z = vector3.z;
+}
+function setRotation(object,vector3) {
+    object.rotation.x = vector3.x;
+    object.rotation.y = vector3.y;
+    object.rotation.z = vector3.z;
+}
+function setSize(object,vector3) {
+    object.scale.x = vector3.x;
+    object.scale.y = vector3.y;
+    object.scale.z = vector3.z;
+
+
+}
+function setColor(object,color) {
+    object.material.color.set(color.ox );
+}
+function setMaterial(object,material) {
+
+}
+
+
 function setViewport(z) {
     opView.camera.position.z = z;
 
 }
-function setSize(width,height) {
 
-}
 function addObject(object) {
     opView.scene.add(object);
 }
@@ -16,7 +40,18 @@ function removeObject(object) {
     opView.scene.remove(object);
 
 }
+function select(object) {
+    selectObject = object;
+}
 
+function getPosition(object) {
+
+    return Vector3(object.position.x,object.position.y,object.position.z);
+}
+function getSelectObject() {
+    return selectObject;
+}
+//创建View
 function create(div) {
 
     var scene = new THREE.Scene();
@@ -26,10 +61,15 @@ function create(div) {
     renderer.setClearColor(Color(255,239 ,213).ox, 1.0);
     div.appendChild(renderer.domElement);
 
+    var light = new THREE.DirectionalLight( 0xff0000 );
+
     var View  = {};
+
     View.scene = scene;
     View.camera = camera;
-    View. renderer = renderer;
+    View.renderer = renderer;
+    View.light = light;
+    View.scene.add( View.light);
     opView= View;
     return View;
 }
@@ -65,3 +105,6 @@ function frame() {
     opView.renderer.render(opView.scene,opView.camera);
     requestAnimationFrame(frame);
 }
+
+
+
