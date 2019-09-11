@@ -95,7 +95,7 @@ function context(div) {
             console.info(getSelectObject().position);
         }
         var mouseVector3 = Vector3(mouse.x,mouse.y,0);
-
+        console.info(mouseVector3);
         console.info(screenConvertToWorld(mouseVector3));
 
     }

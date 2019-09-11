@@ -103,12 +103,12 @@ function Vector3(x,y,z) {
 }
 
 function screenConvertToWorld(mouseInput) {
-    var a = Vector3(mouseInput.x*opView.position.x*Math.cos(45),
-        mouseInput.y*opView.position.x*Math.cos(45),
-        mouseInput.z*opView.position.x*Math.cos(45)
+  // var a = Vector3(mouseInput.x*opView.position.x*Math.cos(45),
+  //     mouseInput.y*opView.position.x*Math.cos(45),
+  //     mouseInput.z*opView.position.x*Math.cos(45)
 
-    );
-    return a;
+  // );
+    console.info(mouseInput);
 
 }
 

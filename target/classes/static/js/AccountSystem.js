@@ -42,11 +42,15 @@ function deductSocreWithWindow(user_acc,value,func) {
     a.value = value;
     var r = openWindow("是否扣除"+value+"积分");
     if(r == true){
-        $.post(getURL("/deductScore"), a, function (data) {
-            func(data);
 
-            alert("扣除"+value+"积分");
-        });
+        requestServer("/deductScore",function (url) {
+            $.post(url, a, function (data) {
+                func(data);
+                alert("扣除"+value+"积分");
+            });
+
+        })
+
     }else {
 
 

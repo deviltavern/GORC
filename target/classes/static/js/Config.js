@@ -52,8 +52,3 @@ function requestServer(url,func) {
 }
 
 
-function getURL(url) {
-     var c =  "http://"+getServer()+url;
-     return c;
-}
-
