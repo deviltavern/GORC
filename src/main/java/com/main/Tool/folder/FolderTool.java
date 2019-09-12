@@ -1,13 +1,13 @@
-package com.main.Tool;
+package com.main.Tool.folder;
 
-import org.omg.Messaging.SYNC_WITH_TRANSPORT;
+import com.main.Tool.Debug;
+import com.main.Tool.XMLTool;
 import org.springframework.util.ClassUtils;
 import org.xml.sax.SAXException;
 
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.nio.ByteBuffer;
-import java.sql.BatchUpdateException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
@@ -41,6 +41,12 @@ public class FolderTool {
 
         return getOriginPath()+"static\\"+"ImageCollector\\";
 
+    }
+    public static String getCodePath(){
+
+
+
+        return "";
     }
 
     /**

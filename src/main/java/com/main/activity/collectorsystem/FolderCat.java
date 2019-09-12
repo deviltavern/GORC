@@ -2,16 +2,12 @@ package com.main.activity.collectorsystem;
 
 
 import com.main.Tool.Debug;
-import com.main.Tool.FolderTool;
+import com.main.Tool.folder.FolderTool;
 import com.main.Tool.XMLTool;
-import org.springframework.util.ClassUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
-import org.xml.sax.SAXException;
 
-import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
-import java.io.IOException;
 import java.util.List;
 
 @RestController

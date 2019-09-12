@@ -2,7 +2,7 @@ package com.main.activity.collectorsystem;
 
 
 import com.main.Tool.Debug;
-import com.main.Tool.FolderTool;
+import com.main.Tool.folder.FolderTool;
 import com.main.Tool.XMLTool;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -14,7 +14,6 @@ import javax.servlet.http.HttpServletResponse   ;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.UUID;
 
