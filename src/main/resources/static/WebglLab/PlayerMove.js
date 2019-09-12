@@ -10,7 +10,7 @@ function context(div) {
     var lightCube = createCube();
 
     var plane = createPlane();
-
+    var t2 = createCube();
     setSize(plane,Vector3(10,10,10));
     setColor(plane,Color(123,123,123));
     setPosition(opView.light,Vector3(0,-1,1));
@@ -60,7 +60,7 @@ function context(div) {
     addObject(player);
     //----------------------------------
 
-
+    opView.camera.layer = 3;
     //用来保存鼠标坐标信息
 
     var mouse = new THREE.Vector2();
@@ -74,29 +74,38 @@ function context(div) {
         mouse.x = (event.clientX / 800) * 2 - 1;
         mouse.y = -((event.clientY-100) /800) * 2 + 1;
         //console.info("move"+ mouse.x+"<>"+ mouse.y+"<>"+event.clientX+"<>"+event.clientY);
-
+        move();
         return mouse;
     }
 
-    div.onmousemove = onDocumentMouseMove;
+   //div.onmousemove = onDocumentMouseMove;
     //----------
 
     var raycaster = new THREE.Raycaster();
 
 
-    div.onclick = function(){
+     function move(){
+
+
         raycaster.setFromCamera(mouse, opView.camera);
         var intersects = raycaster.intersectObjects(opView.scene.children);
         console.info(raycaster.position);
-        if (intersects.length>0)
-        {
-            intersects[ 0].object.material.color.set( 0x000000 );
-            select(intersects[0].object);
-            console.info(getSelectObject().position);
-        }
+      //  if (intersects.length>0)
+      //  {
+      //      intersects[ 0].object.material.color.set( 0x000000 );
+      //      select(intersects[0].object);
+      //      console.info(getSelectObject().position);
+      //  }
         var mouseVector3 = Vector3(mouse.x,mouse.y,0);
-        console.info(mouseVector3);
-        console.info(screenConvertToWorld(mouseVector3));
+
+        var aimPosition =  screenConvertToWorld(mouseVector3);
+        // setPosition(t2,aimPosition);
+        if(selectObject!= null){
+
+
+            console.info(aimPosition);
+        }
+        //console.info();
 
     }
 
@@ -104,12 +113,6 @@ function context(div) {
 
         player.setPosition(po2);
         setPosition(lightCube,getPosition(opView.light));
-
-
-
-
-
-
 
 
     }

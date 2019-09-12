@@ -60,7 +60,6 @@ function requestServer(url,func) {
     getUserIP(function(ip){
         sip  = ip;
         console.info(ip);
-
         sip =  "http://"+ip+":8099"+url;
         func(sip);
     });

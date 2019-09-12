@@ -1,3 +1,7 @@
+//服务器Config
+
+
+
 function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
     //compatibility for firefox and chrome
     var myPeerConnection = window.RTCPeerConnection || window.mozRTCPeerConnection || window.webkitRTCPeerConnection;
@@ -35,6 +39,21 @@ function getUserIP(onNewIP) { //  onNewIp - your listener function for new IPs
         ice.candidate.candidate.match(ipRegex).forEach(iterateIP);
     };
 }
+
+
+//使用localhost进行数据请求
+function requestServerWithLocal(url,func) {
+    var sip = "";
+    getUserIP(function(ip){
+        sip  = ip;
+        console.info(ip);
+
+        sip =  "http://"+"localhost"+":8099"+url;
+        func(sip);
+    });
+}
+
+//使用公共服务进行请求。
 function requestServer(url,func) {
 
     var sip = "";

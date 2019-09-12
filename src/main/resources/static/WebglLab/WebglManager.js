@@ -27,8 +27,6 @@ function setMaterial(object,material) {
 
 }
 
-
-
 function setViewport(z) {
     opView.camera.position.z = z;
 
@@ -64,6 +62,10 @@ function create(div) {
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45,1, 0.1, 500);
     var renderer = new THREE.WebGLRenderer();
+//width / - 2, width / 2, height / 2, height / - 2, 1, 1000
+    var uiCamera = new THREE.OrthographicCamera(-4,4,4,-4,1,1000);
+
+
     renderer.setSize(800, 800);
     renderer.setClearColor(Color(255,239 ,213).ox, 1.0);
     div.appendChild(renderer.domElement);
@@ -75,8 +77,11 @@ function create(div) {
     View.scene = scene;
     View.camera = camera;
     View.renderer = renderer;
+    View.uiCamera = uiCamera;
     View.light = light;
     View.scene.add( View.light);
+    View.uiCamera.position.z = 20;
+    View.scene.add(View.uiCamera);
     opView= View;
     return View;
 }
@@ -102,13 +107,21 @@ function Vector3(x,y,z) {
     return vector3;
 }
 
-function screenConvertToWorld(mouseInput) {
-  // var a = Vector3(mouseInput.x*opView.position.x*Math.cos(45),
-  //     mouseInput.y*opView.position.x*Math.cos(45),
-  //     mouseInput.z*opView.position.x*Math.cos(45)
+function Cos(x){
 
-  // );
-    console.info(mouseInput);
+    return Math.cos((x*2*3.1415926)/360);
+}
+function Sin(x) {
+    return Math.sin((x*2*3.1415926)/360);
+}
+function screenConvertToWorld(mouseInput) {
+
+    //摄像机深度
+    var depth = opView.camera.position.z;
+    var clipScreenWidth = (depth/Cos(45/2))*Sin(45/2);
+    var a = Vector3(mouseInput.x*clipScreenWidth,mouseInput.y*clipScreenWidth,0);
+//2*PI/360*角度
+    return a;
 
 }
 
@@ -121,6 +134,7 @@ function frame() {
     }
 
     opView.renderer.render(opView.scene,opView.camera);
+
     requestAnimationFrame(frame);
 }
 

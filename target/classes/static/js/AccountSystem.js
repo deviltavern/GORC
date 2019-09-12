@@ -43,6 +43,7 @@ function deductSocreWithWindow(user_acc,value,func) {
     var r = openWindow("是否扣除"+value+"积分");
     if(r == true){
 
+
         requestServer("/deductScore",function (url) {
             $.post(url, a, function (data) {
                 func(data);
