@@ -47,6 +47,12 @@ function getPosition(object) {
 
     return Vector3(object.position.x,object.position.y,object.position.z);
 }
+function Move(object,vector3) {
+
+    setPosition(object,Vector3(getPosition(object).x+vector3.x,getPosition(object).y+vector3.y,getPosition(object).z+vector3.z))
+
+}
+
 function getSelectObject() {
     return selectObject;
 }
@@ -83,6 +89,8 @@ function create(div) {
     View.uiCamera.position.z = 20;
     View.scene.add(View.uiCamera);
     opView= View;
+
+    setPosition(opView.light,Vector3(0,-1,1));
     return View;
 }
 
@@ -114,6 +122,77 @@ function Cos(x){
 function Sin(x) {
     return Math.sin((x*2*3.1415926)/360);
 }
+//Vector3的除法
+function Division(vector3,single) {
+
+
+    return Vector3(vector3.x/single,vector3.y/single,vector3.z/single);
+
+}
+//Vector3的乘法
+function Multiply(vector3,single) {
+    return Vector3(vector3.x*single,vector3.y*single,vector3.z*single);
+}
+
+//求两个向量距离
+function Distance(begin,end) {
+
+    return Math.sqrt(Math.pow((begin.x - end.x),2)+ Math.pow((begin.y - end.y),2)+ Math.pow((begin.z - end.z),2));
+
+
+}
+
+//归一化
+function Normal(vector3) {
+
+    var distance = Distance(vector3,Vector3(0,0,0));
+    return Division(vector3,distance);
+
+}
+function Substraction(begin,end) {
+
+    return Vector3(begin.x -end.x,begin.y - end.y,begin.z - end.z);
+
+}
+function Add(begin,end) {
+
+    return Vector3(begin.x +end.x,begin.y + end.y,begin.z + end.z);
+}
+function getRandomVector3() {
+
+    var randomType_x = Math.round(Math.random())%2;
+    var randomType_y = Math.round(Math.random())%2;
+    var rx = Math.random();
+    var ry = Math.random();
+    if(randomType_x == 0&&randomType_y == 0){
+
+        rx = rx;
+        ry = ry;
+
+    }
+    if(randomType_x == 0&&randomType_y == 1){
+
+        rx = rx;
+        ry = -ry;
+
+    }
+    if(randomType_x == 1&&randomType_y == 0){
+
+        rx = -rx;
+        ry = ry;
+
+    }
+    if(randomType_x == 1&&randomType_y == 1){
+
+        rx = -rx;
+        ry = -ry;
+
+    }
+
+    return Vector3(rx,ry,0);
+
+
+}
 function screenConvertToWorld(mouseInput) {
 
     //摄像机深度
@@ -124,7 +203,16 @@ function screenConvertToWorld(mouseInput) {
     return a;
 
 }
+function worldConvertToScreen(worldVec) {
 
+    //摄像机深度
+    var depth = opView.camera.position.z;
+    var clipScreenWidth = (depth/Cos(45/2))*Sin(45/2);
+    var a = Vector3(worldVec.x/clipScreenWidth,worldVec.y/clipScreenWidth,0);
+//2*PI/360*角度
+    return a;
+
+}
 
 function frame() {
 

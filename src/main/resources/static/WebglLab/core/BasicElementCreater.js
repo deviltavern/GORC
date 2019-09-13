@@ -24,6 +24,15 @@ function Plane(color,size) {
     return plane;
 }
 
+function Sphere(color,size) {
+    var geometry = new THREE.SphereGeometry( size.x, size.y, size.z );
+    var material = new THREE.MeshLambertMaterial( {color: 0xFFFFFF} );
+    var sphere = new THREE.Mesh( geometry, material );
+    setPosition(sphere,Vector3(0,0,0));
+
+    return sphere;
+}
+
 function createCube() {
     var cube = Cube(Color(1,1,1),Vector3(1,1,1));
     addObject(cube);
@@ -34,4 +43,9 @@ function createPlane() {
     var plane = Plane(Color(1,1,1),Vector3(1,1,1));
     addObject(plane);
     return plane;
+}
+function createSphere(vector3) {
+    var sphere = Sphere(Color(1,1,1),vector3);
+    addObject(sphere);
+    return sphere;
 }

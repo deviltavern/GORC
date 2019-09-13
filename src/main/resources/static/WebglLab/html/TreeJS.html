@@ -2,21 +2,49 @@
 <html>
 <head>
     <title>webgl</title>
-    <script src="../ThreeJSLib/three.js"></script>
-    <script src="stats.js"></script>
-    <script src="WebglManager.js"></script>
-    <script src="BasicElementCreater.js"></script>
-    <script src="PlayerMove.js"></script>
-    <script src="ControlPanel.js"></script>
+    <meta charset="utf-8">
+    <script src="../core/three.js"></script>
+    <script src="../core/stats.js"></script>
+    <script src="../core/WebglManager.js"></script>
+    <script src="../core/BasicElementCreater.js"></script>
+
+    <script src="../ControlPanel.js"></script>
+    <script src="../core/LWUI.js"></script>
+
+    <script src="../scripts/Gluttonous.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <style>
+
+        .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px}
+
+    </style>
 </head>
 <body>
 
 <div id="Stats-output"></div>
 
 <div id="parent" style="width: 1300px;height: 800px;margin-top: 100px;background: #E5E5E5">
+    <div >
 
-    <div id="ca" style="width: 800px;height: 800px;background: #aa5500;float: left"></div>
+        <div style="z-index: 30;position:absolute;">
+            <button id= "begin">游戏开始</button><br>
+            <div style="margin-top: 20px">
+                <button id= "up">上</button>
+                <button id = "back">下</button>
+                <button id = "left">左</button>
+                <button id = "right">右</button>
+            </div>
+
+
+        </div>
+        <div id="ca" style="width: 800px;height: 800px;background: #aa5500;float: left;z-index: 10;position:absolute;">
+
+        </div>
+
+
+    </div>
+
     <div id="cab" style="width: 400px;height: 800px;background: #42addc;float: left">
         
         <div style="margin-top: 5px;width: 400px;height: 50px;background: #42addc">
@@ -85,14 +113,6 @@
 
         context(document.getElementById("ca"));
 
-        var d1 = document.getElementById("pos_x");
-        var d2 = document.getElementById("pos.y");
-        var d3 = document.getElementById("pos.z");
-        var d4 = document.getElementById("rot.x");
-        var d5 = document.getElementById("rot.y");
-        var d6 = document.getElementById("rot.z");
-        init_control_object(opView.camera);
-        init_slider(d1,d2,d3,d4,d5,d6);
 
     }
 

@@ -3,7 +3,7 @@ var x = 10;
 function context(div) {
 
     create(div)
-    setViewport(20);
+   // setViewport(20);
 
 
     var player =  Cube(Color(123,123,123),Vector3(0,0,0));
@@ -17,45 +17,6 @@ function context(div) {
 
 
     var po2 = Vector3(0,0,0);
-
-
-    document.onkeydown=function(event){
-
-        console.info("presskey");
-
-
-        switch (event.keyCode) {
-            case 65:
-
-                console.info("adjust light source dir");
-                break;
-
-            //left
-            case 37:
-
-                po2.x =po2.x-1;
-                break;
-            //up
-            case 38:
-                po2.y =  po2.y+1;
-                break;
-            //right
-            case 39:
-                po2.x =  po2.x+1;
-                break;
-            //down
-            case 40:
-                po2.y = po2.y-1;
-                break;
-
-            default:
-
-                break;
-        }
-
-    console.info(JSON.stringify(po2));
-
-    };
 
     addObject(player);
     //----------------------------------
@@ -90,18 +51,12 @@ function context(div) {
         raycaster.setFromCamera(mouse, opView.camera);
         var intersects = raycaster.intersectObjects(opView.scene.children);
         console.info(raycaster.position);
-      //  if (intersects.length>0)
-      //  {
-      //      intersects[ 0].object.material.color.set( 0x000000 );
-      //      select(intersects[0].object);
-      //      console.info(getSelectObject().position);
-      //  }
+
         var mouseVector3 = Vector3(mouse.x,mouse.y,0);
 
         var aimPosition =  screenConvertToWorld(mouseVector3);
         // setPosition(t2,aimPosition);
         if(selectObject!= null){
-
 
             console.info(aimPosition);
         }
@@ -109,10 +64,40 @@ function context(div) {
 
     }
 
+     var leftBtn = findViewByID("left");
+     leftBtn.onclick = function (ev) {
+        // setPosition(t2,Vector3(getPosition(t2).x-1,getPosition(t2).y,getPosition(t2).z));
+         Move(t2,Vector3(-1,0,0));
+
+         console.info(t2.position);
+     }
+    var rightBtn = findViewByID("right");
+    rightBtn.onclick = function (ev) {
+        // setPosition(t2,Vector3(getPosition(t2).x-1,getPosition(t2).y,getPosition(t2).z));
+        Move(t2,Vector3(1,0,0));
+    }
+    var upBtn = findViewByID("up");
+    upBtn.onclick = function(ev){
+
+        Move(t2,Vector3(0,1,0));
+    }
+
+    var backBtn = findViewByID("back");
+
+    backBtn.onclick = function (ev) {
+        Move(t2,Vector3(0,-1,0));
+
+
+    }
+
+
+
     op = function () {
 
         player.setPosition(po2);
         setPosition(lightCube,getPosition(opView.light));
+
+        //console.info(opView.camera.position);
 
 
     }
