@@ -1,10 +1,14 @@
-    var socket;
+var socket;
 
 
-    function connect(){
+var init = false;
+function connect(){
     if(window.WebSocket) {
         socket = new WebSocket("ws://localhost:9989/websocket");
         socket.onopen = function (event) {
+
+            alert("服务器开启");
+            send(100,0,"把我的身份证给我！");
         };
         socket.onclose = function (p1) {
             alert("关闭服务器！");
@@ -16,10 +20,11 @@
     socket.onmessage = function (p1) {
         // alert("服务器正常打开！");
 
-        var ta = document.getElementById('responseText');
+       // var ta = document.getElementById('responseText');
 
         alert(p1.data);
 
+        console.info(p1.data);
 
 
         //  $.get("http://localhost:8099/static/Html/hall/homepage.html",{"login":"True"},function(x){alert("seuccesss");});
@@ -37,7 +42,7 @@
         //                        console.log(e);
         //                    });
 
-        $(window).attr('location','http://localhost:8099/mainha?opCode=3');
+        //$(window).attr('location','http://localhost:8099/mainha?opCode=3');
     };
     function tax(value,v2){
         alert(value)
@@ -50,42 +55,42 @@
 
 
 
-    function onClickLogin(){
+function onClickLogin(){
+
+
+}
+
+function send(main_code,sub_code,mes) {
+    if (!window.WebSocket) {
+        return ;
+    }
+    if(socket.readyState == WebSocket.OPEN) {
+
+        var text = ' [' +
+            '{ "main_code":'+'"'+main_code+'",'+'"sub_code":'+'"'+sub_code+'",'+'"mes":'+'"'+mes+'"'+' }]';
+
+        socket.send(text);
 
 
     }
-
-    function send(main_code,sub_code,mes) {
-        if (!window.WebSocket) {
-            return ;
-        }
-        if(socket.readyState == WebSocket.OPEN) {
-
-            var text = ' [' +
-             '{ "main_code":'+'"'+main_code+'",'+'"sub_code":'+'"'+sub_code+'",'+'"mes":'+'"'+mes+'"'+' }]';
-
-                socket.send(text);
-
-
-        }
-        else {
-            alert('WebSocket 连接没有建立成功！');
-        }
+    else {
+        alert('WebSocket 连接没有建立成功！');
     }
+}
 
 
-    function singleSend(mes) {
-            if (!window.WebSocket) {
-                return ;
-            }
-            if(socket.readyState == WebSocket.OPEN) {
+function singleSend(mes) {
+    if (!window.WebSocket) {
+        return ;
+    }
+    if(socket.readyState == WebSocket.OPEN) {
 
 
-                    socket.send(mes);
+        socket.send(mes);
 
 
-            }
-            else {
-                alert('WebSocket 连接没有建立成功！');
-            }
-        }
+    }
+    else {
+        alert('WebSocket 连接没有建立成功！');
+    }
+}

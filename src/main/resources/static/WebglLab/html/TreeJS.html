@@ -11,9 +11,10 @@
     <script src="../ControlPanel.js"></script>
     <script src="../core/LWUI.js"></script>
 
+    <script src="../core/Timer.js"></script>
     <script src="../scripts/Gluttonous.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
-
+    <script src="../scripts/GluSocket.js"></script>
     <style>
 
         .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px}
@@ -34,7 +35,7 @@
                 <button id = "left" style="width: 200px;height: 50px">左</button><br>
                 <button id = "right" style="width: 200px;height: 50px">右</button><br>
             </div>
-            <button id= "begin" style="display: none">游戏开始</button><br>
+            <button id= "begin" >游戏开始</button><br>
 
 
 
@@ -113,6 +114,7 @@
 
 
         context(document.getElementById("ca"));
+
 
 
     }
