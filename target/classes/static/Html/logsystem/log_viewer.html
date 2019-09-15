@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+        function getNow(s) {
+            return s < 10 ? '0' + s: s;
+        }
+        function getNowTime()
+        {
+            var myDate = new Date();
+            var year=myDate.getFullYear();        //获取当前年
+            var month=myDate.getMonth()+1;   //获取当前月
+            var date=myDate.getDate();            //获取当前日
+            var h=myDate.getHours();              //获取当前小时数(0-23)
+            var m=myDate.getMinutes();          //获取当前分钟数(0-59)
+            var s=myDate.getSeconds();
+            var now=year+'-'+getNow(month)+"-"+getNow(date);
+            return now;
+        }
+
+        $(document).ready(function(){
+
+            console.info("hello world");
+
+            //
+            console.info("system_site = "+localStorage.getItem('system_site'));
+            $.post("http://localhost:8099/getUserModel?user_acc=123",function(data){
+
+                $("#push_master").attr("value",data.user_name);
+
+            });
+
+            $("#task_begin_time").val(getNowTime());
+
+
+        });
+    </script>
+</head>
+
+<body>
+
+<div class="layui-row" id="container">
+
+</div>
+<script>
+
+   // a = $("#copyParent");
+
+   var htmlContent = "";
+
+
+
+
+
+    $.post("http://localhost:8099/getLog",function (data) {
+
+        var requestValue = JSON.stringify(data);
+        //console.info(JSON.stringify(data));
+
+        //var logIndex = localStorage.getItem("logIndex");
+        //var logPageValue = localStorage.getItem("logPageValue");
+        localStorage.setItem("logIndex","0");
+        localStorage.setItem("logPageValue",requestValue);
+        for (i=0;i<3;i++){
+            $("#container").append('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="130px" src="log_item_view.html"></iframe>');
+        }
+    });
+ //  $("#container").html('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="100px" src="log_item_view.html"></iframe>')
+ //  $("#container").html('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="100px" src="log_item_view.html"></iframe>')
+ //  $("#container").html('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="100px" src="log_item_view.html"></iframe>')
+ //  $("#container").html('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="100px" src="log_item_view.html"></iframe>')
+
+
+    console.info($("#container").html());
+
+
+
+
+
+</script>
+</body>
+</html>

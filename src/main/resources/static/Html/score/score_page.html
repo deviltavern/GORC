@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>个人积分主页</title>
+    <script src="../../js/CommonTool.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../../js/Config.js"></script>
+
+</head>
+<body>
+<h2>账户名：</h2>
+<br>
+<input id="user_acc" value="123" style="width: 150px; height: 40px; font-size: 30px" readonly>
+<br>
+<h2>用户名:</h2>
+<br>
+<input id="user_name" value="罗继业" style="width: 150px; height: 40px; font-size: 30px" readonly>
+<br>
+<h2>积分值：</h2>
+<input id="user_score" value="---" style="width: 150px; height: 40px; font-size: 30px" readonly>
+<br><br><br>
+<input type="submit" id="btn_score_deduct" value="扣除积分"
+       style="width: 150px; height: 40px; font-size: 25px">
+<br><br><br>
+<input type="button" id="btn_score_usage" value="查看积分使用记录"
+       style="width: auto; height: 40px; font-size: 25px">
+
+</body>
+<script>
+    var userinfo = {};
+    userinfo.user_acc = $("#user_acc").val();
+
+    $.post("http://localhost:8099/scoreShow",userinfo,function (data) {
+        console.info(data.user_gold);
+
+        $("#user_score").attr("value",data.user_gold);
+        //alert(data);
+    });
+    userinfo.user_name=$("#user_name").val();
+    console.info(userinfo);
+    // $.post("http://localhost:8099/receiveScoreValue",userinfo,function (data) {
+    //
+    //     alert(data);
+    //
+    // });
+</script>
+</html>

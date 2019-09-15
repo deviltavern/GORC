@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <base target="_parent">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+    <script>
+
+function getNow(s) {
+return s < 10 ? '0' + s: s;
+}
+        function getNowTime()
+        {
+        var myDate = new Date();
+
+var year=myDate.getFullYear();        //获取当前年
+var month=myDate.getMonth()+1;   //获取当前月
+var date=myDate.getDate();            //获取当前日
+
+
+var h=myDate.getHours();              //获取当前小时数(0-23)
+var m=myDate.getMinutes();          //获取当前分钟数(0-59)
+var s=myDate.getSeconds();
+
+var now=year+'-'+getNow(month)+"-"+getNow(date);
+
+return now;
+        }
+      $(document).ready(function(){
+
+         $('#bs').before('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="60" src="../../Html/hall/home_head.html"></iframe>')
+
+
+
+
+        $('#timeInput').val( getNowTime()) ;
+
+        $("#no_solve_form").hide();
+
+        $('#task_begin_time').val( getNowTime()) ;
+
+
+
+        $.post(localStorage.getItem('system_site')+'/getUserModel?user_acc='+localStorage.getItem("user_acc"),function(data){
+
+         $('#task_master').val(data.user_name);
+        });
+
+
+
+
+    });
+    </script>
+
+</head>
+<body id="bs">
+<!-- 让IE8/9支持媒体查询，从而兼容栅格 -->
+<!--[if lt IE 9]>
+<script src="https://cdn.staticfile.org/html5shiv/r29/html5.min.js"></script>
+<script src="https://cdn.staticfile.org/respond.js/1.4.2/respond.min.js"></script>
+<![endif]-->
+
+
+<div class="layui-container" id="44x">
+
+    <form class="layui-form" action="" id="f4" target="nm_iframe">
+
+
+        <p>发布人</p>
+        <hr class="layui-bg-green">
+
+        <input type="text" id="task_master" name="task_master" lay-verify="task_input" autocomplete="off" placeholder="who" class="layui-input">
+        解决时间
+        <hr class="layui-bg-green" >
+        <div class="layui-input-inline">
+            <input id="task_begin_time" type="text" name="task_begin_time" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" >
+        </div>
+        <p>问题描述</p>
+        <hr class="layui-bg-green">
+        <div class="layui-row layui-bg-orange">
+            <textarea placeholder="" class="layui-textarea" name="task_describe" lay-verify="task_input"></textarea>
+        </div>
+
+
+        <hr class="layui-bg-orange">
+
+        <p>难度</p>
+        <hr class="layui-bg-green">
+
+
+        <select name="task_difficute_level" id="p28" lay-filter = "p28">
+            <option value="细节级" >细节级</option>
+            <option value="任务级" >任务级</option>
+            <option value="子系统级" >子系统级</option>
+            <option value="系统级" >系统级</option>
+        </select>
+
+
+        是否解决
+        <hr class="layui-bg-green" >
+
+        <select name="task_is_solve" id="p27" lay-filter = "task_is_solve">
+            <option value="是" >是</option>
+            <option value="否" selected = "">否</option>
+        </select>
+
+        <p>类型</p>
+        <hr class="layui-bg-green">
+
+        <select name="task_type" id="p29" lay-filter = "p29">
+
+            <option value="算法" >算法</option>
+            <option value="unity" >unity</option>
+            <option value="web前端" >web前端</option>
+            <option value="web后端" >web后端</option>
+            <option value="android前端" >android前端</option>
+            <option value="android后端" >android后端</option>
+            <option value="微信小程序前端" >微信小程序前端</option>
+            <option value="微信小程序后端" >微信小程序后端</option>
+            <option value="sqlserver" >sqlserver</option>
+        </select>
+
+
+        <p>悬赏</p>
+        <hr class="layui-bg-green">
+
+        <select name="task_reward" id="task_reward" >
+
+            <option value="10" >10</option>
+            <option value="50" >50</option>
+            <option value="100" >100</option>
+            <option value="200" >200</option>
+            <option value="500" >500</option>
+            <option value="1000" >1000</option>
+            <option value="2000" >2000</option>
+
+        </select>
+
+        <div id="no_solve_form" hidden = "True">
+
+            <p>解决策略</p>
+            <hr class="layui-bg-green">
+            <div class="layui-row layui-bg-orange">
+                <textarea placeholder="" class="layui-textarea" name="task_solve_strategy"></textarea>
+            </div>
+
+            <hr class="layui-bg-orange">
+            <p>问题代码</p>
+            <hr class="layui-bg-green">
+            <div class="layui-row layui-bg-orange">
+                <textarea placeholder="" class="layui-textarea" name="task_solve_code" style="height:200px"></textarea>
+            </div>
+
+            解决时间
+            <hr class="layui-bg-green" >
+            <div class="layui-input-inline">
+                <input id="timeInput" type="text" name="task_solve_time" lay-verify="required" placeholder="请输入" autocomplete="off" class="layui-input" >
+            </div>
+            <hr class="layui-bg-green">
+
+            <hr class="layui-bg-orange">
+
+
+            <p>解决人</p>
+            <hr class="layui-bg-green">
+
+            <input type="text" name="task_solver" lay-verify="title" autocomplete="off" placeholder="who" class="layui-input">
+
+
+
+
+
+        </div>
+
+        <button class="layui-btn" lay-submit="" lay-filter="btnSubmit">立即提交</button>
+
+    </form>
+
+    <iframe id="id_iframe" name="nm_iframe" style="display:none;"></iframe>
+
+
+
+
+
+
+
+
+
+
+</div>
+
+
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<script type="text/javascript">
+        var select = document.getElementById("f3");
+
+</script>
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use(['form', 'layedit', 'laydate'], function(){
+  var form = layui.form
+  ,layer = layui.layer
+  ,layedit = layui.layedit
+  ,laydate = layui.laydate;
+
+  //日期
+  laydate.render({
+    elem: '#date'
+  });
+  laydate.render({
+    elem: '#date1'
+  });
+
+  //创建一个编辑器
+  var editIndex = layedit.build('LAY_demo_editor');
+
+  //自定义验证规则
+  form.verify({
+    task_input: function(value){
+      if(value.length < 1){
+        return '标题至少得5个字符啊';
+      }
+    }
+    ,pass: [
+      /^[\S]{6,12}$/
+      ,'密码必须6到12位，且不能出现空格'
+    ]
+    ,content: function(value){
+      layedit.sync(editIndex);
+    }
+  });
+
+  //监听指定开关
+  form.on('switch(switchTest)', function(data){
+    layer.msg('开关checked：'+ (this.checked ? 'true' : 'false'), {
+      offset: '6px'
+    });
+    layer.tips('温馨提示：请注意开关状态的文字可以随意定义，而不仅仅是ON|OFF', data.othis)
+  });
+    form.on('select(task_is_solve)', function(data){
+
+
+            switch(data.value){
+            case "是":
+            //   $("#no_solve_form").show();
+
+
+            break;
+
+            case "否":
+              //  $("#no_solve_form").hide();
+            break;
+
+            }
+
+            form.render('select');
+            });
+
+String.prototype.replaceAll=function(a,b){//吧a替换成b
+    var reg=new RegExp(a,"g"); //创建正则RegExp对象
+    return this.replace(reg,b);
+    }
+
+form.on('submit(btnSubmit)', function (data) {
+    //表单数据formData
+    var formData = data.field;
+
+    //-----------------------进行支付请求------------------------------//
+     //
+     $.post(localStorage.getItem("system_site")+"/payforpushtask?user_acc="+localStorage.getItem('user_acc')+"&value="+$("#task_reward").val()+"",function(data){
+
+        switch(data)
+        {
+            case "true":
+
+                    $.post(localStorage.getItem("system_site")+"/requestDataTest",formData,function(d){
+
+                     alert($("#task_reward").val()+'积分支付成功！');
+                    $(window).attr('location',localStorage.getItem('loginkey'));
+                });
+
+            break;
+
+            case "false":
+                alert('您余额不足');
+            break;
+        }
+
+
+        return;
+
+
+     });
+    //-----------------------进行支付请求------------------------------//
+
+
+
+});
+
+  //监听提交
+  form.on('submit(demo1)', function(data){
+    layer.alert(JSON.stringify(data.field), {
+      title: '最终的提交信息'
+    })
+    return false;
+  });
+
+  //表单初始赋值
+  form.val('example', {
+    "username": "贤心" // "name": "value"
+    ,"password": "123456"
+    ,"interest": 1
+    ,"like[write]": true //复选框选中状态
+    ,"close": true //开关状态
+    ,"sex": "女"
+    ,"desc": "我爱 layui"
+  })
+
+
+});
+</script>
+
+</body>
+</html>

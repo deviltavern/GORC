@@ -1,0 +1,207 @@
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>浮窗表单</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+            $("#showWin").click(function(){
+                $("#light").slideDown();
+                $("#fade").fadeIn();
+            });
+
+            $("#hideWin").click(function(){
+                $("#light").slideUp();
+                $("#fade").fadeOut();
+            })
+        });
+
+    </script>
+
+
+    <style>
+        .black_overlay{
+            /*黑色隐藏样式*/
+            display: none;
+            position: absolute;
+            top: 0%;
+            left: 0%;
+            width: 100%;
+            height: 100%;
+            background-color: black;
+            z-index:1001;
+            -moz-opacity: 0.8;
+            opacity:.80;
+            filter: alpha(opacity=88);
+        }
+        .white_content {
+            display: none;
+            position: absolute;
+            top: 25%;
+            left: 25%;
+            width: 55%;
+            height: 60%;
+            padding: 20px;
+            border: 10px solid #258f81;
+            background-color: white;
+            z-index:1002;
+            overflow: auto;
+
+        }
+        .input_control{
+            height:60px;
+            width:850px;
+            margin:20px auto;
+
+        }
+        .input_textarea{
+            height:200px;
+            width:850px;
+            margin:20px auto;
+        }
+        .title{
+            margin-top: -20px;
+            margin-left: -20px;
+
+            height:50px;
+            width:880px;
+            background-color: #258f81;
+        }
+        .title h1{
+            display: inline;
+            height:50px;
+            padding-left: 10px;
+            text-align: center;
+            color: #fff9ec;
+        }
+        .title #hideWin{
+            float: right;
+            height:50px;
+            width:100px;
+            display: inline;
+        }
+        .title img{
+            height:50px;
+            width:80px;
+
+        }
+
+        .row_left{
+            float: left;
+            height: 60px;
+            width: 100px;
+            font-size:1.2em;
+        }
+        .row_right{
+            float: left;
+            height: 60px;
+            width: 740px;
+        }
+        .tip{
+            width:100%;
+
+        }
+
+        input[type="text"]{
+
+        }
+        .form_input{
+            box-sizing: border-box;
+            text-align:center;
+            font-size:1.4em;
+            height:60px;
+            border-radius:4px;
+            border:1px solid #c8cccf;
+            color:#6a6f77;
+            -web-kit-appearance:none;
+            -moz-appearance: none;
+            outline:0;
+            padding:0 1em;
+            border: 1px solid #258f81;
+            width: 100%;
+        }
+
+        #btn1,#btn2{
+            box-sizing: border-box;
+            text-align:center;
+            font-size:1.4em;
+            height:2.7em;
+            border-radius:4px;
+            border:1px solid #c8cccf;
+            color:#fff9ec;
+            background-color: #258f81;
+            display:block;
+            outline:0;
+            padding:0 1em;
+            float: left;
+            width:30%;
+            margin-left: 150px;
+        }
+
+        input[type="text"]:focus{
+            border:1px solid darkorange;
+        }
+    </style>
+</head>
+<body>
+
+<p>请您点击下面的按钮，提交您的源代码哦~</p>
+<button   id="showWin"  >
+    上传代码
+</button>
+
+<div id="light" class="white_content">
+   <div class="title">
+       <h1>发布解决方案</h1><div id="hideWin" ><img src="img/exit.png"></div>
+   </div>
+
+
+    <form action="" method="get">
+        <div class="input_control">
+            <div class="row_left">
+                <p class="tip">您的主题：</p>
+            </div>
+            <div class="row_right">
+                <input type="text" class="form_input" placeholder="Enter your theme here"/>
+            </div>
+        </div>
+        <div class="input_control">
+            <div class="row_left">
+                <p class="tip">附属说明：</p>
+            </div>
+            <div class="row_right">
+                <input type="text" class="form_input" placeholder="Enter your explain here"/>
+            </div>
+        </div>
+        <div class="input_textarea">
+            <div class="row_left">
+                <p class="tip">具体代码：</p>
+            </div>
+            <div class="row_right">
+                <textarea type="text" class="form_input" placeholder="Input your code here" STYLE="height: 200PX"></textarea>
+            </div>
+        </div>
+
+        <div  onclick="myFunction()">
+            <input id="btn1" type="submit" ></input>
+        </div>
+        <div  >
+            <input id="btn2" type="reset" ></input>
+        </div>
+    </form>
+
+
+
+
+
+</div>
+<div id="fade" class="black_overlay"></div>
+
+
+
+</body>
+</html>

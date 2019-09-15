@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <base target="_parent">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+    <style type="text/css">
+  {# 设置table每一行的height #}
+  .layui-table-cell {
+   height: auto;
+   line-height: 30px;
+  }
+ </style>
+
+</head>
+<body>
+
+<div class="layui-row">
+
+    <table class="layui-hide" id="test"lay-filter="demoEvent" lay-even skin = "nob"></table>
+
+</div>
+<script>
+    String.prototype.replaceAll=function(a,b){//吧a替换成b
+    var reg=new RegExp(a,"g"); //创建正则RegExp对象
+    return this.replace(reg,b);
+    }
+
+
+</script>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+
+String.prototype.replaceAll=function(a,b){//吧a替换成b
+    var reg=new RegExp(a,"g"); //创建正则RegExp对象
+    return this.replace(reg,b);
+    }
+layui.use('table', function(){
+  var table = layui.table;
+
+  table.render({
+    elem: '#test'
+
+    ,url:localStorage.getItem("system_site")+'/getTaskModelListFromType?type=安卓后端'
+    ,toolbar: true
+    ,title: '用户数据表'
+    ,totalRow: true
+
+    ,cols: [[
+
+        {field:'task_index', title:'ID', width:68,  unresize: true}
+       ,{field:'task_master', title:'发布人', width:200, unresize: true}
+      ,{field:'task_begin_time', title:'发布时间', width:120,unresize : true}
+      ,{field:'task_describe', title:'任务描述', width:800, unresize : true,event: 'setSign'}
+      ,{field:'task_is_solve', title:'是否解决', width:160, templet: '#sexTpl' ,unresize : true,event: 'task_is_solve_event'}
+      ,{field:'task_solve_strategy', title:'解决策略', width:120,height:200,  sort: true,unresize : true,event: 'task_solve_strategy_event'}
+      ,{field:'task_solver', title:'处理人', width:100, sort: true,unresize : true}
+      ,{field:'task_difficute_level', title:'任务难度', width:100, sort: true,unresize : true}
+      ,{field:'task_type', title:'任务类型', width:100, sort: true,unresize : true}
+      ,{field:'task_solve_time', title:'解决时间', width:100, sort: true,unresize : true}
+
+      ,{field:'task_solve_code', title:'解决代码', width:130, sort: false,unresize : true,event: 'task_master_code_view_solve'}
+
+      ,{field:'task_status', title:'任务状态', width:180, sort: false,unresize : true,event: 'task_status'}
+
+      ,{field:'task_reward', title:'悬赏', width:180, sort: false,unresize : true,event: 'task_reward',templet: '#task_reward_templet' }
+    ]]
+
+
+
+
+
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+
+      return {
+        "code": 0, //解析接口状态
+        "msg": "", //解析提示文本
+        "count": res.total, //解析数据长度
+        "data":res.data //解析数据列表
+      };
+    }
+    ,done: function (res, page, count) {
+            var that = this.elem.next();
+
+            res.data.forEach(function (item, index) {
+
+
+                if (item.task_status == "未处理") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#ffd1c0");
+                }
+                if (item.task_status == "已完成") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#b4ffd5");
+                }
+                if (item.task_status == "正在处理") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#edd398");
+                }
+
+            });
+        }
+
+  });
+
+
+  table.on('tool(demoEvent)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'setSign'){
+      layer.alert(data.task_describe, {
+      title: '任务详情'
+    });
+    //task_master_code_view
+
+
+    }
+    //-----------------------//
+    if(obj.event === 'task_master_code_view'){
+      if(data.task_master_code.length <2)
+        {
+            alert("没有代码");
+
+            return;
+        }
+     $.post(localStorage.getItem("system_site")+'/getCodeFromDB?id='+data.task_master_code,function(data2){
+
+       var v  =  data2.code_value.replaceAll("@@#@@","'");
+
+
+
+
+
+      });
+
+
+
+
+    }
+//-------------------------//
+
+    if(obj.event === 'task_master_code_view_solve'){
+
+        if(data.task_solve_code  <2)
+        {
+            alert("没有代码");
+
+            return;
+        }
+     $.post(localStorage.getItem("system_site")+'/getCodeFromDB?id='+data.task_solve_code,function(data2){
+
+
+         var v  =  data2.code_value.replaceAll("@@#@@","'");
+
+
+        //----------------------//
+                layer.open({
+        type: 1
+        ,title: false //不显示标题栏
+        ,closeBtn: false
+        ,area: '1400px;'
+        ,shade: 0.8
+        ,id: 'LAY_layuipro' //设定一个id，防止重复弹出
+        ,btn: ['关闭']
+        ,btnAlign: 'c'
+        ,moveType: 1 //拖拽模式，0或者1
+        ,content:' <textarea class="layui-code"  id="code_view" style="width:1400px;height:250px">'+v+'</textarea>'
+        ,success: function(layero){
+          var btn = layero.find('.layui-layer-btn');
+          btn.find('.layui-layer-btn0').attr({
+
+          });
+          }
+
+            });
+
+        //-----------------------//
+
+      });
+
+      }
+//---------------------------//
+     if(obj.event === 'task_is_solve_event'){
+
+
+     //if('data.task_is_solve' === '是')
+     //    alert('该任务已经完成！');
+     // }else{
+
+     //   alert('接任务！');
+
+        if(data.task_status.match("正在处理")){
+
+            alert("该任务正在处理，不允许接取！");
+
+            return;
+        }
+
+        if(data.task_is_solve.match('是')){
+             // 包含
+            alert('该任务已经完成！');
+
+        }
+        if(data.task_is_solve.match('否')){
+             // 包含
+
+
+            var r=confirm("是否接取该任务");
+            if(r == true)
+            {
+                var userName ="";
+             $.post(localStorage.getItem('system_site')+'/getUserModel?user_acc='+localStorage.getItem("user_acc"),function(dx){
+                userName = dx.user_name;
+
+
+                 mg = {
+                key:data.task_index,
+                value:"正在处理",
+                task_solver:userName
+
+                 };
+
+                  $.post(localStorage.getItem("system_site")+'/setTaskStatu',mg,function(data){
+                alert(JSON.stringify(data));
+                window.location.reload();
+            });
+
+               alert(JSON.stringify(mg));
+
+            });
+
+
+
+
+            //http://localhost:8099/setTaskStatu
+
+
+
+            }
+        }
+      }
+       //-----------------//
+
+              if(obj.event === 'task_solve_strategy_event'){
+
+
+
+                 alert(data.task_solve_strategy);
+
+      }
+
+       //----------------------------------------------//
+       if(obj.event === 'task_status'){
+
+
+
+          if(data.task_status.match("正在处理")){
+             // 包含
+
+             $.post(localStorage.getItem('system_site')+'/getUserModel?user_acc='+localStorage.getItem("user_acc"),function(dx){
+
+                    if(dx.user_name.match(data.task_solver))
+                    {
+                        var r = confirm("是否提交解决方案？");
+
+                        if(r == true)
+                        {
+
+                         localStorage.setItem('tempdata',JSON.stringify(data));
+
+                         parent.location.href='/static/Html/hall/upload_task_info_form_for_solve_strategy.html';
+                          //  $(window).attr('location','');
+
+                        }
+
+
+                    }else{
+                        alert(data.task_solver+">正在处理！");
+                    }
+
+             });
+
+
+        }
+
+      }
+
+       //----------event-----//
+
+  });
+});
+
+
+</script>
+
+<script type="text/html" id="titleTpl">
+    <a href="" class="">{{d.content}}          </a>
+</script>
+<script type="text/html" id="sexTpl">
+    {{#  if(d.task_is_solve === '否'){ }}
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565781931139&di=9fb2a040bf0c36ef1c3cec3ea147460a&imgtype=jpg&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180831%2F19480eff63ea4351bf9db975d466b2bb.jpeg" style="background-color: #FFFFFF;"  class="layui-nav-img">{{d.task_is_solve }}</img>
+    {{#  } else { }}
+    {{ d.task_is_solve }}
+    {{#  } }}
+</script>
+
+<script type="text/html" id="task_reward_templet">
+    <img src="../../image/gold.jpeg" style="background-color: #FFFFFF;"  class="layui-nav-img">{{d.task_reward }}</img>
+
+</script>
+<script type="text/html" id="bar1">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">Go解决代码</a>
+
+</script>
+
+
+
+<script type="text/html" id="bar2">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">Go问题代码</a>
+
+</script>
+
+
+<script>
+
+</script>
+</body>
