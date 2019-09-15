@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController
 public class ScoreSystem {
 
+    
     @PostMapping("/scoreShow")
     public JSONObject scoreShow(String user_acc) throws Exception {
 
