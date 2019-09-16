@@ -57,14 +57,14 @@ public class ScoreSystem {
             //update user_info set user_gold = 9999 where user_acc = '123'
             DataBaseOP.requestNoReturn("update user_info set user_gold = "+scoreReading+" where user_acc = '"+user_acc+"'");
             DataBaseOP.requestNoReturn("insert into score_record(" +
-                    "user_acc,operate_value,current_value,sc__re_description,operate_time)" +
+                    "user_acc,operate_value,rest_value,sc__re_description,operate_time)" +
                     "values('"+user_acc+"',"+-operate_value+","+scoreReading+",'扣除积分','"+
                     getDatetime()+"')");
         }else {
 
             reObj.put("code",200);
         }
-        reObj.put("current_value",scoreReading);
+        reObj.put("rest_value",scoreReading);
         return reObj;
     }
 
@@ -84,17 +84,17 @@ public class ScoreSystem {
         //update user_info set user_gold = 9999 where user_acc = '123'
         DataBaseOP.requestNoReturn("update user_info set user_gold = " + scoreReading + " where user_acc = '" + user_acc + "'");
         DataBaseOP.requestNoReturn("insert into score_record(" +
-                "user_acc,operate_value,current_value,sc__re_description,operate_time)" +
+                "user_acc,operate_value,rest_value,sc__re_description,operate_time)" +
                 "values('"+user_acc+"',"+operate_value+","+scoreReading+",'增加积分','"+
                 getDatetime()+"')");
-        reObj.put("current_value", scoreReading);
+        reObj.put("rest_value", scoreReading);
         return reObj;
     }
 
     @PostMapping("/getScoreRecord")
     public JSONArray getScoreRecord() throws Exception {
         JSONArray tempjr=DataBaseOP.request("select * from score_record");
-        System.out.println(tempjr);
-        return DataBaseOP.request("select * from score_record");
+
+        return tempjr;
     }
 }
