@@ -8,11 +8,25 @@ var dynamicSpeed = 20;
 var bodyGap = 0.6;
 var head;
 var raycaster = new THREE.Raycaster();
-var foodList = new Array();
+var snackArray = new Array();
 var detectionList = new Array();
 
-//预测接下来的位置
+//从蛇头里面获取
+function getSnackFromArray(id) {
 
+    //console.info(snackArray);
+    for (var i in snackArray){
+
+        if (snackArray[i].id == id)
+        {
+            return snackArray[i];
+        }
+    }
+    return  null;
+
+}
+
+//生成蛇头
 function insNewSnackHead(id) {
     var snackHead = {};
     snackHead.id = id;
@@ -45,7 +59,7 @@ function insNewSnackHead(id) {
         }
 
     }
-
+    snackArray.push(snackHead);
     return snackHead;
 
 }
@@ -129,11 +143,7 @@ function createGluttonousBody(snackHead) {
        // console.info(bodyItem.dirIndex);
     }
    // bodyArray.push(bodyItem);
-
-
-
     return bodyItem;
-
 
 }
 var s1 = null;
@@ -147,29 +157,32 @@ function context(div) {
      console.info("初始速度="+speed);
     // head =  createSphere(Vector3(0.6,16,16));
 
-    s1 =  insNewSnackHead(123);
+
    //  var b1 = createGluttonousBody(head);
    //  var b2 = createGluttonousBody(head);
 
-     uiControl(s1);
+
      var dynamicTime = 0;
      var bodyIndex = 0;
 
 
      op = function(){
-
-        // borderDetection();
+         uploadPredictionPos();
          dynamicTime++;
-            s1.op();
+         for (var si in snackArray)
+         {
+            if(snackArray[si].id == getSnackID())
+            {
+                snackArray[si].op();
+            }
+
+         }
+
         if (dynamicTime>100){
             dynamicTime = 0;
-            insRandomCube();
-        }
-       //  console.info(getFrameTime ());
-        // Move(head,Multiply(Normal(moveDir),speed));
-         //rayDetection();
 
-         //console.info("循环渲染中！");
+        }
+
      }
 
      frame(frameTime);
@@ -215,17 +228,21 @@ function uiControl(snackHead) {
     }
 }
 
-function insRandomCube() {
-    if(foodList.length<10){
-        var vec = getRandomVector3();
+//预测点更新蛇的运动方向
+function updateSnackDir( snack,vector3) {
 
-        var tempCube = createCube();
-        setPosition(tempCube,screenConvertToWorld(vec));
-        foodList.push(tempCube);
-        tempCube.tag = "food";
+    if (snack == null)
+        return;
+    if (Distance(vector3,getPosition(snack.head))<0.1){
+        snack.moveDir = Vector3(0,0,0);
+    }else{
+        var moveDir =Normal(Division(vector3,getPosition(snack.head))) ;
+        snack.moveDir = vector3;
     }
 
+
 }
+
 
 var lastTouchObject;
 
@@ -236,7 +253,7 @@ function onEnter(preObject) {
 
         return;
     }
-    createGluttonousBody(head);
+    s1.addBody();
     lastTouchObject = preObject;
     removeFoodFromList(preObject);
     console.info("初始进入");
@@ -258,16 +275,7 @@ function onExit(insertList) {
 }
 
 
-function removeFoodFromList(food) {
 
-    opView.scene.remove(food);
-    var index = foodList.indexOf(food);
-    if (index > -1) {
-        foodList.splice(index, 1);
-    }
-
-
-}
 
 function rayDetection(snackHead) {
     var point = new THREE.Vector2();

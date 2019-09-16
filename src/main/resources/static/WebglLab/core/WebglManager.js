@@ -158,6 +158,14 @@ function Add(begin,end) {
 
     return Vector3(begin.x +end.x,begin.y + end.y,begin.z + end.z);
 }
+
+
+//从ary中将value移除
+function RemoveFromArray(ary,value) {
+    var index = ary.indexOf(value);
+
+    ary.splice(index, 1);
+}
 function getRandomVector3() {
 
     var randomType_x = Math.round(Math.random())%2;

@@ -3,7 +3,7 @@
 
     function connect(){
     if(window.WebSocket) {
-        socket = new WebSocket("ws://localhost:9989/websocket");
+        socket = new WebSocket("ws://localhost:9001/websocket");
         socket.onopen = function (event) {
         };
         socket.onclose = function (p1) {
@@ -16,9 +16,9 @@
     socket.onmessage = function (p1) {
         // alert("服务器正常打开！");
 
-        var ta = document.getElementById('responseText');
-
-        alert(p1.data);
+        //var ta = document.getElementById('responseText');
+        console.info(p1.data);
+      //  alert(p1.data);
 
 
 
@@ -37,7 +37,7 @@
         //                        console.log(e);
         //                    });
 
-        $(window).attr('location','http://localhost:8099/mainha?opCode=3');
+       // $(window).attr('location','http://localhost:8099/mainha?opCode=3');
     };
     function tax(value,v2){
         alert(value)
