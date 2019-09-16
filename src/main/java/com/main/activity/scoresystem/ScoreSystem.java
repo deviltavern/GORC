@@ -1,23 +1,33 @@
 package com.main.activity.scoresystem;
 
-import com.main.Tool.JqueryRequestTool;
 import com.main.dao.DataBaseOP;
-import com.sun.org.apache.bcel.internal.generic.ACONST_NULL;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
-import org.springframework.http.HttpRequest;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import javax.servlet.http.HttpServletRequest;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 /**
  * Create by fan on 2019/9/14
  */
 @RestController
 public class ScoreSystem {
-
-    
+    /**
+     * @description: 获得系统时间并转为String类型
+     * @return:
+     */
+    public String getDatetime(){
+        Date date = new Date();//获取当前的日期
+        SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");//设置日期格式
+        String str = df.format(date);//获取String类型的时间
+        return str;
+    }
+    /**
+     * @description: 查询积分值
+     * @return: 积分值的json对象
+     */
     @PostMapping("/scoreShow")
     public JSONObject scoreShow(String user_acc) throws Exception {
 
@@ -28,18 +38,63 @@ public class ScoreSystem {
         //System.out.println(tempjr.getJSONObject(0));
         return tempjr.getJSONObject(0);
     }
+    /**
+     * @description: 扣除积分
+     * @return:
+     */
+    @PostMapping("/scoreDeduct")
+    public  JSONObject  scoreDeduct(String user_acc,int operate_value) throws Exception {
+        JSONObject reObj = new JSONObject();
 
-    @PostMapping("/receiveScoreValue")
-    public void receiveScoreValue(
-            HttpServletRequest request
-    ) throws Exception {
+        JSONObject userInfo = DataBaseOP.requestSingle("select * from user_info where user_acc = '"+user_acc+"'" );
+        int scoreReading = new Integer(userInfo.get("user_gold").toString());
+        //System.out.println("score:"+scoreReading);
 
-        JqueryRequestTool tool = new JqueryRequestTool(request);
-        System.out.println(tool.jsonValue);
-        JqueryRequestTool.addExcludeKey("user_name");
+        if((scoreReading - operate_value)>0){
 
-        DataBaseOP.requestNoReturn(tool.getInsertSql("task_log", JqueryRequestTool.flushList()));
+            scoreReading -= operate_value;
+            reObj.put("code",100);
+            //update user_info set user_gold = 9999 where user_acc = '123'
+            DataBaseOP.requestNoReturn("update user_info set user_gold = "+scoreReading+" where user_acc = '"+user_acc+"'");
+            DataBaseOP.requestNoReturn("insert into score_record(" +
+                    "user_acc,operate_value,current_value,sc__re_description,operate_time)" +
+                    "values('"+user_acc+"',"+-operate_value+","+scoreReading+",'扣除积分','"+
+                    getDatetime()+"')");
+        }else {
 
+            reObj.put("code",200);
+        }
+        reObj.put("current_value",scoreReading);
+        return reObj;
+    }
 
+    /**
+     * @description: 增加积分
+     * @return:
+     */
+    @PostMapping("/scoreAdd")
+    public  JSONObject  scoreAdd(String user_acc,int operate_value) throws Exception {
+        JSONObject reObj = new JSONObject();
+
+        JSONObject userInfo = DataBaseOP.requestSingle("select * from user_info where user_acc = '" + user_acc + "'");
+        int scoreReading = new Integer(userInfo.get("user_gold").toString());
+
+        scoreReading += operate_value;
+        reObj.put("code", 100);
+        //update user_info set user_gold = 9999 where user_acc = '123'
+        DataBaseOP.requestNoReturn("update user_info set user_gold = " + scoreReading + " where user_acc = '" + user_acc + "'");
+        DataBaseOP.requestNoReturn("insert into score_record(" +
+                "user_acc,operate_value,current_value,sc__re_description,operate_time)" +
+                "values('"+user_acc+"',"+operate_value+","+scoreReading+",'增加积分','"+
+                getDatetime()+"')");
+        reObj.put("current_value", scoreReading);
+        return reObj;
+    }
+
+    @PostMapping("/getScoreRecord")
+    public JSONArray getScoreRecord() throws Exception {
+        JSONArray tempjr=DataBaseOP.request("select * from score_record");
+        System.out.println(tempjr);
+        return DataBaseOP.request("select * from score_record");
     }
 }
