@@ -8,15 +8,24 @@ function getSnackID() {
 var init = false;
 function connect(){
     if(window.WebSocket) {
-        socket = new WebSocket("ws://47.106.227.238:8080/websocket");
-        socket.onopen = function (event) {
-            console.info("服务器开启完毕！")
-            alert("服务器开启");
-            send(100,0,"把我的身份证给我！");
-        };
-        socket.onclose = function (p1) {
-            alert("关闭服务器！");
-        }
+
+            socket = new WebSocket("ws://192.168.43.34:9001/websocket");
+
+            console.info(socket.readyState+" = socket status");
+
+
+            socket.onopen = function (event) {
+                console.info("服务器开启完毕！")
+                alert("服务器开启");
+                send(100,0,"把我的身份证给我！");
+
+            };
+            socket.onclose = function (p1) {
+               // alert("关闭服务器！");
+                console.info("关闭服务器！");
+            }
+
+
     }
     else {
         alert('抱歉，您的浏览器不支持WebSocket 协议！');
@@ -28,6 +37,7 @@ function connect(){
         var main_code = reinfo.main_code;
         var sub_code = reinfo.sub_code;
        var message = reinfo.message;
+       var tempSnack = null;
        // console.info(reinfo);
         switch (sub_code) {
 
@@ -56,27 +66,45 @@ function connect(){
                 for (var i in message)
                 {
                     var playerInfo =message[i];
-
+                    console.info(playerInfo);
                    var sk = getSnackFromArray(playerInfo.snackID);
                    if(sk!= null){
 
+
+                       console.info(getPosition(sk.head));
+                       //sk.moveDir = Normal(Division(playerInfo.vec - getPosition(sk.head)));
                        setPosition(sk.head,playerInfo.vec);
+
                    }
                 }
                 break;
             case 201:
-               // insRandomCube(message);
+                insRandomCube(message);
                 break;
 
             case 203:
                 //console.info(message);
                for (var i in message) {
-
+                   var snk = getSnackFromArray(message[i].snackID);
+                   snk.bodyMsg = message[i].bodyMsg;
                    if (message[i].snackID != getSnackID()){
                      //  console.info(message[i].snackID);
-                       var snk = getSnackFromArray(message[i].snackID);
                       // console.info(snk);
+
                        if (snk!= null){
+
+                            //console.info(JSON.stringify(message[i].vec)+"<>"+JSON.stringify(getPosition(snk.head)) );
+                            if(Equal(message[i].vec,snk.lastPos) == false){
+
+
+                                snk.moveDir = Normal(Substraction(message[i].vec,snk.lastPos));
+                                snk.lastPos = message[i].vec;
+
+                                //console.info(snk.moveDir);
+                            }else {
+
+
+                            }
 
                            setPosition(snk.head,
                                message[i].vec
@@ -88,7 +116,12 @@ function connect(){
                }
 
                 break;
-
+            case 204:
+                tempSnack = getSnackFromArray(message.snackID);
+                tempSnack.addBody();
+                console.info(tempSnack);
+                console.info("长身体from 204");
+                break;
 
 
         }
@@ -130,7 +163,7 @@ function send(main_code,sub_code,mes) {
 
     }
     else {
-        alert('WebSocket 连接没有建立成功！');
+        console.info('WebSocket 连接没有建立成功！');
     }
 }
 
