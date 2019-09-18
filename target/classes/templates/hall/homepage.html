@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+
+    <link rel="stylesheet" href="/static/css/img.css"  media="all">
+
+    <link rel="stylesheet" href="/static/css/colorx.css"  media="all">
+    <link rel="stylesheet" href="/static/css/fontx_style.css"  media="all">
+    <script src="/static/js/rd.js"></script>
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/js/homepage.js" charset="utf-8"></script>
+
+    <link rel="stylesheet" href="/static/css/video_background.css"  media="all">
+    <style type="text/css">
+  {# 设置table每一行的height #}
+  .layui-table-cell {
+   height: auto;
+   line-height: 50px;
+  }
+ </style>
+
+
+
+
+    <style>
+
+
+        .DIVa {position:absolute;top:5%;width:100%;z-index:-1}
+
+        .modal {
+  position: fixed;   // 可以保证以原有页面内容的高度，遮罩
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+  height: 100%;
+  width: 100%;
+  display: none;
+  justify-content: center;
+}
+
+
+    </style>
+    <script>
+
+
+
+
+    $(document).ready(function(){
+
+         $('#home_headx').before('<iframe name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="/static/Html/hall/home_head.html" style="filter:chroma(color=#ffffff)" ></iframe>')
+
+
+
+
+
+    });
+
+     $(window).load(function () {
+       // $('#hd').load('home_head.html');
+
+          //  insNewTable('sf_table','1',JSON.stringify(a));
+
+
+       });
+
+       function clicktrTest(){
+        alert("123");
+       }
+    </script>
+
+
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body background="/static/image/b3.jpg"id = "bs" >
+
+<div id="home_headx">
+
+
+</div>
+
+
+
+
+
+
+
+<div class="layui-tab purple DIVa" lay-filter="demo">
+
+    <fieldset class="layui-elem-field purple">
+        <legend class='bottom' style="font-size:70px;text-align: left">大厅</legend>
+    </fieldset>
+    <ul class="layui-tab-title">
+        <li  class="layui-this xplp"  lay-id="11" style="font-size:30px" >算法</li>
+        <li  class="layui-this xplp"  lay-id="22" style="font-size:30px">unity</li>
+        <li  class="layui-this xplp"  lay-id="33" style="font-size:30px">web前端</li>
+        <li  class="layui-this xplp"  lay-id="44" style="font-size:30px">web后端</li>
+        <li  class="layui-this xplp"  lay-id="55" style="font-size:30px">android前端</li>
+        <li  class="layui-this xplp"  lay-id="55" style="font-size:30px">android后端</li>
+        <li  class="layui-this xplp"  lay-id="55" style="font-size:30px">微信小程序前端</li>
+        <li  class="layui-this xplp"  lay-id="55" style="font-size:30px">微信小程序后端</li>
+        <li  class="layui-this xplp"  lay-id="55" style="font-size:30px" >sqlserver</li>
+    </ul>
+    <div class="layui-tab-content">
+        <div class="layui-tab-item layui-show">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="900" src="/static/Html/hall/data_list_arithmetic.html"></iframe>
+
+        </div>
+
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1100" src="/static/Html/hall/data_list_unity.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_web_front.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_web_back.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_ad_front.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_ad_back.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_vx_front.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_vx_back.html"></iframe>
+
+        </div>
+        <div class="layui-tab-item">
+
+            <iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="1400" src="/static/Html/hall/data_list_sqlserver.html"></iframe>
+
+        </div>
+    </div>
+
+    </div>
+
+
+
+</div>
+
+
+<video autoplay loop muted>
+    <source src="/static/video/v2.mp4" type="video/mp4"  />
+    Your browser does not support the video tag.
+</video>
+
+
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+<script>
+layui.use('element', function(){
+
+
+  var element = layui.element; //导航的hover效果、二级菜单等功能，需要依赖element模块
+
+  //监听导航点击
+  element.on('nav(demo)', function(elem){
+    //console.log(elem)
+    layer.msg(elem.text());
+
+
+  });
+});
+
+
+
+</script>
+
+</body>
+</html>

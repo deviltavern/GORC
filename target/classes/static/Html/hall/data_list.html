@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+    <style type="text/css">
+  {# 设置table每一行的height #}
+  .layui-table-cell {
+   height: auto;
+   line-height: 30px;
+  }
+ </style>
+
+</head>
+<body>
+
+<div class="layui-row">
+
+    <table class="layui-hide" id="test"lay-filter="demoEvent"></table>
+    <textarea class="layui-code"  id="code_view" style="width:2400px;height:250px"></textarea>
+</div>
+
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+
+String.prototype.replaceAll=function(a,b){//吧a替换成b
+    var reg=new RegExp(a,"g"); //创建正则RegExp对象
+    return this.replace(reg,b);
+    }
+layui.use('table', function(){
+  var table = layui.table;
+
+  table.render({
+    elem: '#test'
+
+    ,url:'http://localhost:8099/getTaskModelList2'
+    ,toolbar: true
+    ,title: '用户数据表'
+    ,totalRow: true
+
+    ,cols: [[
+
+        {field:'task_index', title:'ID', width:68,  unresize: true}
+       ,{field:'task_master', title:'发布人', width:200, unresize: true}
+      ,{field:'task_begin_time', title:'发布时间', width:120,unresize : true}
+      ,{field:'task_describe', title:'任务描述', width:800, unresize : true,event: 'setSign'}
+      ,{field:'task_is_solve', title:'是否解决', width:160, templet: '#sexTpl' ,unresize : true,event: 'task_is_solve_event'}
+      ,{field:'task_solve_strategy', title:'解决策略', width:120,height:200,  sort: true,unresize : true}
+      ,{field:'task_solver', title:'处理人', width:100, sort: true,unresize : true}
+      ,{field:'task_difficute_level', title:'任务难度', width:100, sort: true,unresize : true}
+      ,{field:'task_type', title:'任务类型', width:100, sort: true,unresize : true}
+      ,{field:'task_solve_time', title:'解决时间', width:100, sort: true,unresize : true}
+      ,{field:'task_master_code', title:'问题代码', width:130, sort: true,unresize : true,event: 'task_master_code_view'}
+      ,{field:'task_solve_code', title:'解决代码', width:130, sort: false,unresize : true}
+
+      ,{field:'task_status', title:'任务状态', width:200, sort: false,unresize : true}
+    ]]
+
+
+    ,height: 1000
+
+
+    ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+
+      return {
+        "code": 0, //解析接口状态
+        "msg": "", //解析提示文本
+        "count": res.total, //解析数据长度
+        "data":res.data //解析数据列表
+      };
+    }
+    ,done: function (res, page, count) {
+            var that = this.elem.next();
+
+            res.data.forEach(function (item, index) {
+
+
+                if (item.task_status == "未处理") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#ffd1c0");
+                }
+                if (item.task_status == "已完成") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#b4ffd5");
+                }
+                if (item.task_status == "正在处理") {
+                    var tr = that.find(".layui-table-box tbody tr[data-index='" + index + "']").css("background-color", "#edd398");
+                }
+
+            });
+        }
+
+  });
+
+
+  table.on('tool(demoEvent)', function(obj){
+    var data = obj.data;
+    if(obj.event === 'setSign'){
+      layer.alert(data.task_describe, {
+      title: '任务详情'
+    });
+    //task_master_code_view
+
+
+    }
+    if(obj.event === 'task_master_code_view'){
+
+     $.post(localStorage.getItem("system_site")+'/getCodeFromDB?id='+data.task_master_code,function(data2){
+
+        $("#code_view").text(data2.code_value);
+
+      })
+
+
+
+
+    }
+
+     if(obj.event === 'task_is_solve_event'){
+
+
+     //if('data.task_is_solve' === '是')
+     //    alert('该任务已经完成！');
+     // }else{
+
+     //   alert('接任务！');
+
+        if(data.task_is_solve.match('是')){
+             // 包含
+            alert('该任务已经完成！');
+
+        }
+        if(data.task_is_solve.match('否')){
+             // 包含
+
+
+            var r=confirm("是否接取该任务");
+            if(r == true)
+            {
+
+
+            mg = {
+                key:data.task_index,
+                value:"正在处理",
+                task_solver:localStorage.getItem('user_name')
+
+            };
+
+            //http://localhost:8099/setTaskStatu
+
+            $.post(localStorage.getItem("system_site")+'/setTaskStatu',mg,function(data){
+                alert(JSON.stringify(data));
+                window.location.reload();
+            });
+
+            }
+        }
+      }
+
+
+  });
+});
+
+
+</script>
+
+<script type="text/html" id="titleTpl">
+    <a href="" class="">{{d.content}}          </a>
+</script>
+<script type="text/html" id="sexTpl">
+    {{#  if(d.task_is_solve === '否'){ }}
+    <img src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1565781931139&di=9fb2a040bf0c36ef1c3cec3ea147460a&imgtype=jpg&src=http%3A%2F%2F5b0988e595225.cdn.sohucs.com%2Fimages%2F20180831%2F19480eff63ea4351bf9db975d466b2bb.jpeg" style="background-color: #FFFFFF;">{{d.task_is_solve }}</img>
+    {{#  } else { }}
+    {{ d.task_is_solve }}
+    {{#  } }}
+</script>
+<script type="text/html" id="bar1">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">Go解决代码</a>
+
+</script>
+
+
+
+<script type="text/html" id="bar2">
+    <a class="layui-btn layui-btn-primary layui-btn-xs" lay-event="detail">Go问题代码</a>
+
+</script>
+
+
+<script>
+
+</script>
+</body>

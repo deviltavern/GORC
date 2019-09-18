@@ -1,0 +1,47 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta http-equiv="Access-Control-Allow-Origin" content="*" />
+
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>无标题文档</title>
+
+
+    <script src="http://ajax.aspnetcdn.com/ajax/jquery/jquery-1.9.0.min.js"></script>
+
+
+    <script>
+        window.onload=function(){
+            var file=document.getElementById("f2")
+
+            file.onchange=function(e){
+                var img=document.createElement("img")
+                img.src=window.URL.createObjectURL(file.files[0])
+
+
+                //function (e) { console.log(e.target.files[0]['path'])
+                console.info( $("#f2").val());
+
+                $.get("http://localhost:8080/test?filename="+$("#f2").val(),function(data){
+                    alert("请求成功！");
+                });
+                img.onload=function(){
+                    window.URL.revokeObjectURL(this.src)
+
+                }
+                document.body.appendChild(img)
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+
+<input id = "f2" type="file" value="上传文件2">
+
+<form method="POST">
+
+</form>
+</body>
+</html>
