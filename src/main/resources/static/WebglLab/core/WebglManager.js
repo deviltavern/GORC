@@ -142,6 +142,16 @@ function Distance(begin,end) {
 
 }
 
+//
+function Equal(v1,v2) {
+
+    if(v1.x == v2.x&&v1.y == v2.y&&v1.z == v2.z){
+
+        return true;
+    }
+    return false;
+}
+
 //归一化
 function Normal(vector3) {
 
@@ -154,9 +164,23 @@ function Substraction(begin,end) {
     return Vector3(begin.x -end.x,begin.y - end.y,begin.z - end.z);
 
 }
+
+
 function Add(begin,end) {
 
     return Vector3(begin.x +end.x,begin.y + end.y,begin.z + end.z);
+}
+function getMaxFromVector(vector3) {
+    var type = {};
+
+
+}
+
+//从ary中将value移除
+function RemoveFromArray(ary,value) {
+    var index = ary.indexOf(value);
+
+    ary.splice(index, 1);
 }
 function getRandomVector3() {
 
