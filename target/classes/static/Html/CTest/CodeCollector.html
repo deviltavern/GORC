@@ -44,10 +44,10 @@
                     console.info(aJson);
 
 
-                    $.post("http://localhost:8099/code_collector",aJson,function () {
+                    $.post("http://localhost:8099/code_collector",aJson,function (data) {
 
                         console.info("process over");
-                        alert(aJson);
+                        alert("成功！当前代码已经提交至路径："+data.rest_value);
                       //  alert("tijiaocheng");
 
                             //console.info(userinfo.operate_value);
@@ -225,6 +225,9 @@
 </head>
 <body>
 
+
+
+
 <p>请您点击下面的按钮，提交您的源代码哦~</p>
 <button   id="showWin"  >
     上传代码
@@ -241,10 +244,34 @@
     <form id="form1">
         <div class="input_control">
             <div class="row_left">
-                <p class="tip">您的主题：</p>
+                <p class="tip">您的账号：</p>
             </div>
             <div class="row_right">
-                <input name="title" type="text" class="form_input" placeholder="Enter your theme here"/>
+                <input id="user_acc" name="user_acc" value="Ljy10086" type="text" class="form_input" placeholder="Enter your theme here"/>
+            </div>
+        </div>
+        <div class="input_control">
+            <div class="row_left">
+                <p class="tip">其用户名：</p>
+            </div>
+            <div class="row_right">
+                <input id="user_name" name="user_name" value="罗继业" type="text" class="form_input" placeholder="Enter your theme here"/>
+            </div>
+        </div>
+        <div class="input_control">
+            <div class="row_left">
+                <p class="tip">问题序号：</p>
+            </div>
+            <div class="row_right">
+                <input id="title_id" name="titleID" type="text" class="form_input" value="问题序号" placeholder="Enter your theme here"/>
+            </div>
+        </div>
+        <div class="input_control">
+            <div class="row_left">
+                <p class="tip">问题名字：</p>
+            </div>
+            <div class="row_right">
+                <input name="title" type="text" class="form_input" value="具体问题" placeholder="Enter your theme here"/>
             </div>
         </div>
         <div class="input_control">
@@ -252,7 +279,7 @@
                 <p class="tip">附属说明：</p>
             </div>
             <div class="row_right">
-                <input name="auxiliary" type="text" class="form_input" placeholder="Enter your explain here"/>
+                <input id=“auxiliary” name="auxiliary" type="text" class="form_input" placeholder="Enter your explain here"/>
             </div>
         </div>
         <div class="input_textarea">
@@ -260,7 +287,7 @@
                 <p class="tip">具体代码：</p>
             </div>
             <div class="row_right">
-                <textarea type="text" class="form_input" placeholder="Input your code here" STYLE="height: 200PX"></textarea>
+                <textarea  id=“code_value” name="code" type="text" class="form_input" placeholder="Input your code here" STYLE="height: 200PX"></textarea>
             </div>
         </div>
 
