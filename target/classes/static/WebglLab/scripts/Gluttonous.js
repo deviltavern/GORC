@@ -6,13 +6,27 @@ var bodyArray = new Array();
 var speed = 0.1;
 var dynamicSpeed = 20;
 var bodyGap = 0.6;
-var head;
+
 var raycaster = new THREE.Raycaster();
-var foodList = new Array();
+var snackArray = new Array();
 var detectionList = new Array();
 
-//预测接下来的位置
+//从蛇头里面获取
+function getSnackFromArray(id) {
 
+    //console.info(snackArray);
+    for (var i in snackArray){
+
+        if (snackArray[i].id == id)
+        {
+            return snackArray[i];
+        }
+    }
+    return  null;
+
+}
+
+//生成蛇头
 function insNewSnackHead(id) {
     var snackHead = {};
     snackHead.id = id;
@@ -24,7 +38,9 @@ function insNewSnackHead(id) {
     snackHead.speed = 0.1;
     snackHead.len = 0;
     snackHead.bodyArray = new Array();
-
+    snackHead.lastPos= Vector3(0,0,0);
+    snackHead.dirLabel = 0;
+    snackHead.bodyMsg = "";
 
     snackHead.addBody = function(){
 
@@ -34,18 +50,31 @@ function insNewSnackHead(id) {
        snackHead.len++;
     }
 
+
     snackHead.op = function () {
         borderDetection(snackHead);
-        Move(snackHead.head,Multiply(Normal(snackHead.moveDir),snackHead.speed));
+
+
+        if (snackHead.id != getSnackID()){
+            // for(var bodyItem in snackHead.bodyArray)
+            // {
+            //     snackHead.bodyArray[bodyItem].cloneOp(snackHead);
+            // }
+        }else {
+            Move(snackHead.head,Multiply(Normal(snackHead.moveDir),snackHead.speed));
+
+        }
+
+
         rayDetection(snackHead);
+
         for(var bodyItem in snackHead.bodyArray)
         {
             snackHead.bodyArray[bodyItem].subOp(snackHead);
 
         }
-
     }
-
+    snackArray.push(snackHead);
     return snackHead;
 
 }
@@ -60,6 +89,9 @@ function createGluttonousBody(snackHead) {
 
     bodyItem.dirIndex = 0;
     bodyItem.preDir = moveDir;
+    bodyItem.moveDir = Vector3(0,0,0);
+    bodyItem.bodyIndex = 0;
+    bodyItem.dirLabel = 0;
 
 
 
@@ -67,11 +99,12 @@ function createGluttonousBody(snackHead) {
         console.info(Normal(snackHead.moveDir));
         setPosition(bodyItem.body,Substraction(getPosition(snackHead.bodyArray[snackHead.bodyArray.length-1].body),
             Normal(snackHead.bodyArray[snackHead.bodyArray.length-1].preDir)));
-
+        bodyItem.bodyIndex = snackHead.bodyArray.length;
     }else {
 
         setPosition(bodyItem.body,Vector3(getPosition(snackHead.head).x - bodyGap,
             getPosition(snackHead.head).y,getPosition(snackHead.head).z));
+        bodyItem.bodyIndex = 0;
     }
 
     var b12headNormalx = null;
@@ -82,7 +115,7 @@ function createGluttonousBody(snackHead) {
         setColor(lastBody.body,Color(1,1,1));
         b12headNormalx = Normal(Substraction(getPosition(lastBody.body),getPosition(bodyItem.body)));
         for(var i =0;i<Distance(getPosition(lastBody.body),getPosition(bodyItem.body))*(1/snackHead.speed);i++){
-
+            console.info((Multiply(b12headNormalx,snackHead.speed)));
             bodyItem.dirArray.push(Multiply(b12headNormalx,snackHead.speed));
         }
 
@@ -98,10 +131,16 @@ function createGluttonousBody(snackHead) {
     {
 
         b12headNormal = Normal(Substraction(getPosition(snackHead.head),getPosition(bodyItem.body)));
-
+        console.info("------------------------>");
+        console.info(b12headNormal);
+        console.info(snackHead.speed);
+        console.info("------------------------>");
         for(var i =0;i<Distance(getPosition(snackHead.head),getPosition(bodyItem.body))*(1/snackHead.speed);i++){
+            //console.info((Multiply(b12headNormalx,snackHead.speed)));
 
-            bodyItem.dirArray.push(Multiply(b12headNormal,snackHead.speed));
+            var dir = Multiply(b12headNormal,snackHead.speed);
+            console.info(dir);
+            bodyItem.dirArray.push(dir);
         }
 
     }
@@ -110,66 +149,102 @@ function createGluttonousBody(snackHead) {
 
     bodyItem.subOp = function(snackHead){
         //console.info(Multiply(snackHead.moveDir,snackHead.speed));
+
+        if (snackHead.id!= getSnackID()){
+
+          //  console.info(snackHead.moveDir);
+        }
         bodyItem.dirArray.push(Multiply(snackHead.moveDir,snackHead.speed));
         bodyItem.preDir =bodyItem.dirArray[bodyItem.dirIndex];
 
+
+        bodyItem.moveDir = Normal(bodyItem.preDir);
+
+
         Move(bodyItem.body,bodyItem.preDir);
+        //console.info(bodyItem.preDir);
         bodyItem.dirIndex++;
 
-      //  if (bodyItem.dirIndex>200){
+       if (bodyItem.dirIndex>200){
 //
 //
-      //      bodyItem.dirArray.splice(0, 50);
+           bodyItem.dirArray.splice(0, 50);
+           bodyItem.dirIndex -=50 ;
 //
-      //      bodyItem.dirIndex -=50 ;
+          // console.info("身体缓存 = "+bodyItem.dirArray.length);
+       }
 //
-      //     // console.info("身体缓存 = "+bodyItem.dirArray.length);
-      //  }
-//
-       // console.info(bodyItem.dirIndex);
+      // console.info(bodyItem.dirIndex);
+    }
+
+    bodyItem.cloneOp = function (snackHead) {
+        var ary = snackHead.bodyMsg.mg;
+        for (var i in ary)
+        {
+            if (i>snackHead.bodyArray.length){
+
+                return;
+            }
+            var val = ary[i];
+            var lastBody = null;
+            if (i >1)
+            {
+
+                lastBody = snackHead.bodyArray[i-1].body;
+            }
+            else {
+
+                lastBody = snackHead.head;
+            }
+            var body = snackHead.bodyArray[i];
+            switch (val) {
+
+                case 1:
+                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(-1,0,0),bodyGap)));
+                    break;
+
+                case 3:
+                   setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(0,1,0),bodyGap)));
+                    break;
+
+                case  2:
+                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(1,0,0),bodyGap)));
+                    break;
+                case  4:
+                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(0,-1,0),bodyGap)));
+                    break;
+            }
+
+        }
+
     }
    // bodyArray.push(bodyItem);
-
-
-
     return bodyItem;
 
-
 }
-var s1 = null;
-
+//上下文
 function context(div) {
      connect();
      create(div);
      setViewport(70);
+     onKey();
 
 
-     console.info("初始速度="+speed);
-    // head =  createSphere(Vector3(0.6,16,16));
-
-    s1 =  insNewSnackHead(123);
-   //  var b1 = createGluttonousBody(head);
-   //  var b2 = createGluttonousBody(head);
-
-     uiControl(s1);
      var dynamicTime = 0;
-     var bodyIndex = 0;
-
 
      op = function(){
-
-        // borderDetection();
+         uploadPredictionPos();
          dynamicTime++;
-            s1.op();
+         for (var si in snackArray)
+         {
+             snackArray[si].op();
+         }
+
         if (dynamicTime>100){
             dynamicTime = 0;
-            insRandomCube();
-        }
-       //  console.info(getFrameTime ());
-        // Move(head,Multiply(Normal(moveDir),speed));
-         //rayDetection();
 
-         //console.info("循环渲染中！");
+        }
+
      }
 
      frame(frameTime);
@@ -215,31 +290,41 @@ function uiControl(snackHead) {
     }
 }
 
-function insRandomCube() {
-    if(foodList.length<10){
-        var vec = getRandomVector3();
+//获取body前一个body
 
-        var tempCube = createCube();
-        setPosition(tempCube,screenConvertToWorld(vec));
-        foodList.push(tempCube);
-        tempCube.tag = "food";
+//预测点更新蛇的运动方向
+function updateSnackDir( snack,vector3) {
+
+    if (snack == null)
+        return;
+    if (Distance(vector3,getPosition(snack.head))<0.1){
+        snack.moveDir = Vector3(0,0,0);
+    }else{
+        var moveDir =Normal(Division(vector3,getPosition(snack.head))) ;
+        snack.moveDir = vector3;
     }
 
+
 }
+
 
 var lastTouchObject;
 
 
 
-function onEnter(preObject) {
+function onEnter(snackHead,preObject) {
     if (lastTouchObject == preObject){
 
         return;
     }
-    createGluttonousBody(head);
+   // snackHead.addBody();
     lastTouchObject = preObject;
     removeFoodFromList(preObject);
-    console.info("初始进入");
+    var eatCube = {};
+    eatCube.snackID = snackHead.id;
+    send(100,204,eatCube);
+
+    console.info("吃掉的ID = "+snackHead.id);
 
 }
 function onStay(preObject) {
@@ -258,16 +343,7 @@ function onExit(insertList) {
 }
 
 
-function removeFoodFromList(food) {
 
-    opView.scene.remove(food);
-    var index = foodList.indexOf(food);
-    if (index > -1) {
-        foodList.splice(index, 1);
-    }
-
-
-}
 
 function rayDetection(snackHead) {
     var point = new THREE.Vector2();
@@ -288,7 +364,7 @@ function rayDetection(snackHead) {
 
                 setColor(intersects[0].object,Color(123,123,123));
 
-                onEnter(intersects[0].object);
+                onEnter(snackHead,intersects[0].object);
                 onStay(intersects[0].object);
             }
 
