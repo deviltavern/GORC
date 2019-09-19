@@ -23,7 +23,7 @@ public class Getcode {
     public  String UserName;
     public  String UserId;
     public  String SolutionAdd;
-
+    public  String SolutionCode;
     public byte[] Codebytes;
     @PostMapping("/code_collector")
     public JSONObject collector(HttpServletRequest request) throws Exception {
@@ -48,6 +48,7 @@ public class Getcode {
         QuestionName=request.getParameter("title");
         QuestionId=request.getParameter("titleID");
         SolutionAdd=request.getParameter("auxiliary");
+        SolutionCode=request.getParameter("code");
         UUID id = UUID.randomUUID();
         //JqueryRequestTool.addExcludeKey("push_index");
 
@@ -56,6 +57,7 @@ public class Getcode {
 //打印出来要存入的文件地址
         String path= getOriginPath()+"static/CodeCollect/";
         String infactPath=path+id.toString()+"streamfile.ctg";
+        String insertPath=id.toString()+"streamfile.ctg";
         System.out.println(path);
 //打印拿到json数据
         System.out.println(tool.jsonValue.toString());
@@ -64,14 +66,15 @@ public class Getcode {
         WriteToFile(tool.jsonValue.toString(),infactPath);
 
 //写入数据库，
-        FileNameAdd(UserId,UserName,QuestionId,QuestionName,SolutionAdd,infactPath);
+        FileNameAdd(UserId,UserName,QuestionId,QuestionName,SolutionAdd,insertPath);
 
 //拿到文件的比特流
         Codebytes= readFromCTG(infactPath);
 //解析比特流
         readCode(Codebytes);
 
-        reObj.put("rest_value",infactPath);
+        reObj.put("rest_value",insertPath);
+        reObj.put("rest_filename",insertPath);
         return reObj;
 
     }
@@ -186,10 +189,11 @@ public class Getcode {
             System.out.println(stb);
         }
 
-    public static void readCode(byte[] codeByte)throws Exception{
+    public static String readCode(byte[] codeByte)throws Exception{
 
         String stb = new String(codeByte, StandardCharsets.UTF_8);
         System.out.println(stb);
+        return stb;
     }
 
 
