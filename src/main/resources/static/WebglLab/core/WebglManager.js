@@ -3,6 +3,7 @@
 var op;
 var opView;
 var selectObject;
+var glContext;
 function setPosition(object,vector3) {
     object.position.x = vector3.x;
     object.position.y = vector3.y;
@@ -65,6 +66,9 @@ function getSelectObject() {
 //创建View
 function create(div) {
 
+
+
+
     var scene = new THREE.Scene();
     var camera = new THREE.PerspectiveCamera(45,1, 0.1, 500);
     var renderer = new THREE.WebGLRenderer();
@@ -73,9 +77,11 @@ function create(div) {
 
 
     renderer.setSize(800, 800);
-    renderer.setClearColor(Color(255,239 ,213).ox, 1.0);
+    renderer.setClearColor(Color(123,123 ,123).ox, 1.0);
     div.appendChild(renderer.domElement);
+    glContext = div.firstChild.getContext("webgl");
 
+    console.info(glContext)
     var light = new THREE.DirectionalLight( 0xff0000 );
 
     var View  = {};

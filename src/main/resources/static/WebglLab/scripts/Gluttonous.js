@@ -41,7 +41,9 @@ function insNewSnackHead(id) {
     snackHead.lastPos= Vector3(0,0,0);
     snackHead.dirLabel = 0;
     snackHead.bodyMsg = "";
-
+    snackHead.dirArray = new Array();
+    snackHead.dirIndex = 0;
+    snackHead.posArray = new Array();
     snackHead.addBody = function(){
 
        var bodyItem =  createGluttonousBody(snackHead);
@@ -53,19 +55,12 @@ function insNewSnackHead(id) {
 
     snackHead.op = function () {
         borderDetection(snackHead);
+        snackHead.posArray.push(getPosition(snackHead.head));
 
+        cicleForMoveDirRewrite(snackHead);
 
-        if (snackHead.id != getSnackID()){
-            // for(var bodyItem in snackHead.bodyArray)
-            // {
-            //     snackHead.bodyArray[bodyItem].cloneOp(snackHead);
-            // }
-        }else {
-            Move(snackHead.head,Multiply(Normal(snackHead.moveDir),snackHead.speed));
-
-        }
-
-
+        snackHead.dirArray.push(Multiply(snackHead.moveDir,snackHead.speed));
+        snackHead.dirIndex++;
         rayDetection(snackHead);
 
         for(var bodyItem in snackHead.bodyArray)
@@ -92,6 +87,8 @@ function createGluttonousBody(snackHead) {
     bodyItem.moveDir = Vector3(0,0,0);
     bodyItem.bodyIndex = 0;
     bodyItem.dirLabel = 0;
+    bodyItem.posArray = new Array();
+    bodyItem.posIndex = 0;
 
 
 
@@ -108,43 +105,13 @@ function createGluttonousBody(snackHead) {
     }
 
     var b12headNormalx = null;
-    if (snackHead.bodyArray.length!=0){
-
-        var lastBody = snackHead.bodyArray[snackHead.bodyArray.length-1];
-        console.info(lastBody.id);
-        setColor(lastBody.body,Color(1,1,1));
-        b12headNormalx = Normal(Substraction(getPosition(lastBody.body),getPosition(bodyItem.body)));
-        for(var i =0;i<Distance(getPosition(lastBody.body),getPosition(bodyItem.body))*(1/snackHead.speed);i++){
-            console.info((Multiply(b12headNormalx,snackHead.speed)));
-            bodyItem.dirArray.push(Multiply(b12headNormalx,snackHead.speed));
-        }
-
-        for (var i = lastBody.dirIndex;i<lastBody.dirArray.length;i++){
-            bodyItem.dirArray.push(lastBody.dirArray[i]);
-
-        }
+    var lastBody = snackHead.bodyArray[snackHead.bodyArray.length-1];
 
 
+    for (var i = snackHead.posArray.length - 6*(snackHead.bodyArray.length+1);i<snackHead.posArray.length;i++){
 
+        bodyItem.posArray.push(snackHead.posArray[i]);
     }
-    else
-    {
-
-        b12headNormal = Normal(Substraction(getPosition(snackHead.head),getPosition(bodyItem.body)));
-        console.info("------------------------>");
-        console.info(b12headNormal);
-        console.info(snackHead.speed);
-        console.info("------------------------>");
-        for(var i =0;i<Distance(getPosition(snackHead.head),getPosition(bodyItem.body))*(1/snackHead.speed);i++){
-            //console.info((Multiply(b12headNormalx,snackHead.speed)));
-
-            var dir = Multiply(b12headNormal,snackHead.speed);
-            console.info(dir);
-            bodyItem.dirArray.push(dir);
-        }
-
-    }
-
 
 
     bodyItem.subOp = function(snackHead){
@@ -154,6 +121,8 @@ function createGluttonousBody(snackHead) {
 
           //  console.info(snackHead.moveDir);
         }
+
+        bodyItem.posArray.push(getPosition(snackHead.head));
         bodyItem.dirArray.push(Multiply(snackHead.moveDir,snackHead.speed));
         bodyItem.preDir =bodyItem.dirArray[bodyItem.dirIndex];
 
@@ -161,7 +130,9 @@ function createGluttonousBody(snackHead) {
         bodyItem.moveDir = Normal(bodyItem.preDir);
 
 
-        Move(bodyItem.body,bodyItem.preDir);
+        //Move(bodyItem.body,bodyItem.preDir);
+        setPosition(bodyItem.body,bodyItem.posArray[bodyItem.posIndex]);
+        bodyItem.posIndex = bodyItem.posIndex+1;
         //console.info(bodyItem.preDir);
         bodyItem.dirIndex++;
 
@@ -177,47 +148,7 @@ function createGluttonousBody(snackHead) {
       // console.info(bodyItem.dirIndex);
     }
 
-    bodyItem.cloneOp = function (snackHead) {
-        var ary = snackHead.bodyMsg.mg;
-        for (var i in ary)
-        {
-            if (i>snackHead.bodyArray.length){
 
-                return;
-            }
-            var val = ary[i];
-            var lastBody = null;
-            if (i >1)
-            {
-
-                lastBody = snackHead.bodyArray[i-1].body;
-            }
-            else {
-
-                lastBody = snackHead.head;
-            }
-            var body = snackHead.bodyArray[i];
-            switch (val) {
-
-                case 1:
-                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(-1,0,0),bodyGap)));
-                    break;
-
-                case 3:
-                   setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(0,1,0),bodyGap)));
-                    break;
-
-                case  2:
-                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(1,0,0),bodyGap)));
-                    break;
-                case  4:
-                    setPosition(body.body,Substraction(getPosition(lastBody),Multiply(Vector3(0,-1,0),bodyGap)));
-                    break;
-            }
-
-        }
-
-    }
    // bodyArray.push(bodyItem);
     return bodyItem;
 
@@ -253,42 +184,6 @@ function context(div) {
 
 
 }
-//UI控制部分
-function uiControl(snackHead) {
-
-    var leftBtn = findViewByID("left");
-    leftBtn.onclick = function (ev) {
-        // setPosition(t2,Vector3(getPosition(t2).x-1,getPosition(t2).y,getPosition(t2).z));
-        snackHead.moveDir = Vector3(-1,0,0);
-
-       // console.info(t2.position);
-    }
-    var rightBtn = findViewByID("right");
-    rightBtn.onclick = function (ev) {
-        // setPosition(t2,Vector3(getPosition(t2).x-1,getPosition(t2).y,getPosition(t2).z));
-        snackHead.moveDir = Vector3(1,0,0);
-    }
-    var upBtn = findViewByID("up");
-    upBtn.onclick = function(ev){
-
-        snackHead.moveDir = Vector3(0,1,0);
-    }
-
-    var backBtn = findViewByID("back");
-
-    backBtn.onclick = function (ev) {
-        snackHead.moveDir = Vector3(0,-1,0);
-    }
-
-    var beginBtn = findViewByID("begin");
-
-    beginBtn.onclick = function (ev) {
-
-        s1.addBody();
-        console.info("添加了一个身体！");
-
-    }
-}
 
 //获取body前一个body
 
@@ -317,12 +212,19 @@ function onEnter(snackHead,preObject) {
 
         return;
     }
+
+
    // snackHead.addBody();
+
+
     lastTouchObject = preObject;
     removeFoodFromList(preObject);
-    var eatCube = {};
-    eatCube.snackID = snackHead.id;
-    send(100,204,eatCube);
+
+    if (snackHead.id == getSnackID()){
+        var eatCube = {};
+        eatCube.snackID = snackHead.id;
+        send(100,204,eatCube);
+    }
 
     console.info("吃掉的ID = "+snackHead.id);
 
@@ -377,17 +279,39 @@ function rayDetection(snackHead) {
 
 }
 
+var detectionDelay = 0;
 function borderDetection(snackBody) {
 
     //当head的x大于世界坐标的x
+    //console.info("方向切换！！！");
+    detectionDelay = detectionDelay-1;
+
+    if(detectionDelay<0)
+    {
+        detectionDelay = 0;
+    }
     if(getPosition(snackBody.head).x >screenConvertToWorld(Vector3(1,0,0)).x||getPosition(snackBody.head).x <screenConvertToWorld(Vector3(-1,0,0)).x){
-        snackBody.moveDir.x = -snackBody.moveDir.x;
+
+
+        if (detectionDelay == 0)
+        {
+            detectionDelay = 20;
+            uiControlDir.x = -uiControlDir.x;
+
+
+        }
+        console.info("横向超过");
 
     }
 
     if(getPosition(snackBody.head).y >screenConvertToWorld(Vector3(0,1,0)).y||getPosition(snackBody.head).y <screenConvertToWorld(Vector3(0,-1,0)).y){
-        snackBody.moveDir.y = -snackBody.moveDir.y;
 
+        if (detectionDelay == 0) {
+            detectionDelay = 20;
+            uiControlDir.y = -uiControlDir.y;
+
+        }
+        console.info("纵向超过");
     }
 
 }
