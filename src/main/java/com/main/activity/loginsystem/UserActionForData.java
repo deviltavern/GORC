@@ -85,6 +85,45 @@ public class UserActionForData {
     }
 
 
+    @PostMapping("/loginEvent")
+    public String loginEvent(String user_acc,String user_pwd) throws Exception {
+
+
+        System.out.println(user_acc);
+        try{
+            userModel = (UserModel)JSONObject.toBean(userJson,UserModel.class);
+            dbModel = UserInfoDBOP.getUserInfoModelListSingle(user_acc);
+
+            if(user_pwd .equals(dbModel.user_pwd) ){
+
+                System.out.println("登录成功！");
+                String reValue = UserActionForHtml.randomValue;
+                new User(UserActionForHtml.randomValue,user_acc,user_pwd);
+
+                UserActionForHtml.randomValue = "";
+                Random rd = new Random();
+                for (int i =0;i<1;i++)
+                {
+                    UserActionForHtml.randomValue += Math.abs(rd.nextInt()%10);
+
+                }
+
+                return  reValue;
+
+            }
+
+
+        }catch (Exception e){
+
+            return "222";
+
+        }
+        //    userJson =  JSONObject.fromObject(message);
+//
+        return "222";
+
+    }
+
     @PostMapping("/register")
     public String reigster( HttpServletRequest request) throws Exception {
 

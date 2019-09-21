@@ -5,20 +5,33 @@ String.prototype.replaceAll=function(a,b){//吧a替换成b
     return this.replace(reg,b);
     }
 
-$.post(server+'/getTaskModelList',function(data){
+
+    requestServerEX('/getTaskModelList',function (data) {
+
+        var index = 0;
+
+        for (var i = 0; i < data.length; i++) {
 
 
-    var index = 0;
+            //  alert(JSON.stringify(data[i]));
+            insNewTable('sf_table',i +"",JSON.stringify(data[i]));
 
-    for (var i = 0; i < data.length; i++) {
-
-
-      //  alert(JSON.stringify(data[i]));
-       insNewTable('sf_table',i +"",JSON.stringify(data[i]));
-
-    }
-
-})
+        }
+    });
+// $.post(server+,function(data){
+//
+//
+//     var index = 0;
+//
+//     for (var i = 0; i < data.length; i++) {
+//
+//
+//       //  alert(JSON.stringify(data[i]));
+//        insNewTable('sf_table',i +"",JSON.stringify(data[i]));
+//
+//     }
+//
+// })
 function insNewTable(tableName,id,value)
 {
     $('#'+tableName).before('<tbody id = "'+tableName+id+'"></tbody>');
