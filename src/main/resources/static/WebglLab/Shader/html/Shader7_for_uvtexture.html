@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+
+
+             uniform sampler2D u_Sampler;
+             varying vec2 v_TexCoord;
+             void main() {
+               gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+             }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+          uniform mat4 u_MvpMatrix;
+          varying vec2 v_TexCoord;
+          void main() {
+
+           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+           v_TexCoord = mvPosition.xy*0.2;
+           gl_Position = projectionMatrix * mvPosition;
+
+
+         }
+
+    </script>
+
+    <script >
+
+        window.onload = function (ev) {
+
+            create(document.getElementById("canvas-frame"));//创建了一个View，也就是指定了Camera，lisght，Scene,renderer
+            setViewport(20);//设定Camera的z值为20，保证我们的cube在裁剪空间里面
+
+            var material = new THREE.ShaderMaterial({
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+
+            });
+            geometryCachePush(Vector3(0,0,0));
+            geometryCachePush(Vector3(5,0,0));
+            geometryCachePush(Vector3(5,5,0));
+            geometryCachePush(Vector3(0,5,0));
+            var mesh = createMeshWithoutMaterial();
+            mesh.material =material;
+
+            var texture = glContext.createTexture();
+            // 创建 Image对象
+            var imgObj = new Image();
+            // 为 src 属性赋值
+            imgObj.src = "../../../image/b2.jpg";
+
+            imgObj.onload = function (ev) {
+
+                glContext.activeTexture(glContext.TEXTURE0);
+                glContext.bindTexture   (glContext.TEXTURE_2D,texture);
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MAG_FILTER, glContext.LINEAR);// 纹理放大方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MIN_FILTER, glContext.LINEAR);// 纹理缩小方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_S,     glContext.CLAMP_TO_EDGE);// 纹理水平填充方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_T,     glContext.CLAMP_TO_EDGE);// 纹理垂直填充方式
+
+                glContext.texImage2D(glContext.TEXTURE_2D, 0, glContext.RGB, glContext.RGB, glContext.UNSIGNED_BYTE, imgObj);
+
+            }
+
+
+            frame();//循环渲染
+
+
+        }
+    </script>
+<body>
+
+
+<div id="canvas-frame"></div>
+
+
+</body>
+</html>

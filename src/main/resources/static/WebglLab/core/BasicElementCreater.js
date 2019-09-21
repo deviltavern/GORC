@@ -49,3 +49,38 @@ function createSphere(vector3) {
     addObject(sphere);
     return sphere;
 }
+
+var geometryCache = new Array();
+
+function geometryCachePush(vector3) {
+
+    geometryCache.push(vector3);
+}
+function createMeshWithoutMaterial() {
+
+
+    var geometry = new THREE.Geometry();
+    var material = null;
+
+    for (var i in geometryCache)
+    {
+        console.info(geometryCache[i]);
+
+
+        geometry.vertices.push(new THREE.Vector3(geometryCache[i].x,geometryCache[i].y,geometryCache[i].z));
+    }
+    var normal = new THREE.Vector3( 0, 0, 1 ); //三角面法向量,x,y,z定义z轴为法向量
+
+
+    for (var i = 0;i<geometryCache.length - 2;i++)
+    {
+
+
+        geometry.faces.push( new THREE.Face3( 0, 1+i, 2+i, normal) ); //三角面添加到几何体
+    }
+
+    var msh = new THREE.Mesh(geometry,material );
+    addObject(msh);
+    geometryCache.length = 0;
+    return msh;
+}

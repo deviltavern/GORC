@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Service</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="ChatForService.js"></script>
+    <script>
+        window.onload = function (ev) {
+
+            connect();
+
+            var btn = document.getElementById("con");
+            btn.onclick = function (ev1) {
+
+                var identityInfo = {};
+                identityInfo.type = "service";
+
+                send(101,0,identityInfo);
+
+            }
+
+            var sendBtn = document.getElementById("sendCVT");
+            var chatInput = document.getElementById("cvt");
+
+            sendBtn.onclick = function (ev1) {
+
+                console.info(chatInput.value);
+                send(101,2,getChatValue(chatInput.value));
+
+            }
+
+        }
+
+    </script>
+</head>
+<body>
+
+<input name="id" value="12345678">
+
+<p id="showP" style="width: 300px;height: 300px;background: #C2BE9E"></p>
+
+<button id="con" style="margin-top: 30px">连接</button>
+<input name="chatValue" id="cvt" style="width: 400px;height: 40px">
+<button id="sendCVT">发送</button>
+<script>
+
+
+</script>
+
+</body>
+</html>

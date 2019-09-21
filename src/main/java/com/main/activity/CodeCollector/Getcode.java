@@ -2,6 +2,7 @@ package com.main.activity.CodeCollector;
 
 import com.main.Tool.JqueryRequestTool;
 import com.main.dao.DataBaseOP;
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -18,31 +19,45 @@ import static com.main.Tool.folder.FolderTool.getOriginPath;
 public class Getcode {
 
    public  String QuestionName;
+    public  String QuestionId;
+    public  String UserName;
+    public  String UserId;
+    public  String SolutionAdd;
+    public  String SolutionCode;
     public byte[] Codebytes;
     @PostMapping("/code_collector")
-    public String collector(HttpServletRequest request) throws Exception {
+    public JSONObject collector(HttpServletRequest request) throws Exception {
 //拿到json数据
+
+        JSONObject reObj = new JSONObject();
         JqueryRequestTool tool = new JqueryRequestTool(request);
 
         Enumeration enu=request.getParameterNames();
-        while(enu.hasMoreElements()){
-            String name=(String)enu.nextElement();//得到name的名字。
-            System.out.print("属性"+name);
-            String value=request.getParameter(name);//是通过页面中的name属性得到值。
-            System.out.println(",值："+value);
-        }
+//        while(enu.hasMoreElements()){
+//            String name=(String)enu.nextElement();//得到name的名字。
+//            if(name.equals("auxiliary")){
+//                System.out.print("属性"+name);
+//                SolutionAdd=request.getParameter(name);//是通过页面中的name属性得到值。
+//                System.out.println(",值："+SolutionAdd);
+//            }
+//        }
       //  通过页面属性name的属性得到值：request1.getParameter(name);即可。
-
-
-
+        System.out.println(",值："+request.getParameter("code"));
+        UserId=request.getParameter("user_acc");
+        UserName=request.getParameter("user_name");
+        QuestionName=request.getParameter("title");
+        QuestionId=request.getParameter("titleID");
+        SolutionAdd=request.getParameter("auxiliary");
+        SolutionCode=request.getParameter("code");
         UUID id = UUID.randomUUID();
         //JqueryRequestTool.addExcludeKey("push_index");
 
         //DataBaseOP.requestNoReturn(tool.getInsertSql("task_log",JqueryRequestTool.flushList()));
 
 //打印出来要存入的文件地址
-        String path= getOriginPath()+"static//CodeCollect//";
+        String path= getOriginPath()+"static/CodeCollect/";
         String infactPath=path+id.toString()+"streamfile.ctg";
+        String insertPath=id.toString()+"streamfile.ctg";
         System.out.println(path);
 //打印拿到json数据
         System.out.println(tool.jsonValue.toString());
@@ -51,24 +66,27 @@ public class Getcode {
         WriteToFile(tool.jsonValue.toString(),infactPath);
 
 //写入数据库，
-        FileNameAdd(QuestionName,infactPath);
-
+        FileNameAdd(UserId,UserName,QuestionId,QuestionName,SolutionAdd,insertPath);
 
 //拿到文件的比特流
         Codebytes= readFromCTG(infactPath);
 //解析比特流
         readCode(Codebytes);
-        return "success";
+
+        reObj.put("rest_value",insertPath);
+        reObj.put("rest_filename",insertPath);
+        return reObj;
+
     }
 
 
-    public  static String FileNameAdd(String Qname,String fileName) throws Exception {
+    public  static String FileNameAdd(String user_acc,String user_name,String title_id,String title,String auxiliary,String filePath) throws Exception {
 
         DataBaseOP.requestNoReturn(DataBaseOP.dbName,
-                "insert into code_collector(question_name,solution_name) values('"+
-                Qname+"','"+fileName+"')");
+                "insert into code_collector(user_acc,user_name,question_id,question_name,solution_add,solution_name) " +
+                        "values('"+ user_acc+"','"+ user_name+"','"+ title_id+"','"+ title+"','"+ auxiliary+"','"+filePath+"')");
 
-        return fileName;
+        return filePath;
     }
 
 
@@ -171,10 +189,11 @@ public class Getcode {
             System.out.println(stb);
         }
 
-    public static void readCode(byte[] codeByte)throws Exception{
+    public static String readCode(byte[] codeByte)throws Exception{
 
         String stb = new String(codeByte, StandardCharsets.UTF_8);
         System.out.println(stb);
+        return stb;
     }
 
 

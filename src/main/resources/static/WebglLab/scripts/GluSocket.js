@@ -47,6 +47,7 @@ function connect(){
                 insNewSnackHead(snackID);
                 uiControl(getSnackFromArray(getSnackID()));
                 setLabelID(snackID);
+
                 break;
 
             case 1:
@@ -84,10 +85,11 @@ function connect(){
 
             case 203:
                 //console.info(message);
+                showEvent();
                for (var i in message) {
                    var snk = getSnackFromArray(message[i].snackID);
                    snk.bodyMsg = message[i].bodyMsg;
-                   if (message[i].snackID != getSnackID()){
+                  // if (message[i].snackID != getSnackID()){
                      //  console.info(message[i].snackID);
                       // console.info(snk);
 
@@ -95,12 +97,10 @@ function connect(){
 
                             //console.info(JSON.stringify(message[i].vec)+"<>"+JSON.stringify(getPosition(snk.head)) );
                             if(Equal(message[i].vec,snk.lastPos) == false){
-
-
                                 snk.moveDir = Normal(Substraction(message[i].vec,snk.lastPos));
                                 snk.lastPos = message[i].vec;
 
-                                //console.info(snk.moveDir);
+                               // console.info(snk.moveDir);
                             }else {
 
 
@@ -112,7 +112,7 @@ function connect(){
                        }
 
 
-                   }
+                  // }
                }
 
                 break;

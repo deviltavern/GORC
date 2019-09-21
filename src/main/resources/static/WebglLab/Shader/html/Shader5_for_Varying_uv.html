@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+
+        varying vec2 suv;
+
+        void main( void ) {
+        gl_FragColor = vec4( suv.x*suv.y, suv.x*suv.y,suv.x*suv.y, 1.0 );
+
+        }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec2 suv;
+        void main()
+        {
+        suv = uv;
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_Position = projectionMatrix * mvPosition;
+
+        }
+
+    </script>
+
+    <script >
+
+        window.onload = function (ev) {
+
+            create(document.getElementById("canvas-frame"));//创建了一个View，也就是指定了Camera，lisght，Scene,renderer
+
+            setViewport(20);//设定Camera的z值为20，保证我们的cube在裁剪空间里面
+            var cube = createCube();//创建了一个cube，并添加到View中的Scene中，指定的是Lambda光照材质
+            var color = Color(147,112,219);
+         //   var material = new THREE.MeshBasicMaterial( {color:color.ox} );
+
+            brTime = {
+                time: { value: 1.0 }
+            };
+            var material = new THREE.ShaderMaterial({
+
+                uniforms: brTime,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+
+            });
+            cube.material = material;
+            setPosition(cube,Vector3(5,5,0));
+            op = function(){
+
+
+                brTime.time.value += 1;
+
+            }
+
+            console.info(cube);
+
+            frame();//循环渲染
+
+
+        }
+    </script>
+<body>
+
+
+<div id="canvas-frame"></div>
+</body>
+</html>
