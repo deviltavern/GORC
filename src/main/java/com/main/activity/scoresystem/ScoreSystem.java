@@ -3,6 +3,7 @@ package com.main.activity.scoresystem;
 import com.main.dao.DataBaseOP;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -91,10 +92,41 @@ public class ScoreSystem {
         return reObj;
     }
 
-    @PostMapping("/getScoreRecord")
-    public JSONArray getScoreRecord() throws Exception {
+    /**
+     * @description: 获取积分记录表
+     * @return:
+     */
+    @GetMapping("/getScoreRecord")
+    public JSONObject getScoreRecord() throws Exception {
         JSONArray tempjr=DataBaseOP.request("select * from score_record");
+        JSONObject jsOb=toTableData(tempjr);
+        jsOb.put("msg", "积分记录表");
+        System.out.println(jsOb.toString());
 
-        return tempjr;
+        return jsOb;
+    }
+
+    /**
+     * @description: 将从数据库中查询得到的JSONArray类型数据转化为表格展示需要的JSONObject类型
+     * @return: html需要的表格数据格式
+     */
+    public JSONObject toTableData(JSONArray jr){
+        JSONObject jsonOb=new JSONObject();
+        jsonOb.put("code", 0);
+        jsonOb.put("msg", "");
+        jsonOb.put("count", jr.size());
+        jsonOb.put("data", jr);
+        return jsonOb;
+    }
+    /**
+     * @description: 表格数据测试
+     * @return:
+     */
+    @GetMapping("/scoreTableTest")
+    public JSONObject scoreTableTest() {
+        String str="{'code':0,'msg':'','count':1000,'data':[{'id':10000,'username':'user-0','sex':'女','city':'城市-0','sign':'签名-0','experience':255,'logins':24,'wealth':82830700,'classify':'作家','score':57},{'id':10000,'username':'user-0','sex':'女','city':'城市-0','sign':'签名-0','experience':255,'logins':24,'wealth':82830700,'classify':'作家','score':57}]}";
+        JSONObject myJson = JSONObject.fromObject(str);
+        System.out.println(myJson);
+        return myJson;
     }
 }

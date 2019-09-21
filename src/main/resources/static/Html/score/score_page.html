@@ -3,9 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>个人积分主页</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
     <script src="../../js/CommonTool.js"></script>
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <script src="../../js/Config.js"></script>
+
 
 </head>
 <body>
@@ -22,15 +27,62 @@
 <br><br>
 <input type="submit" id="btn_score_deduct" value="扣除积分"
        style="width: 150px; height: 40px; font-size: 25px">
-<br><br>
+
 <input type="submit" id="btn_score_add" value="增加积分"
        style="width: 150px; height: 40px; font-size: 25px">
-<br><br>
-<input type="button" id="btn_score_record" value="查看积分使用记录"
-       style="width: auto; height: 40px; font-size: 25px">
+
+<!--<input type="button" id="btn_score_record" value="查看积分使用记录"-->
+<!--       style="width: auto; height: 40px; font-size: 25px">-->
 <div id="show_score_record" style="font-size: 25px"></div>
+
+<table class="layui-hide" id="test"></table>
+
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<!--<script>-->
+<!--    layui.use('table', function(){-->
+<!--        var table = layui.table;-->
+
+<!--        var tableIns = table.render({-->
+<!--            elem: '#test'-->
+<!--            ,url:'http://localhost:8099/getScoreRecord'-->
+<!--            ,title:'积分操作记录表'-->
+<!--            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增-->
+<!--            ,cols: [[-->
+<!--                {field:'sc_re_index',  title: '序号', sort: true}-->
+<!--                ,{field:'user_acc',  title: '账户名'}-->
+<!--                ,{field:'operate_value',  title: '积分数额', sort: true}-->
+<!--                ,{field:'rest_value',  title: '剩余积分'}-->
+<!--                ,{field:'sc__re_description', title: '备注'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增-->
+<!--                ,{field:'operate_time', title: '积分操作时间', minWidth: 100, sort: true}-->
+<!--            ]]-->
+<!--        });-->
+<!--    });-->
+<!--</script>-->
+
 </body>
 <script>
+    //表格数据加载
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            ,url:'http://localhost:8099/getScoreRecord'
+            ,title:'积分操作记录表'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'sc_re_index',  title: '序号', sort: true}
+                ,{field:'user_acc',  title: '账户名'}
+                ,{field:'operate_value',  title: '积分数额', sort: true}
+                ,{field:'rest_value',  title: '剩余积分'}
+                ,{field:'sc__re_description', title: '备注'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'operate_time', title: '积分操作时间', minWidth: 100, sort: true}
+            ]]
+        });
+    });
+
     var userinfo = {};
     userinfo.user_acc = $("#user_acc").val();
 
@@ -54,6 +106,12 @@
                     alert("积分扣除成功！当前积分为："+data.rest_value);
 
                 $("#user_score").attr("value",data.rest_value);
+
+                layui.table.reload('test', {
+                    url: 'http://localhost:8099/getScoreRecord'
+                    ,where: {} //设定异步数据接口的额外参数
+                });
+
             })
         }
         //console.info(userinfo.operate_value);
@@ -70,19 +128,26 @@
                     alert("积分增加成功！当前积分为："+data.rest_value);
 
                 $("#user_score").attr("value",data.rest_value);
+
+                layui.table.reload('test', {
+                    url: 'http://localhost:8099/getScoreRecord'
+                    ,where: {} //设定异步数据接口的额外参数
+                });
             })
         }
         //console.info(userinfo.operate_value);
     })
 
     $("#btn_score_record").click(function () {
-        $.post("http://localhost:8099/getScoreRecord",function (data) {
+        $.get("http://localhost:8099/getScoreRecord",function (data) {
             console.info(data);
             // $("#show_score_record").remove();
-            $("#show_score_record").append(JSON.stringify(data));
+            // $("#show_score_record").append(JSON.stringify(data));
 
         })
-
     })
+
+
 </script>
+
 </html>
