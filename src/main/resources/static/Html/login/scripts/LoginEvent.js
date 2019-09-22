@@ -52,7 +52,11 @@ userLoginBtn.onclick = function (ev) {
         requestServer("/login?skey="+data,function (ip) {
             localStorage.setItem('loginkey',ip);
             console.info(ip);
-            $(window).attr("location",ip);
+           // $(window).attr("location",ip);
+
+           // window.location.href = ip;
+
+            window.open(ip.toString());
         });
 
 
