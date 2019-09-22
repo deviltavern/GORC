@@ -31,7 +31,7 @@ getUserIP(function (ip) {
 
     localStorage.setItem("system_site","http://"+ip+":8099");
 
-   console.info(ip);
+   console.info("用户IP = "+ip);
 });
 
 userLoginBtn.onclick = function (ev) {
