@@ -54,9 +54,9 @@ userLoginBtn.onclick = function (ev) {
             console.info(ip);
            // $(window).attr("location",ip);
 
-           // window.location.href = ip;
+            window.location.href = ip;
 
-            window.open(ip.toString());
+          //  window.open(ip.toString());
         });
 
 
