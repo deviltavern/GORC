@@ -5,10 +5,12 @@ var userPwdInput = document.getElementById("loginUserPwdInput");
 var userLoginBtn = document.getElementById("loginPageLoginBtn");
 var userRegisterBtn = document.getElementById("loginPageRegisterBtn");
 
+var loginPageRegisterBtnClickCount = 0;
 var loginPage = document.getElementById("loginPage");
 
 
 var registerPage = document.getElementById("registerPage");
+
 
 var registerPageRegisterSuccessBtn = document.getElementById("registerSuccessBtn");
 var registerPageRegisterFailedBtn = document.getElementById("registerFailedBtn");
@@ -59,12 +61,21 @@ userLoginBtn.onclick = function (ev) {
 userRegisterBtn.onclick = function (ev) {
     console.info("register！");
 
-    registerPage.setAttribute("style","");
+    if(loginPageRegisterBtnClickCount %2 == 0){
+
+        registerPage.setAttribute("style","");
+    }else {
+
+        registerPage.setAttribute("style","display:none");
+    }
+
+    loginPageRegisterBtnClickCount++;
+
 }
 
 registerPageRegisterFailedBtn.onclick = function (ev) {
 
     registerPage.setAttribute("style","display:none");
-
+    loginPageRegisterBtnClickCount= 0;
 
 }

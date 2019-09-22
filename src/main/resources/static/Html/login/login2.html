@@ -159,7 +159,7 @@
             width: 60px;
             height:  60px;
             border-radius: 50%;
-            background-image: url("../../image/qqIcon.jpg");
+            background-image: url("../../image/g1.png");
             background-size: 100%,100%;
 
 
@@ -173,7 +173,8 @@
             width: 60px;
             height:  60px;
             border-radius: 50%;
-            background-image: url("../../image/qqIcon.jpg");
+            background-image: url("../../image/x2.png");
+            background-repeat: no-repeat;
             background-size: 100%,100%;
         }
 
@@ -182,7 +183,7 @@
             height: 100%;
 
             border-radius: 50px;
-            background-image: url("../../image/qqIcon.jpg");
+            background: #88440000;
             background-size: 100%,100%;
 
         }
@@ -192,7 +193,7 @@
 
 
 </head>
-<body>
+<body id="bsx">
 <div id="xs"></div>
 <div class="loginPanelPos" id = "loginPage">
     <div class="loginHead">
@@ -222,11 +223,11 @@
 
     <div class="registerHead"></div>
     <div class="registerUserAccInput">
-        <input id = "registerUserAccInput" name="registerUserAccInput">
+        <input placeholder="账号" id = "registerUserAccInput" name="registerUserAccInput">
     </div>
     <div class="registerUserPwdInput">
 
-        <input id ="registerUserPwdInput"  name="registerUserPwdInput">
+        <input placeholder="密码" id ="registerUserPwdInput"  name="registerUserPwdInput">
     </div>
     <div class="registerSuccessBtn">
         <button id = "registerSuccessBtn" class="radiusBtn"></button>
@@ -240,9 +241,14 @@
 
 <script type="module">
 
-    window.onload = function(){
-
+    window.onload = function(ev){
+        window.innerWidth = window.innerWidth*0.99;
+        window.innerHeight = window.innerHeight*0.98;
         createBackground(document.getElementById("xs"))
+
+        console.info(window.innerWidth+"<>"+window.innerHeight);
+        var bd = document.getElementsByTagName("bsx");
+
     }
 
 
