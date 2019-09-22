@@ -6,7 +6,8 @@ var mouse = new THREE.Vector2(), INTERSECTED;
 var radius = 100, theta = 0;
 function createBackground(div) {
 
-
+    window.innerWidth = window.innerWidth*0.99;
+    window.innerHeight = window.innerHeight*0.98;
     container = div;
     init();
     animate();

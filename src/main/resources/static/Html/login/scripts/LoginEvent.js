@@ -60,7 +60,7 @@ userLoginBtn.onclick = function (ev) {
 }
 userRegisterBtn.onclick = function (ev) {
     console.info("register！");
-
+    //createSheild(30);
     if(loginPageRegisterBtnClickCount %2 == 0){
 
         registerPage.setAttribute("style","");
