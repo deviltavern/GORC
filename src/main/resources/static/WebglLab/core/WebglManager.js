@@ -78,8 +78,8 @@ function create(div) {
 
     renderer.setSize(800, 800);
     renderer.setClearColor(Color(123,123 ,123).ox, 1.0);
-    div.appendChild(renderer.domElement);
-    glContext = div.firstChild.getContext("webgl");
+    var canvasx = div.appendChild(renderer.domElement);
+    glContext = canvasx.getContext("webgl");
 
     console.info(glContext)
     var light = new THREE.DirectionalLight( 0xff0000 );

@@ -290,28 +290,31 @@ function borderDetection(snackBody) {
     {
         detectionDelay = 0;
     }
-    if(getPosition(snackBody.head).x >screenConvertToWorld(Vector3(1,0,0)).x||getPosition(snackBody.head).x <screenConvertToWorld(Vector3(-1,0,0)).x){
+    var localHeadPos = getPosition(getSnackFromArray(getSnackID()).head);
 
-
-        if (detectionDelay == 0)
-        {
-            detectionDelay = 20;
-            uiControlDir.x = -uiControlDir.x;
-
-
-        }
-        console.info("横向超过");
-
-    }
-
-    if(getPosition(snackBody.head).y >screenConvertToWorld(Vector3(0,1,0)).y||getPosition(snackBody.head).y <screenConvertToWorld(Vector3(0,-1,0)).y){
-
-        if (detectionDelay == 0) {
-            detectionDelay = 20;
-            uiControlDir.y = -uiControlDir.y;
-
-        }
-        console.info("纵向超过");
-    }
+    //
+    // if(localHeadPos.x >screenConvertToWorld(Vector3(1,0,0)).x||localHeadPos.x <screenConvertToWorld(Vector3(-1,0,0)).x){
+    //
+    //
+    //     if (detectionDelay == 0)
+    //     {
+    //         detectionDelay = 20;
+    //         uiControlDir.x = -uiControlDir.x;
+    //
+    //
+    //     }
+    //     console.info("横向超过");
+    //
+    // }
+    //
+    // if(localHeadPos.y >screenConvertToWorld(Vector3(0,1,0)).y||localHeadPos.y <screenConvertToWorld(Vector3(0,-1,0)).y){
+    //
+    //     if (detectionDelay == 0) {
+    //         detectionDelay = 20;
+    //         uiControlDir.y = -uiControlDir.y;
+    //
+    //     }
+    //     console.info("纵向超过");
+    // }
 
 }
