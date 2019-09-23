@@ -8,6 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
     <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
     <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <script src="/static/Html/demo/ComboBox/Combox.js"></script>
 
     <link rel="stylesheet" href="/static/css/img.css"  media="all">
 
@@ -15,7 +16,7 @@
     <link rel="stylesheet" href="/static/css/fontx_style.css"  media="all">
     <script src="/static/js/rd.js"></script>
     <script src="/static/layui/layui.js" charset="utf-8"></script>
-
+    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>
     <link rel="stylesheet" href="/static/css/video_background.css"  media="all">
     <style type="text/css">
   {# 设置table每一行的height #}
@@ -54,11 +55,41 @@
 
     $(document).ready(function(){
 
-         $('#home_headx').before('<iframe name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="/static/Html/hall/home_head.html" style="filter:chroma(color=#ffffff)" ></iframe>')
+         $('#home_headx').before('<iframe name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="/static/Html/hall/home_head/home_head2.html" style="filter:chroma(color=#ffffff)" ></iframe>')
+
+        var tast_publishArray = new Array();
+         tast_publishArray.push("任务发布");
+         tast_publishArray.push("发布记录");
+        var task_publishCombox = createCombox(tast_publishArray);
+        task_publishCombox.hide();
+
+        op = function () {
+            console.info();
+
+
+            if(localStorage.getItem("hover_value")!= "")
+            {
+                var v = JSON.parse(localStorage.getItem("hover_value"));
+                console.info(v);
+                switch (v.type) {
+                    case "task_publish":
+                        task_publishCombox.show();
+                        task_publishCombox.move(v.pos.x,v.pos.y);
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
+            }
 
 
 
+        }
 
+        frame();
 
     });
 

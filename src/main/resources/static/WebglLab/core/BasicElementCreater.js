@@ -68,7 +68,13 @@ function createMeshWithoutMaterial() {
 
 
         geometry.vertices.push(new THREE.Vector3(geometryCache[i].x,geometryCache[i].y,geometryCache[i].z));
+
     }
+
+    geometry.vertices[0].uv = new THREE.Vector2(0,0);
+    geometry.vertices[0].uv = new THREE.Vector2(0,1);
+    geometry.vertices[0].uv = new THREE.Vector2(1,0);
+    geometry.vertices[0].uv = new THREE.Vector2(1,1);
     var normal = new THREE.Vector3( 0, 0, 1 ); //三角面法向量,x,y,z定义z轴为法向量
 
 

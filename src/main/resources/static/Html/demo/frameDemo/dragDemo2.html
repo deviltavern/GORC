@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+
+    <script>
+        var op;
+        var start = null;
+
+        var fps = 60
+        var fpsInterval = 1000 / fps
+        var last = new Date().getTime() //上次执行的时刻
+        function frame() {
+
+
+            var now = new Date().getTime()
+            var elapsed = now - last;
+            // 经过了足够的时间
+            if (elapsed > fpsInterval) {
+                last = now - (elapsed % fpsInterval); //校正当前时间
+
+                // 循环的代码
+                // drawSomething()
+                if (op!= null){
+
+                    op();
+                }
+            }
+            requestAnimationFrame(frame);
+
+        }
+        var hover_value_obj = {};
+
+        window.onload = function (ev) {
+
+            var btn = document.getElementById("xs");
+
+            var body = document.getElementById("bid");
+            btn.style.position = "absolute";
+            //捕获位置
+            var pos = {} ;
+            pos.x = 0;
+            pos.y = 0;
+
+            body.onmousemove = function (ev1) {
+
+
+                pos.x = ev1.clientX;
+                pos.y = ev1.clientY;
+                btn.style.left = pos.x+"px";
+                btn.style.top = pos.y+"px";
+            }
+            var value = 0;
+            op = function(){
+              //  console.info(btn.style)
+
+
+                value += 0.6;
+            }
+            frame();
+
+        }
+    </script>
+
+    <style>
+        .pos {
+            position: absolute;
+            left: 20px;
+            right: 20px;
+
+        }
+
+    </style>
+</head>
+<body>
+<div  id = "bid" style="width: 400px;height: 400px"></div>
+<button id="xs" >123</button>
+
+</body>
+</html>

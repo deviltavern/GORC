@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
+
+    <link rel="stylesheet" href="../../../css/img.css" media="all">
+    <script src="../../../js/rd.js"></script>
+
+    <script src="../../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../demo/frameDemo/FrameCirculation.js"></script>
+    <base target="_parent">
+
+    <script>
+
+        //获取某个html元素的定位
+        function GetPos(obj) {
+            var pos = new Object();
+            pos.x = obj.offsetLeft;
+            pos.y = obj.offsetTop;
+            while (obj = obj.offsetParent) {
+                pos.x += obj.offsetLeft;
+                pos.y += obj.offsetTop;
+            }
+            pos.x += 8;
+            pos.y += 55;
+            return pos;
+        };
+        function createBottom() {
+
+            var dx = document.createElement("canvas");
+            var dv = document.body.appendChild(dx);
+
+            dv.style.height = 5+"px";
+
+            dv.w = 100;
+            dv.style.width =  dv.w+"px";
+            dv.style.background = "#FFD700";
+            dv.style.position = "absolute";
+            dv.style.zIndex = "100";
+            dv.style.borderRadius = "5px";
+            dv.style.left = "0px";
+            dv.style.top = "0px";
+
+
+            dv.move = function (x,y) {
+
+                dv.style.left = x+"px";
+                dv.style.top = y + "px";
+            }
+
+            dv.hide = function () {
+
+                dv.style.display = "none";
+            }
+            dv.show = function () {
+
+                dv.style.display = "";
+
+                dv.w =0;
+                dv.style.width =  dv.w+"px";
+
+            }
+
+            dv.expand = function () {
+                if (dv.w<100){
+
+                    dv.w += 5;
+                    dv.style.width =  dv.w+"px";
+                }
+
+            }
+
+            return dv;
+
+
+        }
+
+        $(document).ready(function(){
+        var dv =  createBottom();
+        dv.hide();
+        var hoverObj = {};
+
+        function onExit(){
+                dv.hide();
+                localStorage.setItem("hover_value","");
+
+            }
+
+        var front_train_label = document.getElementById("front_train_label");
+            front_train_label.onmouseenter = function (ev) {
+                hoverObj.code = "front_train_label";
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+            dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+            dv.show();
+        }
+            front_train_label.onmouseleave = onExit;
+
+        var myself = document.getElementById("myself");
+            myself.onmouseenter = function (ev) {
+
+                hoverObj.code = "myself";
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            myself.onmouseleave = onExit;
+
+        var score = document.getElementById("score");
+            score.onmouseenter = function (ev) {
+                hoverObj.code = "score";
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            score.onmouseleave =  onExit;
+
+        var level = document.getElementById("level");
+            level.onmouseenter = function (ev) {
+
+                hoverObj.code = "level";
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            level.onmouseleave =  onExit;
+
+        var task_publish = document.getElementById("task_publish");
+            task_publish.onmouseenter = function (ev) {
+                hoverObj.code = "task_publish";
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            task_publish.onmouseleave =  onExit;
+
+        op = function () {
+            dv.expand();
+
+
+        }
+
+        frame();
+
+
+    });
+
+
+
+    </script>
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body style="background-color:transparent" >
+
+<!--<canvas style="height: 10px;width: 100px;background: #884400;position:absolute;z-index: 100;border-radius: 5px"></canvas>-->
+
+<ul class="layui-nav">
+    <li class="layui-nav-item"><a href="javascript: home_head_load_home_page()">任务大厅</a></li>
+    <li class="layui-nav-item">
+        <a id="front_train_label" href="javascript:;">技能训练营</a>
+
+    </li>
+
+    <li class="layui-nav-item" lay-unselect="">
+        <a id = "myself" href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+
+    </li>
+
+
+    <li class="layui-nav-item" lay-unselect="">
+        <a id = "score" href="javascript:;" ><img src="../../../image/gold.jpeg" class="layui-nav-img"><span id="gold_label">1000</span></a>
+
+    </li>
+
+    <li class="layui-nav-item" lay-unselect="">
+        <a id = "level" href="javascript:;" ><img id="levelICO" src="../../../image/l1.jpeg" class="layui-nav-img"><span id="levelTxt">练气</span></a>
+
+    </li>
+    <li id = "task_publish" class="layui-nav-item"><a href="http://localhost:8099/static/Html/hall/upload_task_info_form.html" id="sendTask">发布任务</a></li>
+
+
+</ul>
+
+
+</body>
+</html>
