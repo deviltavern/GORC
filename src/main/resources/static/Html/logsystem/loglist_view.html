@@ -1,0 +1,125 @@
+<!--罗文希-->
+<!--浏览日志列表页面-->
+<!--点击发布日志按钮跳转到发布日志界面-->
+<!--点击一条日志跳转到日志详情页面-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>日志列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script>
+
+    </script>
+</head>
+
+<body style="background: #f6f6f6">
+<!--导航栏-->
+<form class="layui-form" action="">
+    <div class="layui-layout layui-layout-admin">
+        <div class="layui-header ">
+            <div class="layui-logo">日志</div>
+            <!-- 头部区域（可配合layui已有的水平导航） -->
+            <ul class="layui-nav layui-layout-left">
+                <li class="layui-nav-item"><a href="">首页</a></li>
+                <li class="layui-nav-item"><a href="">用户</a></li>
+            </ul>
+            <ul class="layui-nav layui-layout-right">
+                <li class="layui-nav-item">
+                    <a href="javascript:;">
+                        <img src="http://t.cn/RCzsdCq" class="layui-nav-img">
+                        Vency
+                    </a>
+                    <dl class="layui-nav-child">
+                        <dd><a href="">基本资料</a></dd>
+                        <dd><a href="">安全设置</a></dd>
+                    </dl>
+                </li>
+                <li class="layui-nav-item"><a href="">退出</a></li>
+            </ul>
+        </div>
+    </div>
+</form>
+
+<fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
+    <legend>
+        <div style="float:right;">
+            <button id="btn-pub-log" style="background: #009688;width: 120px;height: 40px;color:#ffffff;">发表日志</button>
+        </div>
+    </legend>
+</fieldset>
+
+<!--搜索栏-->
+<div style="margin-right: 10%;margin-left: 10% ;padding-left: 20px;padding-right: 20px">
+    <input id="input_search" style="height: 40px;width: 85%">
+    <button id="btn_search" style="height: 40px;width:120px;float: right;background: #009E94;color: #ffffff">搜索</button>
+</div>
+<!--日志列表-->
+<div class="layui-row" id="container" style="margin-right: 10%;margin-left: 10%;background-color: #f6f6f6;padding: 15px">
+</div>
+
+<script>
+    var logdata="";
+    //页面加载
+    $(document).ready(function(){
+        var htmlContent = "";
+        //向服务器发送数据 post(路径，传出数据，返回函数)，返回数据在data里
+        $.post("http://localhost:8099/getLog",function (data) {
+            renderData(data);
+        });
+    });
+    //点击按钮，跳转到发布日志页面
+    $('#btn-pub-log').click(function () {
+        window.location.href = "publish_log.html";
+    })
+    //点击搜索，获取搜索框结果
+    $('#btn_search').click(function () {
+        var searchword=$('#input_search').val();
+        console.info(searchword);
+        var searchdata = {keyword:searchword};//请求数据,格式{参数名：参数值}
+        JSON.stringify(searchdata);  //请求数据序列化处理
+        $("#container").html(""); //清空内容
+        //将关键词传递给服务器并请求搜索结果
+        $.post("http://localhost:8099/SearchLog",searchdata,function(data){
+            for (let item of data) {
+                renderData(data);
+            }
+        });
+    })
+    //加载数据
+    function renderData(data) {
+        for (var item of data) {
+            var info=JSON.stringify(item)
+            $('#container').append(
+                `<div class="layui-col-xs12">
+               <div style="padding:5px;border-radius:10px;">
+        <div class="layui-card" id="log_info${item.push_index}" onclick=logInfoClick(${info})>
+            <div class="layui-card-header layui-row">
+                <p class="layui-col-sm10" id="log_title${item.push_index}" style="font-weight:500;font-size: 18px;">${item.describe}</p>
+                <p class="layui-col-sm1" style="margin-top: 5px" id="log_author${item.push_index}">${item.push_master}</p>
+                <p class="layui-col-sm1" style="margin-top: 5px" id="log_date${item.push_index}">${item.task_begin_time}</p>
+            </div>
+            <div class="layui-card-body">
+                <p id="log_detail${item.push_index}">${item.solve_strategy}</p>
+            </div>
+        </div>
+    </div>
+</div>`
+
+            )
+        }
+    }
+    //点击文章列表列表，进入详情页面
+    function logInfoClick(loginfo) {
+        localStorage.setItem("clicklog", JSON.stringify(loginfo));
+        //如果查看他人日志，需扣除积分
+        //判断作者名是否与用户名相等，若不等，扣除相应积分
+        window.location.href = "log_detail.html";
+    }
+</script>
+</body>
+</html>
