@@ -1,0 +1,66 @@
+body{
+    background-image: url("bg3.jpg");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: 10px 40px;
+    /*position: absolute;*/
+    margin: 0 auto;
+    width: 1517px;
+    height: 750px;
+    /*border:white solid 1px;*/
+}
+@font-face {
+    font-family: mySweet;
+    src: url("ziti/www124.ttf")
+}
+
+.bg_box h5{
+    font-family: mySweet;
+    color:rgba(28,41,49,0.9);
+}
+
+
+.bg_box p{
+    font-family: 楷体;
+
+}
+.bg_box{
+    width: 900px;
+    height: 450px;
+    background-color: transparent;
+    overflow: auto;
+    position:absolute;
+    left:330px;
+    top:300px;
+}
+.bg_box::-webkit-scrollbar {
+    width: 50px;
+}
+.bg_box::-webkit-scrollbar-thumb {
+    background-color:rgba(28,41,49,0.9);
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 5px #A0A0A0;
+    background-image: url("table1.gif") ;
+    background-size:70px 70%;
+    background-position: 50% 50%;
+    background-repeat: no-repeat;
+}
+
+.bg_box::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 5px #F5F5F5;
+    border-radius: 5px;
+    background: rgba(50,50,50,0.8);
+}
+#a1{
+
+    margin-left: -3px;
+
+
+}
+#title_01{
+    position:relative;
+    /*left:100px;*/
+    /*top:-95px;*/
+    left:-20px;
+    top:-95px;
+}

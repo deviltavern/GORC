@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SheildDemo.js"></script>
+    <link rel="stylesheet" type="text/css" href="SheildDemo.css">
+    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>
+
+</head>
+<body>
+
+
+    <iframe  id="a1" name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="../../hall/home_head/home_head2.html" style="filter:chroma(color=#ffffff)" ></iframe>
+    <img id="title_01" src="title1.png  "width="220px" height="285px">
+    <div id="bg_box" class="bg_box">
+    </div>
+
+
+
+<script>
+
+    window.onload = function (ev) {
+
+
+        console.info("begin");
+        var bg_box=document.getElementById("bg_box");
+        console.info(bg_box);
+
+        test();
+        create2(bg_box,"123");
+
+        var tpArray = new Array();
+
+        for(var i =0;i<10;i++){
+
+           var bx = create2(bg_box,"jzosition"+i);
+
+           tpArray.push(bx);
+
+
+
+        }
+    }
+
+
+</script>
+</body>
+</html>
