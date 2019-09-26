@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../core/WebglManager.js"></script>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+            uniform float vx;
+            uniform float vy;
+            varying float vavx;
+            varying float vavy;
+			attribute vec4 color;
+			varying vec3 vPosition;
+			varying vec4 vColor;
+
+			void main()	{
+                vavx = vx;
+                vavy = vy;
+				vPosition = position;
+				vColor = color;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+			varying vec3 vPosition;
+			varying vec4 vColor;
+			varying float vavx;
+            varying float vavy;
+
+
+
+			void main()	{
+
+				vec4 color = vec4( vColor );
+				gl_FragColor = vec4(color);
+
+				if(distance(vec2(vavx*8.29,vavy*8.29),vPosition.xy)<1.0)
+				{
+				        gl_FragColor = vec4(0.5,1.0,1.0,1.0);
+				}
+
+
+			}
+
+		</script>
+
+</head>
+<body>
+
+
+<script>
+    window.onload = function (ev) {
+        createGLCanvas();
+
+        //画一个三角面需要三个点，一个矩形是俩三角面就需要六个点，不难理解吧...
+        bufferCanteen(Vector3(-5,-5,0),Color(0.1,0.3,0.4));
+        bufferCanteen(Vector3(5,-5,0),Color(0.1,0.3,0.4));
+        bufferCanteen(Vector3(5,5,0),Color(0.1,0.3,0.4));
+
+        bufferCanteen(Vector3(-5,5,0),Color(0.1,0.3,0.4));
+        bufferCanteen(Vector3(-5,-5,0),Color(0.1,0.3,0.4));
+        bufferCanteen(Vector3(5,5,0),Color(0.1,0.3,0.4));
+
+        var mesh = createBufferGeoMeshFromCanteen();
+
+        var brt = {
+            vx:{value:0.0},
+            vy:{value:0.0}
+
+        }
+
+        var material = new THREE.ShaderMaterial( {
+
+            uniforms:brt,
+            vertexShader: document.getElementById( 'vertexShader' ).textContent,
+            fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+
+
+        } );
+
+        glCanvas.onmousemove = function(ev){
+
+            var _mouse = {};
+
+            console.info(ev.clientX+"<>"+ev.clientY);
+            _mouse.x = ( ev.clientX / 800 ) * 2 - 1;
+            _mouse.y = -( ev.clientY /800 ) * 2 + 1;
+
+
+            brt.vx.value = _mouse.x;
+            brt.vy.value = _mouse.y;
+
+
+        }
+
+        mesh.material = material;
+
+        op = function () {
+
+
+        }
+
+
+    }
+
+
+</script>
+</body>
+</html>
