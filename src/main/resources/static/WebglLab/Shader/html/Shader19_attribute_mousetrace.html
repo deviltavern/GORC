@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../core/WebglManager.js"></script>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+            uniform float vx;
+            uniform float vy;
+            varying float vavx;
+            varying float vavy;
+			attribute vec4 color;
+			varying vec3 vPosition;
+			varying vec4 vColor;
+
+			void main()	{
+                vavx = vx;
+                vavy = vy;
+				vPosition = position;
+				vColor = color;
+
+				gl_Position = projectionMatrix * modelViewMatrix * vec4( position, 1.0 );
+
+			}
+
+		</script>
+
+    <script id="fragmentShader" type="x-shader/x-fragment">
+
+			varying vec3 vPosition;
+			varying vec4 vColor;
+			varying float vavx;
+            varying float vavy;
+
+
+
+			void main()	{
+
+				vec4 color = vec4( vColor );
+				gl_FragColor = vec4(color);
+
+			//if(distance(vec2(vavx*8.29,vavy*8.29),vPosition.xy)<1.0)
+			//{
+			//        gl_FragColor = vec4(0.5,1.0,1.0,1.0);
+			//}
+
+
+			}
+
+		</script>
+
+</head>
+<body>
+
+
+<script>
+    window.onload = function (ev) {
+        createGLCanvas();
+
+        //画一个三角面需要三个点，一个矩形是俩三角面就需要六个点，不难理解吧...
+     // bufferCanteen(Vector3(-5,-5,0),Color(0.1,0.3,0.4));
+     // bufferCanteen(Vector3(5,-5,0),Color(0.1,0.3,0.4));
+     // bufferCanteen(Vector3(5,5,0),Color(0.1,0.3,0.4));
+
+     // bufferCanteen(Vector3(-5,5,0),Color(0.1,0.3,0.4));
+     // bufferCanteen(Vector3(-5,-5,0),Color(0.1,0.3,0.4));
+     // bufferCanteen(Vector3(5,5,0),Color(0.1,0.3,0.4));
+
+
+        var r = 3;
+        var offset_x = 0;
+        var offset_y = 0;
+        var th = 60;
+        for (var i =0;i<6;i++) {
+
+            var coe = ((i * th) / 180);
+
+            var x = r * Math.cos(3.14159 * coe);
+            var y = r * Math.sin(3.14159 * coe);
+            console.info("&&&&=" + "<>" + x+"<>"+y);
+            //圆心
+            bufferCanteen(Vector3(offset_x, offset_y, 0), Color(0.1, 0.3, 0.4));
+            //三角形第一个顶点
+            bufferCanteen(Vector3(offset_x + x, offset_y + y, 0), Color(0.1, 0.3, 0.4));
+
+            coe = (((i + 1) * th) / 180);
+
+            x = r * Math.cos(3.14159 * coe);
+            y = r * Math.sin(3.14159 * coe);
+
+            console.info("%%%%="+ "<>" + x+"<>"+y);
+            bufferCanteen(Vector3(offset_x + x, offset_y + y, 0), Color(0.1, 0.3, 0.4));
+
+
+        }
+
+
+        function updateCircle(ev,mesh) {
+
+
+            //清空顶点缓存
+           // clearBufferGeoCache(2);
+            //获得鼠标位置对应的webgl坐标
+            var mousePos = screen2WebglCoordinate(ev,800,800);
+            //获得鼠标位置对应的视口坐标(垂直世界坐标)
+            var viewpotPos = screenConvertToWorld(mousePos);
+
+            console.info(viewpotPos);
+            var r = 3;
+
+
+            var offset_x = viewpotPos.x;
+            var offset_y = viewpotPos.y;
+
+            //重新绘制圆
+            var th = 60;
+            for (var i =0;i<6;i++) {
+
+                var coe = ((i * th) / 180);
+
+                var x = r * Math.cos(3.14159 * coe);
+                var y = r * Math.sin(3.14159 * coe);
+                //console.info("&&&&=" + "<>" + x+"<>"+y);
+                //圆心
+                bufferCanteen(Vector3(offset_x, offset_y, 0), Color(0.1, 0.3, 0.4));
+                //三角形第一个顶点
+                bufferCanteen(Vector3(offset_x + x, offset_y + y, 0), Color(0.1, 0.3, 0.4));
+
+                coe = (((i + 1) * th) / 180);
+
+                x = r * Math.cos(3.14159 * coe);
+                y = r * Math.sin(3.14159 * coe);
+
+              //  console.info("%%%%="+ "<>" + x+"<>"+y);
+                bufferCanteen(Vector3(offset_x + x, offset_y + y, 0), Color(0.1, 0.3, 0.4));
+
+
+            }
+
+            updateBufferGeoMeshFromCanteen(mesh);
+        }
+        var mesh = createBufferGeoMeshFromCanteen();
+        console.info(bufferGeometryVerticsCache);
+
+        var brt = {
+            vx:{value:0.0},
+            vy:{value:0.0}
+
+        }
+
+        var material = new THREE.ShaderMaterial( {
+
+            uniforms:brt,
+            vertexShader: document.getElementById( 'vertexShader' ).textContent,
+            fragmentShader: document.getElementById( 'fragmentShader' ).textContent,
+
+
+        } );
+
+   //glCanvas.onmousemove = function(ev){
+
+   //    var _mouse = {};
+
+   //    //console.info(ev.clientX+"<>"+ev.clientY);
+   //    _mouse.x = ( ev.clientX / 800 ) * 2 - 1;
+   //    _mouse.y = -( ev.clientY /800 ) * 2 + 1;
+
+
+   //    brt.vx.value = _mouse.x;
+   //    brt.vy.value = _mouse.y;
+
+
+   //}
+
+        glCanvas.onmousemove = function(ev){
+            console.info("重绘");
+            updateCircle(ev,mesh);
+        }
+
+        mesh.material = material;
+
+        op = function () {
+            //console.info();
+
+        }
+
+
+    }
+
+
+</script>
+</body>
+</html>

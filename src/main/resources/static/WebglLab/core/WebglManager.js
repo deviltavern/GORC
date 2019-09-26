@@ -4,6 +4,7 @@ var op;
 var opView;
 var selectObject;
 var glContext;
+var glCanvas;
 function setPosition(object,vector3) {
     object.position.x = vector3.x;
     object.position.y = vector3.y;
@@ -79,6 +80,7 @@ function create(div) {
     renderer.setSize(800, 800);
     renderer.setClearColor(Color(123,123 ,123).ox, 1.0);
     var canvasx = div.appendChild(renderer.domElement);
+    glCanvas = canvasx;
     glContext = canvasx.getContext("webgl");
 
     console.info(glContext)
@@ -100,12 +102,36 @@ function create(div) {
     return View;
 }
 
+function createGLCanvas() {
+    var canvas = document.createElement("div");
+
+    var Lcanvas = document.body.appendChild(canvas);
+    create(Lcanvas);
+    setViewport(20);
+
+    frame();
+
+}
+
 function Color(r,g,b) {
 
     var color = {};
     color.r = r;
     color.g = g;
     color.b = b;
+
+    color.ox = (color.r << 16) | (color.g << 8) | color.b;
+
+    return color;
+}
+
+function Color(r,g,b,a) {
+
+    var color = {};
+    color.r = r;
+    color.g = g;
+    color.b = b;
+    color.a = a;
 
     color.ox = (color.r << 16) | (color.g << 8) | color.b;
 
@@ -182,6 +208,15 @@ function getMaxFromVector(vector3) {
 
 }
 
+function Rotation2D(vector3,th) {
+        //console.info(Math.cos(th)+"<>"+Math.sin(th));
+    var s = (vector3.x )*Math.sin(th)+Math.cos(th)*(vector3.y);
+    var t = Math.cos(th)*(vector3.x ) - Math.sin(th)*(vector3.y);
+
+    return Vector3(s,t,0);
+
+}
+
 //从ary中将value移除
 function RemoveFromArray(ary,value) {
     var index = ary.indexOf(value);
@@ -231,6 +266,17 @@ function screenConvertToWorld(mouseInput) {
     var a = Vector3(mouseInput.x*clipScreenWidth,mouseInput.y*clipScreenWidth,0);
 //2*PI/360*角度
     return a;
+
+}
+
+function screen2WebglCoordinate(ev,width,height) {
+    var _mouse = {};
+
+
+    _mouse.x = ( ev.clientX /  width) * 2 - 1;
+    _mouse.y = -( ev.clientY /height ) * 2 + 1;
+
+    return _mouse;
 
 }
 function worldConvertToScreen(worldVec) {

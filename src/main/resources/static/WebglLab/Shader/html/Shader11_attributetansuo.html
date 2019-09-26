@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+</head>
+<body>
+<!--顶点着色器程序-->
+<script type="x-shader/x-vertex" id="vertexshader">
+
+            attribute vec2 size;
+            varying vec3 uvx;
+            //attribute float uvs;
+
+            varying vec2 px;
+
+            varying vec2 t_uv;
+            void main() {
+                px = size;
+                gl_PointSize = 20.0;
+                t_uv = position.xy;
+                gl_Position = vec4(position, 1.0 );
+
+                //uvx = vec3(a_Position);
+            }
+    </script>
+
+<!--片元着色器程序-->
+<script type="x-shader/x-fragment" id="fragmentshader">
+
+            varying vec2 px;
+            varying vec2 t_uv;
+            vec2 c = vec2(0.0,0.0);
+
+            void main() {
+
+
+                if(distance(t_uv,px)<0.5){
+                    gl_FragColor = vec4(1.0,1.0,1.0,1.0);
+                }
+
+
+            }
+    </script>
+
+<script>
+    window.onload = function (ev) {
+
+        create(document.getElementById("d213"));
+
+        setViewport(10);
+        /**
+         * 创建模型对象
+         */
+            //类型数组创建顶点数据
+
+        var sizes = new Float32Array([0.5,0.5,0.5,0.5,0,5,0.5]);
+
+
+
+        var vertices = new Float32Array([
+               1,  1,  0,//顶点0
+                -1,  1,  0,//顶点1
+                -1, -1,  0,//顶点2
+                1, -1,  0,//顶点3
+                -1, -1,  0,
+                1,  1,  0,
+            ]);
+        //类型数组格式顶点数据转为BufferAttribute对象
+        var verticesPosition = new THREE.BufferAttribute( vertices, 3 );
+        var geometry = new THREE.BufferGeometry();//缓冲几何对象
+
+
+
+
+        //顶点数据关联着色器程序
+        geometry.addAttribute('position',verticesPosition);
+
+       // geometry.attributes.size.needsUpdate = true;
+        geometry.addAttribute( 'size', new THREE.BufferAttribute( sizes, 1 ) );
+        glCanvas.onmousemove = function (ev) {
+            //sizes[0] =;
+            //sizes[1] = ev.clientY/800;
+//
+
+            //console.info(sizes);
+           var vt = geometry.getAttribute( 'size' );
+           // console.info(vt);
+            vt[0] = ev.clientX/800;
+            vt[1] =ev.clientY/800;
+        }
+        //geometry.setAttribute('size',)
+        br = {
+            uvs:{value:1.0}
+
+        }
+        var material=new THREE.ShaderMaterial({
+           // attributes:br,
+            //加载顶点着色器程序
+            vertexShader:   document.getElementById( 'vertexshader' ).textContent,
+
+            //加载片元着色器程序
+            fragmentShader: document.getElementById( 'fragmentshader' ).textContent,
+
+        });//着色器材质对象
+        var ar = new Float32Array([0.5,0.5,0]);
+        var arp = new THREE.BufferAttribute( ar, 1 );
+        geometry.addAttribute('normal',arp);
+
+        var points=new THREE.Mesh(geometry,material);//模型对象
+
+       // glContext.enable(glContext.)
+        addObject(points);
+        frame();//循环渲染
+    }
+
+</script>
+<div id="d213"></div>
+</body>
+</html>
