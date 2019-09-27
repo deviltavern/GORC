@@ -1,8 +1,8 @@
 body{
-    background-image: url("bg3.jpg");
+   // background-image: url("bg3.jpg");
     background-repeat: no-repeat;
     background-attachment: fixed;
-    background-position: 50% 40px;
+    //background-position: 50% 40px;
     /*position: absolute;*/
     margin: 0 auto;
 

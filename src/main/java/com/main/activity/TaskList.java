@@ -3,6 +3,7 @@ package com.main.activity;
 
 
 import com.alibaba.fastjson.JSONException;
+import com.main.activity.CodeCollector.DBOption;
 import com.main.dao.DataBaseOP;
 import com.main.Model.TaskModel;
 
@@ -322,5 +323,16 @@ public class TaskList {
             i += readlen;
         }
         return buffer;
+    }
+
+
+    @PostMapping("/getTaskDataByType")
+    public JSONArray getTaskDataByType(String  type) throws Exception {
+
+        System.out.println(type);
+        String sql = "select * from task_list where task_type = '"+type+"'";
+
+      return   DataBaseOP.request(sql);
+
     }
 }

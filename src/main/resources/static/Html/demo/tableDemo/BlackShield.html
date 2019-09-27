@@ -5,8 +5,14 @@
     <title>Title</title>
     <script src="SheildDemo.js"></script>
     <link rel="stylesheet" type="text/css" href="SheildDemo.css">
-    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>
+<!--    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>-->
+    <script src="../../../WebglLab/core/three.js"></script>
+    <script src="../../../WebglLab/core/stats.js"></script>
+    <script src="../../../js/Config.js"></script>
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
 
+    <script src="../frameDemo/FrameCirculation.js"></script>
+    <script src = "../ComboBox/Combox.js"></script>
 </head>
 <body>
 
@@ -22,25 +28,31 @@
 
     window.onload = function (ev) {
 
+        bacgroundInit();
 
-        console.info("begin");
         var bg_box=document.getElementById("bg_box");
-        console.info(bg_box);
 
-        test();
-        create2(bg_box,"123");
-
-        var tpArray = new Array();
-
-        for(var i =0;i<10;i++){
-
-           var bx = create2(bg_box,"jzosition"+i);
-
-           tpArray.push(bx);
+        getDataFromServer("web前端");
 
 
+
+
+
+       var btn = createLabelButton("",0,"算法");
+        btn.onclick = function (ev1) {
+            console.info("click算法");
+            removeAll();
+            getDataFromServer("算法");
 
         }
+       var btn_front = createLabelButton("",1,"web前端");
+        btn_front.onclick = function (ev1) {
+            removeAll();
+            getDataFromServer("web前端");
+        }
+        createLabelButton("",2,"web后端");
+        createLabelButton("",3,"unity");
+        createLabelButton("",4,"数据库");
     }
 
 
