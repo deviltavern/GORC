@@ -3,7 +3,7 @@ function test() {
 
     console.info("123");
 }
-var taskData;
+var taskData = new Array();
 var cparent;
 function bacgroundInit() {
 
@@ -31,8 +31,6 @@ function bacgroundInit() {
                     combox.move(hoverObject.pos.x,hoverObject.pos.y+16);
                     combox.show()
                     break;
-
-
 
             }
         }
@@ -103,19 +101,20 @@ function create2(parent,itemID) {
 
 }
 
+
 function getDataFromServer(type){
     requestServer("/getTaskDataByType",function (ip) {
 
         var reJosn = {};
         reJosn.type = type;
         $.post(ip,reJosn,function (data) {
-
+            taskData.length = 0;
             console.info(data);
 
             for(var i in data)
             {
                 console.info(data[i]);
-
+                taskData.push(data[i]);
                 if (data[i].task_head == null)
                 {
 
@@ -194,10 +193,18 @@ function createLabel(parent,itemID,hdeadInfo,contentInfo,sp) {
     desc_p.style.fontSize="16px";
     desc_p.style.textIndent="2em";
 
-    var desc_a =desc_p.appendChild( document.createElement("a"));
+    var desc_a =desc_p.appendChild( document.createElement("button"));
     desc_a.innerHTML="[详情]";
     desc_a.style.color="orange";
-    desc_a.href="BlackShield.html";
+
+
+    desc_a.onclick = function (ev) {
+
+        localStorage.setItem("detail",JSON.stringify(taskData[c2.id]));
+        console.info(localStorage.getItem("detail"));
+
+        window.open('detail.html');
+    }
     var box = {};
     box.content = c2;
     box.id = itemID;
@@ -215,7 +222,7 @@ function createLabelButton(spSrc,posy,content) {
 
     le.style.width = 200+"px";
     le.style.height = 50+"px";
-    le.style.background = "rgb(123,123,123)";
+    le.style.background = "#d5c59f";
     le.style.position = "absolute";
     le.style.top = 300+posy*55+"px";
     le.style.borderRadius = "10px";

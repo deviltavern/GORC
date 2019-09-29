@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+
+    <link>
+
+
+    <script>
+
+        function createInput() {
+
+
+            var e1 = document.createElement("input");
+            var e2 = document.body.appendChild(e1);
+
+            e2.type = "range";
+            e2.style.width = "300px";
+            e2.style.zIndex = "100";
+            e2.style.position = "absolute";
+            e2.style.heigt = "50px";
+            e2.onchange = function (ev) {
+
+                console.info("123");
+            }
+            return e2;
+        }
+
+
+    </script>
+    <script>
+
+        function init(detail,headLabel,detailLabel,level){
+
+            headLabel.innerText = detail.task_head;
+            detailLabel.innerText = detail.task_describe;
+            level.src = "../../../image/"+detail.task_difficute_level+".png";
+
+
+        }
+
+        window.onload = function (ev) {
+
+
+            loadFont("myTwwe","ziti/www124.ttf");
+            var img=  createimg("../../../image/Ls.png",100,100,50);
+
+            iframe("../../hall/home_head/home_head2.html")
+
+           // var xmon = xMonitor(img)  ;
+
+            //使用动画必须调用，调用一次就够了
+            initAnimation();
+
+
+            setPositionWithPercent(img,Vector3(30,9.3));
+            var preImgPos = getPosition(img);
+
+            console.info(preImgPos);
+
+            //-----------------------------使用循环动画-------------------------------
+            var ce = circleEvent(100);
+            ce.func = function (time)
+             {
+                var xx = parseFloat(preImgPos.x) + time/4;
+                setPositionWithPercent(img,Vector3(xx,preImgPos.y));
+                setRotation(img,xx*19);
+            }
+
+            img.doAnimation =ce.run;
+
+            addAnimation(img);
+            //-----------------------------使用循环动画-------------------------------
+
+            var imgHead = createimg("../../../image/lh1.png",900,200);
+            setPositionWithPercent(imgHead,Vector3(25,10));
+            setScale(imgHead,Vector3(50,20));
+
+            var bo2 = createimg("../../../image/bo2.jpg",500,700);
+
+            setPositionWithPercent(bo2,Vector3(36,27));
+
+            var label =  createLabel("你是傻逼",33,50);
+            setPositionWithPercent(label,Add(getPosition(imgHead),Vector3(10,8.5)));
+            var content =  createLabel("你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是逼你是傻逼你是是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼你是傻逼",23,
+
+            50);
+            setPositionWithPercent(content,Add(getPosition(bo2),Vector3(2,5.1)));
+
+
+            var detail = localStorage.getItem("detail");
+
+            var detailObj = JSON.parse(detail);
+            console.info(detail);
+            if (detail!= null){
+
+                console.info(detail)
+                init(detailObj,label,content,img);
+            }
+
+
+        }
+    </script>
+
+
+</head>
+<body>
+
+
+
+</body>
+</html>

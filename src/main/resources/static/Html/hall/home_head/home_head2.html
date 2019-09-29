@@ -81,69 +81,53 @@
 
 
         }
+        function onExit(){
+            dv.hide();
+            localStorage.setItem("hover_value","");
+
+        }
+        var dv;
+        var hoverObj;
+        function setElementEff(hoveCode,domValue){
+
+            domValue.onmouseenter = function (ev) {
+
+                hoverObj.code = hoveCode;
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            domValue.onmouseleave = onExit;
+
+        }
 
         $(document).ready(function(){
-        var dv =  createBottom();
+        dv =  createBottom();
         dv.hide();
-        var hoverObj = {};
+        hoverObj = {};
 
-        function onExit(){
-                dv.hide();
-                localStorage.setItem("hover_value","");
 
-            }
 
         var front_train_label = document.getElementById("front_train_label");
-            front_train_label.onmouseenter = function (ev) {
-                hoverObj.code = "front_train_label";
-                hoverObj.pos = GetPos(ev.target);
-                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
-            dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
-            dv.show();
-        }
-            front_train_label.onmouseleave = onExit;
-
         var myself = document.getElementById("myself");
-            myself.onmouseenter = function (ev) {
-
-                hoverObj.code = "myself";
-                hoverObj.pos = GetPos(ev.target);
-                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
-                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
-                dv.show();
-            }
-            myself.onmouseleave = onExit;
-
         var score = document.getElementById("score");
-            score.onmouseenter = function (ev) {
-                hoverObj.code = "score";
-                hoverObj.pos = GetPos(ev.target);
-                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
-                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
-                dv.show();
-            }
-            score.onmouseleave =  onExit;
-
         var level = document.getElementById("level");
-            level.onmouseenter = function (ev) {
-
-                hoverObj.code = "level";
-                hoverObj.pos = GetPos(ev.target);
-                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
-                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
-                dv.show();
-            }
-            level.onmouseleave =  onExit;
-
         var task_publish = document.getElementById("task_publish");
-            task_publish.onmouseenter = function (ev) {
-                hoverObj.code = "task_publish";
-                hoverObj.pos = GetPos(ev.target);
-                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
-                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
-                dv.show();
-            }
-            task_publish.onmouseleave =  onExit;
+        //task_hall
+            var task_hall = document.getElementById("task_hall");
+            var task_log = document.getElementById("task_log");
+            setElementEff("myself",myself);
+            setElementEff("front_train_label",front_train_label);
+            setElementEff("score",score);
+            setElementEff("level",level);
+            setElementEff("task_publish",task_publish);
+            setElementEff("task_log",task_log);
+            setElementEff("task_hall",task_hall);
+
+
+
+
 
         op = function () {
             dv.expand();
@@ -167,7 +151,7 @@
 <!--<canvas style="height: 10px;width: 100px;background: #884400;position:absolute;z-index: 100;border-radius: 5px"></canvas>-->
 
 <ul class="layui-nav">
-    <li class="layui-nav-item"><a href="javascript: home_head_load_home_page()">任务大厅</a></li>
+    <li  class="layui-nav-item"><a id = "task_hall" href="../../demo/tableDemo/BlackShield.html">任务大厅</a></li>
     <li class="layui-nav-item">
         <a id="front_train_label" href="javascript:;">技能训练营</a>
 
@@ -188,7 +172,8 @@
         <a id = "level" href="javascript:;" ><img id="levelICO" src="../../../image/l1.jpeg" class="layui-nav-img"><span id="levelTxt">练气</span></a>
 
     </li>
-    <li id = "task_publish" class="layui-nav-item"><a href="http://localhost:8099/static/Html/hall/upload_task_info_form.html" id="sendTask">发布任务</a></li>
+    <li id = "task_publish" class="layui-nav-item"><a href="../upload_task_info_form.html" id="sendTask">发布任务</a></li>
+    <li id = "task_log" class="layui-nav-item"><a href="../../logsystem/loglist_view.html" >日志</a></li>
 
 
 </ul>
