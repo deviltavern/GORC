@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userinfopage</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style type="text/css">
+        .div1{
+            width: 100%;
+            height: 100%;
+            /*vertical-align: middle;*/
+            text-align: center;
+            padding: 25px;
+            margin: 0 auto;
+        }
+        .div2{
+            display: inline-block;
+            background-color: orangered;
+        }
+        .fontsize{
+            font-size: 25px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('#bs').before('' +
+                '<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="60" src="../../Html/hall/home_head.html"></iframe>')
+
+        })
+    </script>
+</head>
+<body id="bs">
+<div class="div1" style="width:100%; background-color:#a6926c; height: 100%; ">
+    <div class="" style=" width:300px; margin: 0 auto; ">
+        <table style="alignment: center">
+            <caption class="fontsize"; style="text-align: center; ">个人信息</caption>
+            <tr style="vertical-align: bottom">
+                <td>
+                    <img src="../../image/gold.jpeg" style="width: 50px; vertical-align: middle" alt="">
+                    <p class="fontsize">账户名：</p>
+                </td>
+                <td>
+                    <b class="fontsize">123</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="fontsize">用户名：</p>
+                </td>
+                <td>
+                    <b class="fontsize">罗继业</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <img src="../../image/gold.jpeg" style="width: 50px" alt="">
+                    <p class="fontsize">积分值：</p>
+                </td>
+                <td>
+                    <b class="fontsize">9250</b>
+                </td>
+            </tr>
+            <tr>
+                <td>
+                    <p class="fontsize">用户等级：</p>
+                </td>
+                <td>
+                    <b class="fontsize">渡劫</b>
+                </td>
+            </tr>
+        </table>
+    </div>
+
+
+</div>
+
+<!--<h2>账户名：</h2>-->
+<!--<input id="user_acc" value="123" style="width: 150px; height: 40px; font-size: 30px" readonly>-->
+
+<!--<h2>用户名:</h2>-->
+<!--<input id="user_name" value="罗继业" style="width: 150px; height: 40px; font-size: 30px" readonly>-->
+<!--<br>-->
+<!--<h2>积分值：</h2>-->
+<!--<input id="user_score" value="---" style="width: 150px; height: 40px; font-size: 30px" readonly>-->
+<!--<br>-->
+<!--<h2>用户等级：</h2>-->
+<!--<input id="user_level" value="---" style="width: 150px; height: 40px; font-size: 30px" readonly>-->
+</body>
+</html>

@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>score_page2</title>
+    <script src="../../layui/layui.js" charset="utf-8"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="../../js/CommonTool.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../../js/Config.js"></script>
+</head>
+<body id="bs">
+
+<table class="layui-hide"  id="test"></table>
+<script>
+
+    //表格数据加载
+    layui.use('table', function(){
+        var table = layui.table;
+        table.render({
+            elem: '#test'
+            ,url:'http://localhost:8099/getScoreRecord'
+            ,title:'积分操作记录表'
+            ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            ,cols: [[
+                {field:'sc_re_index',  title: '序号', sort: true}
+                ,{field:'user_acc',  title: '账户名'}
+                ,{field:'operate_value',  title: '积分数额', sort: true}
+                ,{field:'rest_value',  title: '剩余积分'}
+                ,{field:'sc__re_description', title: '备注'} //minWidth：局部定义当前单元格的最小宽度，layui 2.2.1 新增
+                ,{field:'operate_time', title: '积分操作时间', minWidth: 100, sort: true}
+            ]]
+            ,page: true
+            ,limits: [3,5,10]  //一页选择显示3,5或10条数据
+            ,limit: 10  //一页显示10条数据
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据，res为从url中get到的数据
+                var result;
+                console.log(this);
+                console.log(JSON.stringify(res));
+                if(this.page.curr){
+                    result = res.data.slice(this.limit*(this.page.curr-1),this.limit*this.page.curr);
+                }
+                else{
+                    result=res.data.slice(0,this.limit);
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.msg, //解析提示文本
+                    "count": res.count, //解析数据长度
+                    "data": result //解析数据列表
+                };
+            }
+        });
+    });
+
+
+    $(document).ready(function() {
+
+        $('#bs').before('<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="60" src="../../Html/hall/home_head.html"></iframe>')
+
+        // $.post(localStorage.getItem('system_site')+'/getUserModel?user_acc='+localStorage.getItem("user_acc"),function(data){
+        //
+        //     $('#task_master').val(data.user_name);
+        // });
+    });
+</script>
+</body>
+</html>
