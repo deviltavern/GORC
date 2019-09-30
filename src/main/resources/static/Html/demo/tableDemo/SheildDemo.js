@@ -21,19 +21,19 @@ function bacgroundInit() {
 
         var hoverValue = localStorage.getItem("hover_value");
 
-        if(hoverValue!= ""){
-
-            var hoverObject = JSON.parse(hoverValue);
-            switch (hoverObject.code) {
-
-                case "front_train_label":
-                    console.info("前端训练营！");
-                    combox.move(hoverObject.pos.x,hoverObject.pos.y+16);
-                    combox.show()
-                    break;
-
-            }
-        }
+        // if(hoverValue!= ""||hoverValue!= null){
+        //
+        //     var hoverObject = JSON.parse(hoverValue);
+        //     switch (hoverObject.code) {
+        //
+        //         case "front_train_label":
+        //             console.info("前端训练营！");
+        //             combox.move(hoverObject.pos.x,hoverObject.pos.y+16);
+        //             combox.show()
+        //             break;
+        //
+        //     }
+        // }
 
     }
 

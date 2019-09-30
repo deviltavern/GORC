@@ -48,15 +48,15 @@ userLoginBtn.onclick = function (ev) {
     console.info(message);
     requestServerEX("/loginEvent",message,function (data) {
         console.info(data);
-        localStorage.setItem('loginkey',localStorage.getItem("system_site")+"/login?skey="+data);
-        requestServer("/login?skey="+data,function (ip) {
+        localStorage.setItem('loginkey',localStorage.getItem("system_site")+"/login?skey="+data.reValue);
+
+        var skey = data.reValue;
+
+        localStorage.setItem("spxInfo",JSON.stringify(data));
+        requestServer("/login?skey="+skey,function (ip) {
             localStorage.setItem('loginkey',ip);
-            console.info(ip);
-           // $(window).attr("location",ip);
 
-            //window.location.href = ip;
-
-            window.open(ip.toString());
+            window.parent.location.href = ip.toString();
         });
 
 

@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <link rel="stylesheet" href="../demo/ElementCreatorFrame/ZCElementer.css">
+    <style>
+        .fontUnderline{
+            position: absolute;
+            font-family: zffg;
+            text-decoration: underline;
+            font-size: 60px;
+            left: 20%;
+
+
+        }
+        .fontCenter{
+
+
+        }
+
+    </style>
+    <script>
+
+        window.onload = function (ev) {
+
+            loadFont("zffg","../../font/www124.TTF");
+
+            var mainDiv = div(60,600);
+            setColor(mainDiv,Color24(230 ,230, 250));
+            setPositionWithPercent(mainDiv,Vector3(20,10));
+            setBorder(mainDiv,0,"30px");
+            mainDiv.className = "shadow_0";
+
+            var headImg = createimg("../../image/la.png",150,150);
+            headImg.style.borderRadius = "50%";
+
+            var nameLabel = createLabel("昵称: ",30,40);
+
+            setParent(nameLabel,mainDiv);
+            setCSS(nameLabel,"fontUnderline");
+            setParent(headImg,mainDiv);
+
+            var nameInfo = createLabel("王二麻子",30,40);
+            setParent(nameInfo,mainDiv);
+            setCSS(nameInfo,"fontUnderline");
+            setPositionWithPercent(nameInfo,Vector3(40,0));
+
+            var scoreLabel = createLabel("积分: ",30,40);
+            setParent(scoreLabel,mainDiv);
+            setCSS(scoreLabel,"fontUnderline");
+            setPositionWithPercent(scoreLabel,Vector3(20,15));
+
+            var scoreImg = createimg("../../image/scoreBac1.png",150,150);
+            setParent(scoreImg,mainDiv);
+            setBorder(scoreImg,0,"50%");
+            setPositionWithPercent(scoreImg,Vector3(40,23));
+
+            initAnimation();
+
+            var loop = endlessLoop();
+            loop.func = function(time){
+
+                setRotation(scoreImg,time);
+
+            };
+            scoreImg.doAnimation = loop.run;
+            addAnimation(scoreImg);
+
+            var scoreInfo = createLabel("10000",10,10);
+            scoreInfo.style.textAlign = "center";
+            setParent(scoreInfo,mainDiv);
+            setPositionWithPercent(scoreInfo,Vector3(41.5,27));
+            setFontSize(scoreInfo,"30px");
+
+
+
+
+            console.info(nameLabel.tagName);
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

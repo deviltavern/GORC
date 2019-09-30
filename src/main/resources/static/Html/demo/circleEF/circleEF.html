@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+//        function Vector2(x,y) {
+//
+//            var temp = {};
+//            temp.x = x;
+//            temp.y = y;
+//            return temp;
+//        }
+//        function canvas(width,height,x,y) {
+//            var canvasObj = {};
+//
+//            var  e1 = document.createElement("canvas");
+//            var e2 = document.body.appendChild(e1);
+//            e2.style.width = width+"px";
+//            e2.style.height = height+"px";
+//            e2.style.position = "absolute";
+//            e2.style.top = y+"%";
+//            e2.style.left = x+"%";
+//
+//            e2.style.background = "rgb(123,123,123)";
+//
+//            e2.width = width;
+//            e2.height = height;
+//            canvasObj.canvas = e2;
+//            canvasObj.context = e2.getContext("2d");
+//
+//            canvasObj.origin = Vector2(width/2,height/2);
+//
+//
+//            return canvasObj;
+//
+//
+//        }
+
+    </script>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script>
+
+        window.onload = function (ev) {
+
+
+            initAnimation();
+
+
+
+
+
+          var ca =  canvas(200,200,30,30);
+          ca.canvas.style.borderRadius = "50%";
+          var context = ca.context;
+
+            context.lineWidth = 10;
+
+            //context.moveTo(ca.origin.x,ca.origin.y);
+
+            context.fillStyle="#FF0000";
+            var offValue = 0;
+
+            var o2 = 0;
+
+
+            ca.doAnimation = function(){
+
+                offValue+= 0.01;
+                //console.info(offValue);
+                context.beginPath();
+                context.fillStyle="#FF0000";
+
+                context.arc(ca.origin.x, ca.origin.y, 90, Math.PI+o2, Math.PI - offValue, true);
+
+
+                context.stroke();                // 进行绘制
+
+            }
+            addAnimation(ca);
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

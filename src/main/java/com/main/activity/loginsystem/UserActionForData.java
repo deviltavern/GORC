@@ -6,7 +6,9 @@ import com.main.dao.DataBaseOP;
 import com.main.dao.UserInfoDBOP;
 import com.main.DynamicLayer.User;
 import com.main.Model.UserModel;
+import net.sf.json.JSON;
 import net.sf.json.JSONObject;
+import org.hibernate.validator.internal.engine.messageinterpolation.parser.ELState;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -84,17 +86,39 @@ public class UserActionForData {
 
     }
 
+    @PostMapping("/loginMatch")
+    public JSONObject loginMatch(String user_acc, String user_pwd) throws Exception {
 
+        JSONObject rejson = new JSONObject();
+        System.out.println(user_acc);
+        userModel = (UserModel) JSONObject.toBean(userJson, UserModel.class);
+        //System.out.println(userModel.user_acc);
+        dbModel = UserInfoDBOP.getUserInfoModelListSingle(user_acc);
+
+
+        if (user_pwd.equals(dbModel.user_pwd)) {
+            rejson.put("strArg","true");
+        }else {
+
+            rejson.put("strArg","false");
+        }
+
+        return rejson;
+
+    }
     @PostMapping("/loginEvent")
-    public String loginEvent(String user_acc,String user_pwd) throws Exception {
+    public JSONObject loginEvent(String user_acc,String user_pwd) throws Exception {
 
-
+        JSONObject reData = new JSONObject();
         System.out.println(user_acc);
         try{
             userModel = (UserModel)JSONObject.toBean(userJson,UserModel.class);
             dbModel = UserInfoDBOP.getUserInfoModelListSingle(user_acc);
 
             if(user_pwd .equals(dbModel.user_pwd) ){
+
+                reData.put("user_acc",user_acc);
+                reData.put("user_pwd",user_pwd);
 
                 System.out.println("登录成功！");
                 String reValue = UserActionForHtml.randomValue;
@@ -107,20 +131,21 @@ public class UserActionForData {
                     UserActionForHtml.randomValue += Math.abs(rd.nextInt()%10);
 
                 }
-
-                return  reValue;
+                reData.put("reValue",reValue);
+                return  reData;
 
             }
 
 
         }catch (Exception e){
-
-            return "222";
+            reData.put("reValue","222");
+            return  reData;
 
         }
         //    userJson =  JSONObject.fromObject(message);
 //
-        return "222";
+        reData.put("reValue","222");
+        return reData;
 
     }
 

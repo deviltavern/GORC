@@ -4,7 +4,9 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="../ElementCreatorFrame/ZCElementer.js"></script>
-
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../../js/Config.js"></script>
+    <link rel="stylesheet" href="../ElementCreatorFrame/ZCElementer.css">
     <link>
 
 
@@ -39,17 +41,104 @@
             level.src = "../../../image/"+detail.task_difficute_level+".png";
 
 
+
+
         }
 
         window.onload = function (ev) {
+            document.body.style.backgroundImage = "url('../../../image/bsd.jpg')"
+            var detail = localStorage.getItem("detail");
 
+            var detailObj = JSON.parse(detail);
+            iframe("../../hall/home_head/home_head2.html");
+            var acceiveIcon = "../../../image/redZ.png";
 
             loadFont("myTwwe","ziti/www124.ttf");
             var img=  createimg("../../../image/Ls.png",100,100,50);
+            var acceiveBtn = button("接取",acceiveIcon,6,14,67,80);
+            acceiveBtn.onclick = function (ev1) {
 
-            iframe("../../hall/home_head/home_head2.html")
 
-           // var xmon = xMonitor(img)  ;
+                var spxInfo = localStorage.getItem("spxInfo");
+                var spxObj = JSON.parse(spxInfo);
+                var data = {};
+                data.user_acc = spxObj.user_acc;
+                data.user_pwd = spxObj.user_pwd;
+                console.info(spxInfo);
+                if(spxInfo != null){
+
+                    requestServer("/loginMatch",function (ip) {
+
+                        console.info(data);
+                        $.post(ip,data,function (reData) {
+
+                            if(reData.strArg == "true"){
+
+                                console.info("登录成功");
+
+                                var setStatu = {};
+                                setStatu.key =detailObj.task_index;
+                                setStatu.value = 1+"";
+                                setStatu.task_solver = spxObj.user_acc;
+                                requestServer("/setTaskStatu",function (dpi) {
+                                    $.post(dpi,setStatu,function (reData2) {
+
+                                        var reFromSetStatu = confirm("success");
+
+                                        if(reFromSetStatu == true){
+
+                                            console.info("接取完毕！");
+
+                                            var goMainPage = confirm("回到主页？");
+
+                                            if(goMainPage == true){
+
+                                                requestServer("/login?skey="+spxObj.reValue,function (ip) {
+
+                                                    location.href = ip;
+
+                                                });
+                                            }
+                                        }
+                                    });
+
+
+                                });
+
+                            }
+
+                        });
+
+                    });
+                }else {
+
+                    console.info("登录数据为空！");
+
+                    window.open("../../login/login2.html");
+                }
+
+
+
+
+
+
+             //  requestServer("/receive",function (ip) {
+
+             //      var data = {};
+             //      data.
+
+             //      $.post(ip,)
+
+
+             //  });
+
+
+
+            };
+
+
+
+            // var xmon = xMonitor(img)  ;
 
             //使用动画必须调用，调用一次就够了
             initAnimation();
@@ -67,7 +156,7 @@
                 var xx = parseFloat(preImgPos.x) + time/4;
                 setPositionWithPercent(img,Vector3(xx,preImgPos.y));
                 setRotation(img,xx*19);
-            }
+            };
 
             img.doAnimation =ce.run;
 
@@ -79,7 +168,7 @@
             setScale(imgHead,Vector3(50,20));
 
             var bo2 = createimg("../../../image/bo2.jpg",500,700);
-
+            bo2.className = "shadow_0";
             setPositionWithPercent(bo2,Vector3(36,27));
 
             var label =  createLabel("你是傻逼",33,50);
@@ -90,9 +179,7 @@
             setPositionWithPercent(content,Add(getPosition(bo2),Vector3(2,5.1)));
 
 
-            var detail = localStorage.getItem("detail");
 
-            var detailObj = JSON.parse(detail);
             console.info(detail);
             if (detail!= null){
 

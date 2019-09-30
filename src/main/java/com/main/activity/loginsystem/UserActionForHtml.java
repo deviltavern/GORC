@@ -25,7 +25,7 @@ public class UserActionForHtml {
         if (User.vorify(skey) == true)
         {
             System.out.println("已经登陆，刷新页面！");
-            return "hall/homepage.html";
+            return "hall/homepage2.html";
         }
 
         if(skey.equals(randomValue))
@@ -34,7 +34,7 @@ public class UserActionForHtml {
             System.out.println("进入新的页面！");
             String a = "";
 
-            return "hall/homepage.html";
+            return "hall/homepage2.html";
         }else {
 
             return "login/login_page.html";

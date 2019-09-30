@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="/static/layui/css/layui.css"  media="all">
+    <script src="/static/Html/demo/ComboBox/Combox.js"></script>
+
+    <link rel="stylesheet" href="/static/css/img.css"  media="all">
+
+    <link rel="stylesheet" href="/static/css/colorx.css"  media="all">
+    <link rel="stylesheet" href="/static/css/fontx_style.css"  media="all">
+    <script src="/static/js/rd.js"></script>
+    <script src="/static/layui/layui.js" charset="utf-8"></script>
+    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>
+    <script src="/static/Html/demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <link rel="stylesheet" href="/static/css/video_background.css"  media="all">
+    <style type="text/css">
+  {# 设置table每一行的height #}
+  .layui-table-cell {
+   height: auto;
+   line-height: 50px;
+  }
+ </style>
+
+
+
+
+    <style>
+
+
+        .DIVa {position:absolute;top:5%;width:100%;z-index:-1}
+
+        .modal {
+  position: fixed;   // 可以保证以原有页面内容的高度，遮罩
+  top: 0;
+  left: 0;
+  bottom: 0;
+  background: rgba(0,0,0,.5);
+  height: 100%;
+  width: 100%;
+  display: none;
+  justify-content: center;
+}
+
+
+    </style>
+    <script>
+
+
+
+
+    $(document).ready(function() {
+
+      //  $('#home_headx').before('<iframe name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="/static/Html/hall/home_head/home_head2.html" style="filter:chroma(color=#ffffff)" ></iframe>')
+
+       var  iframe1 =  iframe("/static/Html/demo/tableDemo/BlackShield.html");
+
+        iframe1.height = 1200+"px";
+        //
+        // var tast_publishArray = new Array();
+        // tast_publishArray.push("任务发布");
+        // tast_publishArray.push("发布记录");
+        // var task_publishCombox = createCombox(tast_publishArray);
+        // task_publishCombox.hide();
+        //
+        // op = function () {
+        //     console.info();
+        //
+        //
+        //     if (localStorage.getItem("hover_value") != "") {
+        //         var v = JSON.parse(localStorage.getItem("hover_value"));
+        //         console.info(v);
+        //         switch (v.type) {
+        //             case "task_publish":
+        //                 task_publishCombox.show();
+        //                 task_publishCombox.move(v.pos.x, v.pos.y);
+        //                 break;
+        //
+        //             default:
+        //
+        //                 break;
+        //
+        //         }
+        //
+        //     }
+        //
+        //
+        // }
+        //
+        //
+        //
+        // frame();
+
+    });
+
+     $(window).load(function () {
+       // $('#hd').load('home_head.html');
+
+          //  insNewTable('sf_table','1',JSON.stringify(a));
+
+
+       });
+
+       function clicktrTest(){
+        alert("123");
+       }
+    </script>
+
+
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body >
+
+<div id="home_headx">
+
+
+</div>
+
+
+
+
+
+
+
+
+
+
+
+</body>
+</html>

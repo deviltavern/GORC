@@ -28,6 +28,8 @@
 
     window.onload = function (ev) {
 
+        var localInfo = localStorage.getItem("spxInfo");
+        console.info(localInfo);
         bacgroundInit();
 
         var bg_box=document.getElementById("bg_box");

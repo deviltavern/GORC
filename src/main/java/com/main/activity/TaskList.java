@@ -330,7 +330,7 @@ public class TaskList {
     public JSONArray getTaskDataByType(String  type) throws Exception {
 
         System.out.println(type);
-        String sql = "select * from task_list where task_type = '"+type+"'";
+        String sql = "select * from task_list where task_type = '"+type+"' and task_status = '0'";
 
       return   DataBaseOP.request(sql);
 

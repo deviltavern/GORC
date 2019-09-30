@@ -1,0 +1,8 @@
+.shadow_0{
+
+    box-shadow:-10px 0px 10px gray,   /*左边阴影*/
+    0px -10px 10px #000,  /*上边阴影*/
+    10px 0px 10px gray,  /*右边阴影*/
+    0px 10px 10px gray;" /*下边阴影*/
+
+}
