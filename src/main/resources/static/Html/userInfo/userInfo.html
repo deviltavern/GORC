@@ -9,9 +9,20 @@
         .fontUnderline{
             position: absolute;
             font-family: zffg;
-            text-decoration: underline;
+
             font-size: 60px;
             left: 20%;
+
+
+        }
+        .stageInfo{
+            position: absolute;
+
+            font-size: 60px;
+            left: 40%;
+            border-radius: 30px;
+            top: 30%;
+            font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
 
 
         }
@@ -20,22 +31,140 @@
 
         }
 
+        .permissionLabel{
+            position: absolute;
+            font-family: zffg;
+            font-size: 60px;
+            left: 20%;
+            border-radius: 30px;
+            top: 60%;
+
+        }
+        .permissionInfo{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 80px;
+            left: 46%;
+            border-radius: 30px;
+            top: 55%;
+        }
+        .emailDiv{
+            position: absolute;
+            font-family: zffg;
+            font-size: 80px;
+            left: 0%;
+            border-radius: 30px;
+            top: 47%;
+            width: 17%;
+            height: 30%;
+
+            background-size: 100%;
+
+        }
+        .emailBtn{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 80px;
+
+            border-radius: 30px;
+
+            width: 100%;
+            height: 100%;
+
+            background-size: 100%;
+
+
+        }
+
+        .emailEnumeratorLabel{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 30px;
+            bottom: -10%;
+            border-radius: 30px;
+            right: 5%;
+            color: #FFB800;
+            text-shadow: 0 0 0.2em #87F, 0 0 0.2em #87F,
+            0 0 0.2em #87F;
+            background-size: 100%;
+
+        }
+        .xshadow0{
+
+            box-shadow:-10px 0px 10px gray,   /*左边阴影*/
+            0px -10px 10px #000,  /*上边阴影*/
+            10px 0px 10px gray,  /*右边阴影*/
+            0px 10px 10px gray;" /*下边阴影*/
+        }
+
+        .box {  background-color: #CCCCCC;  width: 200px; height: 200px;  }
+
+        .boxshadow1{
+            box-shadow:inset 0px 15px 15px -15px #000,
+            inset 0px -15px 15px -15px #000;
+        }
+        .boxshadow2{
+            box-shadow:15px 0 15px -15px #000,
+            -15px 0 15px -15px #000;
+        }
+        .boxshadow3{ border-radius:10px;
+            box-shadow:0px 0px 0px 3px #bb0a0a,
+            0px 0px 0px 6px #2e56bf,
+            0px 0px 0px 9px #ea982e;
+        }
+
+
     </style>
     <script>
-
         window.onload = function (ev) {
 
             loadFont("zffg","../../font/www124.TTF");
-
+            iframe("../hall/home_head/home_head2.html");
             var mainDiv = div(60,600);
             setColor(mainDiv,Color24(230 ,230, 250));
             setPositionWithPercent(mainDiv,Vector3(20,10));
             setBorder(mainDiv,0,"30px");
             mainDiv.className = "shadow_0";
-
-            var headImg = createimg("../../image/la.png",150,150);
+            //--------------------头像---------------------------
+            var headImg = createimg("../../image/dmw.jpeg",150,150);
             headImg.style.borderRadius = "50%";
 
+            //--------------------邮箱------------------
+            var emailDiv = div();
+            setParent(emailDiv,mainDiv);
+            setCSS(emailDiv,"emailDiv");
+
+            var emailBtn = createimg("../../image/yx.png");
+
+            setParent(emailBtn,emailDiv);
+            setCSS(emailBtn,"emailBtn");
+            emailBtn.onmouseenter = function (ev1) {
+                setCSS(emailBtn,"emailBtn boxshadow2");
+
+            };
+            emailBtn.onmousedown = function (ev1) {
+                setCSS(emailBtn,"emailBtn boxshadow1");
+
+            }
+            emailBtn.onmouseup = function (ev1) {
+                setCSS(emailBtn,"emailBtn boxshadow2");
+
+            }
+            emailBtn.onmouseleave = function (ev1) {
+                setCSS(emailBtn,"emailBtn");
+
+            }
+
+            var emailEnumeratorLabel = createLabel("233");
+            setParent(emailEnumeratorLabel,emailDiv);
+            setCSS(emailEnumeratorLabel,"emailEnumeratorLabel");
+
+
+
+            //---------------属性--------------Info------------------
             var nameLabel = createLabel("昵称: ",30,40);
 
             setParent(nameLabel,mainDiv);
@@ -50,7 +179,7 @@
             var scoreLabel = createLabel("积分: ",30,40);
             setParent(scoreLabel,mainDiv);
             setCSS(scoreLabel,"fontUnderline");
-            setPositionWithPercent(scoreLabel,Vector3(20,15));
+            setPositionWithPercent(scoreLabel,Vector3(20,20));
 
             var scoreImg = createimg("../../image/scoreBac1.png",150,150);
             setParent(scoreImg,mainDiv);
@@ -75,12 +204,77 @@
             setFontSize(scoreInfo,"30px");
 
 
+            //---------------位阶-----------------------------//
+            var levelLabel = createLabel("位阶: ");
 
+            setCSS(levelLabel,"fontUnderline");
+
+            setParent(levelLabel,mainDiv);
+            setPositionWithPercent(levelLabel,Vector3(20,40));
+            var levelInfo =  createLabel("Q-0",20,40);
+            setParent(levelInfo,mainDiv);
+            setCSS(levelInfo,"stageInfo");
+            setPositionWithPercent(levelInfo,Vector3(43,39));
+            setFontColor(levelInfo,Color24(	155 ,205 ,155));
+
+
+            //---------------------权限------------------------------------//
+            var permissionLabel = createLabel("权限: ");
+
+            setCSS(permissionLabel,"permissionLabel");
+            setParent(permissionLabel,mainDiv);
+
+            var permissionInfo = createLabel("A");
+            setParent(permissionInfo,mainDiv);
+            setCSS(permissionInfo,"permissionInfo");
+
+
+
+            //---------------边界-------------//
+
+
+
+
+
+
+            var offset = 3.3;
+            //创建任务浏览的按钮：
+            var taskInfoBtn = button("当前任务","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(0+offset,90));
+            taskInfoBtn.onclick = function (ev1) {
+
+                window.location.href = "userCurrentTask.html";
+            }
+
+
+
+            var taskInfoBtn = button("任务记录","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(16+offset,90));
+
+            var taskInfoBtn = button("积分记录","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(32+offset,90));
+
+            var taskInfoBtn = button("我的训练营","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(48+offset,90));
+
+            var taskInfoBtn = button("我的技能树","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(64+offset,90));
+
+            var taskInfoBtn = button("渡劫申请","",15,10,0,20);
+            setParent(taskInfoBtn,mainDiv);
+            setPositionWithPercent(taskInfoBtn,Vector3(80+offset,90));
 
             console.info(nameLabel.tagName);
 
 
         }
+
+
     </script>
 </head>
 <body>

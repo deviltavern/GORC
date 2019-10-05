@@ -16,6 +16,16 @@ function loadFont(fontName,src) {
 
 }
 
+function loadCSS(src) {
+
+    var lik=  document.createElement("link");
+
+    document.head.appendChild(lik);
+
+    lik.rel = "stylesheet";
+    lik.href = src;
+
+}
 
 //元素创建
 function createimg(src,width,height) {
@@ -110,7 +120,37 @@ return e2;
 
 
 }
+function textInput() {
 
+    var input = document.createElement("input");
+    input.type = "text";
+
+
+    return input;
+
+}
+
+function hilabel(content,i) {
+    var p = document.createElement("h"+i);
+    p.innerText = content;
+    return p;
+}
+function textareaInput() {
+
+    var input = document.createElement("textarea");
+
+
+    return input;
+}
+
+function fileInput() {
+    var input = document.createElement("input");
+    input.type = "file";
+    input.name = "file";
+
+    return input;
+
+}
 function button(value,src,width,height,left,top) {
 
     var e1 = document.createElement("input");
@@ -292,6 +332,7 @@ function setScale(origin,vector2) {
 
 
 }
+
 function getPosition(element) {
 
 
@@ -339,6 +380,10 @@ function setRotation(element,value) {
 function setColor(orign,rbg) {
 
     orign.style.backgroundColor = rbg;
+}
+function setFontColor(origin,rgb) {
+    origin.style.color = rgb;
+
 }
 function setBorder(origin,type,value) {
 
@@ -417,6 +462,9 @@ function setFontSize(origin,fontSize) {
 function setFontUnderline(origin,ef) {
     origin.style.textDecoration = ef;
 
+}
+function setText(origin,content) {
+    origin.innerText = content;
 }
 
 
@@ -568,5 +616,135 @@ function endlessLoop() {
 
     return circler;
 }
+function endlessLoopWithLimit(timeLimit) {
+    var circler = {};
 
-//----------------Animation-----------------------//
+    circler.limit = timeLimit;
+    circler.dynamicX = 0;
+    circler.dynamicBorder = false;
+
+    circler.func = function (time) {
+        // console.info(time);
+    };
+
+    circler.run = function () {
+
+        if(circler.dynamicX>circler.limit){
+
+            return;
+        }
+        circler.dynamicX += 1;
+        circler.func(circler.dynamicX);
+    }
+
+    return circler;
+}
+//----------------Time-----------------------//
+
+
+// var seconds = GetDateDiff(str2Date('2019-10-01 17:01:58'),new Date());
+function getDateDiff(startTimeDate, endTimeDate) {
+
+
+    var diff = 0;
+    var difDat = startTimeDate.getDate() - endTimeDate.getDate();
+    var difHour = startTimeDate.getHours() - endTimeDate.getHours();
+    var difMil = startTimeDate.getMinutes() - endTimeDate.getMinutes();
+    var difSecon = startTimeDate.getSeconds() - endTimeDate.getSeconds();
+
+    diff = difDat*24*60*60+ difHour*60*60+difMil*60+difSecon;
+
+    return -diff;
+
+
+
+}
+
+function str2Date(str) {
+
+    var new_time_str = str.replace(/-/g, '/')
+    var newtime = new Date(new_time_str)
+    return newtime;
+}
+
+function getDaySecond(dayNum) {
+
+    return dayNum*24*60*60;
+}
+
+function getDateFromSeconds(seconds) {
+
+    var day = parseInt( seconds/(60*60*24));
+
+    var resthour = seconds - day*(60*60*24);
+    var hour = parseInt( resthour/(60*60));
+
+    var restMinites = resthour - hour*60*60;
+    var minit = parseInt( restMinites/(60));
+    var restSeconds = restMinites - minit*60;
+    return day+":"+ hour+":"+minit+":"+restSeconds;
+
+}
+
+//---------------------------------------------------后端------------------------------------------------//
+/**
+ * 从Input标签中获得数据源，绑定到Formdata中，可以直接上传到服务器
+ * @param fileInputTag
+ * @param fileName
+ * @returns {boolean|FormData}
+ */
+function getFileSourceFromInputTag(fileInputTag,fileName) {
+    var $icon = $(".upload-icon");
+    var formData = new FormData(),
+        fs = fileInputTag.files;
+    var max_size = 1024 * 1024 * 100
+
+    for (var i = 0; i < fs.length; i++) {
+        var d = fs[0]
+        if(d.size <= max_size){  //文件必须小于100M
+
+            formData.append(fileName, fs[i]);
+            console.info(formData);
+
+        }else{
+            alert('上传文件过大！');
+            return false
+        }
+    }
+
+    return formData;
+
+
+}
+
+function uploadFormdata(url,formData) {
+
+    $.ajax({
+        type: "POST",
+        url: url,
+        data: formData,
+        cache: false,
+        processData: false,
+        contentType: false
+
+    });
+}
+//将file和本地文件建立映射关系，获得本地资源的url(通过input标签)
+function getObjectURL(file)
+{
+    var url = "";
+    if(window.createObjectURL!=undefined)
+    {
+        url = window.createObjectURL(file);
+    }
+    else if(window.URL!=undefined)
+    {
+        url = window.URL.createObjectURL(file);
+    }
+    else if (window.webkitURL != undefined)
+    {
+        url = window.webkitURL.createObjectURL(file);
+    }
+    return url;
+}
+

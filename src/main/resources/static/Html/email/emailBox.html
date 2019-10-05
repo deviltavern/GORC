@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style>
+        .emailDiv{
+            width:50%;
+            position: absolute;
+            height: 100%;
+            background: #edcc92;
+            border-radius: 40px;
+
+            left: 25%;
+
+        }
+        .headInput{
+
+            width:85%;
+            position: absolute;
+            height: 20px;
+            top: 5%;
+            background: #edcc92;
+            border-radius: 40px;
+            left: 8%;
+
+        }
+        .headLabel{
+
+            position: absolute;
+            top: 3%;
+            background: #edcc92;
+            border-radius: 40px;
+            left: 2%;
+
+        }
+
+        .emailSender{
+
+
+            width:15%;
+            position: absolute;
+            height: 20px;
+            top: 10%;
+            background: #edcc92;
+            border-radius: 40px;
+            right: 8%;
+        }
+        .emailSenderLabel{
+            position: absolute;
+            top: 8%;
+            background: #edcc92;
+            border-radius: 40px;
+            right: 25%;
+
+        }
+        .emailType{
+            width:15%;
+            position: absolute;
+            height: 20px;
+            top: 15%;
+            background: #edcc92;
+            border-radius: 40px;
+            right: 8%;
+
+        }
+        .emailTypeLabel{
+
+            position: absolute;
+            top: 13%;
+            background: #edcc92;
+            border-radius: 40px;
+            right: 25%;
+
+        }
+        .emailContent{
+
+            position: absolute;
+            top: 20%;
+            width: 60%;
+            height: 60%;
+            background: #edcc92;
+            border-radius: 40px;
+            text-indent: 2em;
+            right: 15%;
+            padding: 5%;
+        }
+        .addImgDiv{
+
+            position: absolute;
+            top: 20%;
+            width: 10%;
+            height: 10%;
+            left: 2%;
+            background-image: url("../../image/pen0.png");
+            background-size: 100%;
+            border-radius: 10px;
+            box-shadow:5px 5px 5px -5px #000,
+            -5px 0 5px -5px #000;
+        }
+        .fileInputBtn{
+            width: 100%;
+            height: 100%;
+            opacity: 0;
+
+
+        }
+        .imgFile{
+            position: absolute;
+            top: 33%;
+            width: 10%;
+            height: 10%;
+            left: 2%;
+            background-size: 100%;
+            border-radius: 10px;
+
+            box-shadow: 0px 5px 5px -5px #000,
+             5px -5px 5px -5px #000;
+        }
+
+        .sendBtn{
+            position: absolute;
+            bottom: 5%;
+            width: 10%;
+            height: 8%;
+            right: 5%;
+            background-size: 100%;
+            border-radius: 10px;
+            background-size: 100%;
+            background-image: url("../../image/send0.png");
+            box-shadow:5px 5px 5px -5px #000,
+            -5px 0 5px -5px #000;
+        }
+
+
+
+    </style>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ButtonDemo0/button.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/Config.js"></script>
+
+    <script>
+       function email() {
+           this.type = 0;
+           this.content = '123';
+           this.send_master = 'yk';
+           this.receive_master = 'test';
+           this.send_date = new Date().toDateString();
+       }
+
+
+
+       function form() {
+
+           var form = document.createElement("form");
+           form.addChild = function (domValue) {
+             form.appendChild(domValue);
+           };
+
+
+
+           return form;
+       }
+
+
+
+    </script>
+
+
+    <script>
+
+
+    </script>
+
+
+    <script >
+        window.onload = function (ev) {
+
+            //初始化
+            loadCSS("../demo/ButtonDemo0/button.css");
+
+            //初始化用户信息
+            var userInfo = localStorage.getItem("spxInfo");
+            var userObject = null;
+            if(userInfo != null){
+                userObject = JSON.parse(userInfo);
+
+            }else {
+                userObject = {};
+                userObject.user_acc = "yk";
+
+            }
+
+            var emailDiv = div();
+            var headInput = textInput();
+            var headLabel = hilabel("标题",4);
+            var emailSender = textInput();
+            var emailSenderLabel = hilabel("发件人",4);
+            var emailType = textInput();
+            var emailTypeLabel = hilabel("信件类型",4);
+            var emailContent = textareaInput();
+            var addImgDiv = div();
+            var fileInputBtn = fileInput();
+            var imgFile = createimg("../../image/sd0.jpg");
+
+            var sendBtn = div();
+
+
+
+
+            setCSS(emailDiv,"emailDiv");
+            setParent(headInput,emailDiv);
+            setCSS(headInput,"headInput");
+            setParent(headLabel,emailDiv);
+            setCSS(headLabel,"headLabel");
+            setParent(emailSender,emailDiv);
+            setCSS(emailSender,"emailSender");
+            setParent(emailSenderLabel,emailDiv);
+            setCSS(emailSenderLabel,"emailSenderLabel");
+            setParent(emailType,emailDiv);
+            setCSS(emailType,"emailType");
+            setParent(emailTypeLabel,emailDiv);
+            setCSS(emailTypeLabel,"emailTypeLabel");
+            setParent(emailContent,emailDiv);
+            setCSS(emailContent,"emailContent");
+            setParent(addImgDiv,emailDiv);
+            setParent(fileInputBtn,addImgDiv);
+            setCSS(fileInputBtn,"fileInputBtn");
+
+            setParent(imgFile,emailDiv);
+            setParent(sendBtn,emailDiv);
+            setCSS(sendBtn,"sendBtn");
+            setCSS(imgFile,"imgFile");
+
+            fileInputBtn.onchange = function (ev1) {
+
+                console.info(fileInputBtn.files[0]);
+                var data = {};
+                data.imgFile = fileInputBtn.files[0];
+                imgFile.src = getObjectURL(fileInputBtn.files[0]);
+
+               // handleFile(fileInputBtn,"imgFile");
+
+
+            }
+            bindButtonEf(addImgDiv,"addImgDiv",function () {
+               console.info("123");
+                var reader = new FileReader();
+            });
+
+            bindButtonEf(sendBtn,"sendBtn",function () {
+
+                var formData = getFileSourceFromInputTag(fileInputBtn,"imgFile");
+                formData.append("headImg",headInput.value);
+                uploadFormdata("http://localhost:8099/uploadEmailImg",formData);
+               // console.info(formData.toString());
+            });
+        }
+
+    </script>
+</head>
+<body>
+
+
+</body>
+</html>

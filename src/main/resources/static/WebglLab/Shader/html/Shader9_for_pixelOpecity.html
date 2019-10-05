@@ -48,7 +48,7 @@
            vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
 
 
-           v_TexCoord = mvPosition.xy*0.2;
+           v_TexCoord = mvPosition.xy*0.051;
 
           // v_TexCoord = vec2(cos(3.14159/4.0)*v_TexCoord.x+sin(3.14159/4.0)*v_TexCoord.y,-sin(3.14159/4.0)*v_TexCoord.x + cos(3.14159/4.0)*v_TexCoord.y);
 
@@ -79,11 +79,12 @@
 
             });
 
-
-            geometryCachePush(Vector3(0,0,0));
-            geometryCachePush(Vector3(5,0,0));
-            geometryCachePush(Vector3(5,5,0));
-            geometryCachePush(Vector3(0,5,0));
+            var border =getBorder();
+            console.info(border);
+            geometryCachePush(Vector3(-border.x,-border.x,0));
+            geometryCachePush(Vector3(border.x,-border.x,0));
+            geometryCachePush(Vector3(border.x,border.x,0));
+            geometryCachePush(Vector3(-border.x,border.x,0));
             var mesh = createMeshWithoutMaterial();
             mesh.material =material;
 
@@ -91,7 +92,7 @@
             // 创建 Image对象
             var imgObj = new Image();
             // 为 src 属性赋值
-            imgObj.src = "../../../image/bac2x.jpg";
+            imgObj.src = "../../../image/webglBack.jpg";
 
 
             imgObj.onload = function (ev) {
@@ -111,7 +112,7 @@
 
                 brt.vt.value += 0.1;
 
-                brt.coe.value = -3.14159/2;
+                brt.coe.value = 0;
 
 
             }

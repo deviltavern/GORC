@@ -1,12 +1,14 @@
-package com.main.activity;
+package com.main.activity.tasksystem;
 
 
 
 import com.alibaba.fastjson.JSONException;
 import com.main.activity.CodeCollector.DBOption;
+import com.main.activity.CodeList;
 import com.main.dao.DataBaseOP;
 import com.main.Model.TaskModel;
 
+import net.sf.json.JSON;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,6 +17,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Enumeration;
 
 @RestController
@@ -299,7 +304,8 @@ public class TaskList {
     public String setTaskStatu(String key,String value,String task_solver) throws Exception {
 
         //
-        String sql = "update task_list set task_status ='"+value+"',task_solver='"+task_solver+"' where task_index = " +key;
+        String sql = "update task_list set task_status ='"+value+"',task_solver='"+task_solver
+                +"',task_begin_time = '"+getNow()+"' where task_index = " +key;
         DataBaseOP.requestNoReturn(DataBaseOP.dbName,sql);
 
         System.out.println(sql);
@@ -333,6 +339,56 @@ public class TaskList {
         String sql = "select * from task_list where task_type = '"+type+"' and task_status = '0'";
 
       return   DataBaseOP.request(sql);
+
+    }
+
+    @PostMapping("/getTaskBeginTime")
+    public JSONObject getTaskBeginTime() throws ParseException {
+        Date date = new Date();
+
+        String lastTime = "2019-10-01 17:01:58";
+        SimpleDateFormat sdf1 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+
+        Date lastDate = sdf1.parse(lastTime);
+        System.out.println(sdf1.parse(lastTime));
+        SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        System.out.println(sdf.format(date));
+        String dateNow = sdf.format(date);
+
+        float betwwenTime = (date.getTime() - lastDate.getTime())/1000;
+        JSONObject reData = new JSONObject();
+
+
+        reData.put("now",dateNow);
+        reData.put("last",lastTime);
+        reData.put("between",betwwenTime);
+
+        return reData;
+    }
+
+    public String getNow(){
+        Date date = new Date();
+        SimpleDateFormat  sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return sdf.format(date);
+    }
+
+
+    /**
+     * 根据Task_Statu获取不同种类的任务信息
+     * @param task_status
+     * @param task_solver
+     * @return
+     */
+    @PostMapping("/getTaskDataByTaskStatu")
+    public JSONArray getTaskDataByTaskStatu(String task_status,String task_solver) throws Exception {
+
+        JSONArray jsonArray = null;
+
+        String sql = "select * from task_list where task_solver = '"+task_solver+"' and task_status = '"+task_status+"'";
+
+        jsonArray = DataBaseOP.request(sql);
+        return  jsonArray;
+
 
     }
 }

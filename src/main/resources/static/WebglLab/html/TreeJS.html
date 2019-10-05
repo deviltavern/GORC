@@ -3,6 +3,8 @@
 <head>
     <title>webgl</title>
     <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=700px, user-scalable=no">
     <script src="../core/three.js"></script>
     <script src="../core/stats.js"></script>
     <script src="../core/WebglManager.js"></script>
@@ -18,41 +20,82 @@
     <script src="../scripts/GluSocket.js"></script>
     <script src="../scripts/GluUploading.js"></script>
     <script src="../scripts/UIController.js"></script>
+
     <style>
 
         .div-relative{position:relative; color:#000; border:1px solid #000; width:500px; height:400px}
 
     </style>
+
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+             uniform sampler2D u_Sampler;
+             varying vec2 v_TexCoord;
+             uniform float coe;
+             vec4 tp = vec4(1.0,1.0,1.0,1.0);
+             void main() {
+              float s = sin(coe)*(v_TexCoord.x-0.5)+cos(coe)*(v_TexCoord.y-0.5);
+              float t = -cos(coe)*(v_TexCoord.x-0.5) + sin(coe)*(v_TexCoord.y-0.5);
+
+               vec2 vtep = vec2(s+0.5,t+0.5);
+
+              gl_FragColor = texture2D(u_Sampler, vtep);
+             }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+          uniform float vt;
+          uniform mat4 u_MvpMatrix;
+          varying vec2 v_TexCoord;
+          void main() {
+
+           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+
+           v_TexCoord = (mvPosition.xy + vec2(29,29))*0.01;
+
+           gl_Position = projectionMatrix * mvPosition;
+
+
+         }
+
+    </script>
+
 </head>
 <body>
-
+<div style="">
+    <button id= "up" style="display: none;width: 200px;height: 50px">上</button><br>
+    <button id = "back" style="display: none;width: 200px;height: 50px">下</button><br>
+    <button id = "left" style="display: none;width: 200px;height: 50px">左</button><br>
+    <button id = "right" style="display: none;width: 200px;height: 50px">右</button><br>
+    <button id= "begin" >游戏开始</button><br>
+</div>
 <div id="Stats-output"></div>
 
-<div id="parent" style="width: 1300px;height: 800px;margin-top: 100px;background: #E5E5E5">
+
     <div >
 
         <div style="z-index: 30;position:absolute;">
             <H3 id = "idLabel"></H3>
-            <div style="margin-top: 20px">
-                <button id= "up" style="width: 200px;height: 50px">上</button><br>
-                <button id = "back" style="width: 200px;height: 50px">下</button><br>
-                <button id = "left" style="width: 200px;height: 50px">左</button><br>
-                <button id = "right" style="width: 200px;height: 50px">右</button><br>
-            </div>
-            <button id= "begin" >游戏开始</button><br>
+
+
             <h5 id = "localMoveDir"></h5>
+
+            <h5 id = "netCoe"></h5>
+            <h5 id="info"></h5>
 
 
 
         </div>
-        <div id="ca" style="width: 800px;height: 800px;background: #aa5500;float: left;z-index: 10;position:absolute;">
+        <div id="ca" style="width: 650px;height: 650px;background: #aa5500;float: left;z-index: 10;position:absolute;">
 
         </div>
 
 
     </div>
 
-    <div id="cab" style="width: 400px;height: 800px;background: #42addc;float: left">
+    <div id="cab" style="width: 400px;height: 800px;background: #42addc;float: left;display: none">
         
         <div style="margin-top: 5px;width: 400px;height: 50px;background: #42addc">
 
@@ -87,7 +130,7 @@
 
     </div>
 
-</div>
+
 
 <script>
     var stats = new Stats();
@@ -119,6 +162,50 @@
 
 
         context(document.getElementById("ca"));
+
+
+        glContext.enable(glContext.BLEND);
+        glContext.blendFunc(glContext.SRC_ALPHA, glContext.ONE_MINUS_SRC_ALPHA);
+        brt = {
+            vt: { value: 1.0 },
+            coe:{value : 0.0}
+        };
+        var material = new THREE.ShaderMaterial({
+            uniforms :brt,
+            vertexShader: document.getElementById('vertexShader').textContent,
+            fragmentShader: document.getElementById('fragment_shader').textContent
+
+        });
+
+        var border =getBorder();
+        console.info(border);
+        geometryCachePush(Vector3(-border.x,-border.x,0));
+        geometryCachePush(Vector3(border.x,-border.x,0));
+        geometryCachePush(Vector3(border.x,border.x,0));
+        geometryCachePush(Vector3(-border.x,border.x,0));
+        var mesh = createMeshWithoutMaterial();
+        mesh.material =material;
+
+        var texture = glContext.createTexture();
+        // 创建 Image对象
+        var imgObj = new Image();
+        // 为 src 属性赋值
+        imgObj.src = "../../image/webglBack.jpg";
+
+
+        imgObj.onload = function (ev) {
+
+            glContext.activeTexture(glContext.TEXTURE0);
+            glContext.bindTexture   (glContext.TEXTURE_2D,texture);
+            glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MAG_FILTER, glContext.LINEAR);// 纹理放大方式
+            glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MIN_FILTER, glContext.LINEAR);// 纹理缩小方式
+            glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_S,     glContext.CLAMP_TO_EDGE);// 纹理水平填充方式
+            glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_T,     glContext.CLAMP_TO_EDGE);// 纹理垂直填充方式
+
+            glContext.texImage2D(glContext.TEXTURE_2D, 0, glContext.RGB, glContext.RGB, glContext.UNSIGNED_BYTE, imgObj);
+
+        }
+
 
 
 

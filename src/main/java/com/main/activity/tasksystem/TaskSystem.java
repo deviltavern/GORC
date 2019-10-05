@@ -1,4 +1,4 @@
-package com.main.activity;
+package com.main.activity.tasksystem;
 
 import com.google.common.net.InetAddresses;
 import org.springframework.stereotype.Controller;

@@ -249,8 +249,10 @@ function onExit(insertList) {
 
 function rayDetection(snackHead) {
     var point = new THREE.Vector2();
-    point.x = worldConvertToScreen(getPosition(snackHead.head)).x;
-    point.y = worldConvertToScreen(getPosition(snackHead.head)).y;
+    point.x = worldConvertToScreen(Substraction(getPosition(snackHead.head),getPosition(opView.camera))).x;
+    point.y = worldConvertToScreen(Substraction(getPosition(snackHead.head),getPosition(opView.camera))).y;
+
+    //console.info(point);
     raycaster.setFromCamera(point, opView.camera);
     var intersects = raycaster.intersectObjects(foodList);
 

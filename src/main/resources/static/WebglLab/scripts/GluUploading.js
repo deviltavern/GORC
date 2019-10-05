@@ -11,7 +11,7 @@ function uploadPredictionPos() {
 
        var destination =Multiply(uiControlDir,0.1);
        destination.bodyMsg = getBodyItemList(getSnackFromArray(getSnackID()));
-      // console.info("更新消息！");
+       //console.info(uiControlDir);
        send(100,202,destination);
 
    }

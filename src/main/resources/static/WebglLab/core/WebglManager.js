@@ -77,7 +77,9 @@ function create(div) {
     var uiCamera = new THREE.OrthographicCamera(-4,4,4,-4,1,1000);
 
 
-    renderer.setSize(800, 800);
+
+    renderer.setSize(650, 650);
+
     renderer.setClearColor(Color(123,123 ,123).ox, 1.0);
     var canvasx = div.appendChild(renderer.domElement);
     glCanvas = canvasx;
@@ -277,6 +279,19 @@ function screen2WebglCoordinate(ev,width,height) {
     _mouse.y = -( ev.clientY /height ) * 2 + 1;
 
     return _mouse;
+
+}
+function getBorder() {
+    var v1 = Vector3(1,1,0);
+    var wbgl = screenConvertToWorld(v1);
+
+    return wbgl;
+
+}
+
+function cameraFollow(offset,vector3) {
+    console.info("camera flow");
+   setPosition(opView.camera,Add(offset,vector3));
 
 }
 function worldConvertToScreen(worldVec) {

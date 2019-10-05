@@ -27,8 +27,59 @@ function setLabelID(ID) {
 
 }
 
+var times = 0;
+var lastDir = Vector3(0,0,0);
+window.ontouchmove = function(event){
+
+    times++;
+    if(times>5){
+
+        dir = Substraction(lastDir,Vector3(event.changedTouches[0].screenX,event.changedTouches[0].screenY,0));
+        dir = Normal(dir);
+        lastDir = Vector3(event.changedTouches[0].screenX,event.changedTouches[0].screenY,0);
+        document.getElementById("info").innerText =  JSON.stringify(dir);
+        // console.info(JSON.stringify(dir));
+
+        uiControlDir = Vector3(-dir.x,dir.y,dir.z);
+    }
+}
+
+var allowMouseMove = false;
+
+window.onmousedown = function (ev) {
+    allowMouseMove = true;
+
+}
+window.onmouseup = function (ev) {
+    allowMouseMove = false;
+    uiControlDir = Vector3(0,0,0);
+
+}
+
+window.onmousemove = function (ev) {
+    if(allowMouseMove == true) {
+
+        console.info("123");
 
 
+        times++;
+        if (times > 5) {
+
+            dir = Substraction(lastDir, Vector3(ev.clientX, ev.clientY, 0));
+            dir = Normal(dir);
+            lastDir = Vector3(ev.clientX, ev.clientY, 0);
+            document.getElementById("info").innerText = JSON.stringify(dir);
+            // console.info(JSON.stringify(dir));
+
+            uiControlDir = Vector3(-dir.x, dir.y, dir.z);
+        }
+    }
+
+}
+window.ontouchend = function (ev) {
+    uiControlDir = Vector3(0,0,0);
+   // document.getElementById("info").innerText =  JSON.stringify(dir);
+}
 function onKey() {
     window.onkeydown = function (ev) {
 
@@ -37,8 +88,9 @@ function onKey() {
         if (ev.keyCode == 68){
 
            // console.info("hello");
+            uiControlDir = Vector3(0,0,0);
+            console.info("按下了D键")
 
-            getBodyItemList(getSnackFromArray(getSnackID()));
         }
 
     }

@@ -41,45 +41,21 @@
 
     </script>
     <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="clockPlugin.js"></script>
+
     <script>
 
         window.onload = function (ev) {
 
-
             initAnimation();
+            var cp = clock0(str2Date('2019-10-01 17:06:49'));
 
 
+            var div0 = div();
 
+            setParent(cp.parent,div0);
+            setPosition(cp.parent,Vector3(200,200));
 
-
-          var ca =  canvas(200,200,30,30);
-          ca.canvas.style.borderRadius = "50%";
-          var context = ca.context;
-
-            context.lineWidth = 10;
-
-            //context.moveTo(ca.origin.x,ca.origin.y);
-
-            context.fillStyle="#FF0000";
-            var offValue = 0;
-
-            var o2 = 0;
-
-
-            ca.doAnimation = function(){
-
-                offValue+= 0.01;
-                //console.info(offValue);
-                context.beginPath();
-                context.fillStyle="#FF0000";
-
-                context.arc(ca.origin.x, ca.origin.y, 90, Math.PI+o2, Math.PI - offValue, true);
-
-
-                context.stroke();                // 进行绘制
-
-            }
-            addAnimation(ca);
 
 
         }
