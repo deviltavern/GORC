@@ -1,6 +1,7 @@
 package com.main.activity.email;
 
 import com.main.Tool.JqueryRequestTool;
+import com.main.dao.DataBaseOP;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.web.HttpRequestHandler;
@@ -19,18 +20,18 @@ import static com.main.Tool.folder.FolderTool.getOriginPath;
 public class EmailController {
 
 
-    public JSONObject getImgName(String type){
+    public JSONObject getImgName(String uuidStr,String type){
 
         JSONObject reObj = new JSONObject();
 
 
-        UUID uploadImgUUID = UUID.randomUUID();
-        String uuidStr = uploadImgUUID.toString();
+
         String originPath = getOriginPath();
         originPath += "/static/Email/EmailImg/"+uuidStr+"."+type;
 
         reObj.put("abPath",originPath);
         reObj.put("url","static/Email/EmailImg/"+uuidStr+"."+type);
+        reObj.put("uuid",uuidStr);
         return reObj;
     }
     public String getTypeFromMultipartFile(MultipartFile file){
@@ -41,20 +42,28 @@ public class EmailController {
 
     }
     @PostMapping("uploadEmailImg")
-    public JSONObject uploadEmailImg(MultipartFile imgFile,HttpServletRequest handler) throws IOException {
+    public JSONObject uploadEmailImg(MultipartFile imgFile,HttpServletRequest handler) throws Exception {
         JSONObject reObj = new JSONObject();
+        JqueryRequestTool.addExcludeKey("imgFile");
 
+        JqueryRequestTool tool = new JqueryRequestTool(handler);
+
+        if (imgFile != null){
+            JSONObject path = getImgName(tool.jsonObject.get("email_id").toString(),getTypeFromMultipartFile(imgFile));
+            imgFile.transferTo(new File(path.get("abPath").toString()));
+            reObj.put("url",path.get("url").toString());
+        }else {
+            tool.jsonObject.put("email_append_source","none");
+        }
 
         reObj.put("status","success");
 
 
-        JSONObject path = getImgName(getTypeFromMultipartFile(imgFile));
 
-        imgFile.transferTo(new File(path.get("abPath").toString()));
-        reObj.put("url",path.get("url").toString());
-        JqueryRequestTool.addExcludeKey("imgFile");
-        JqueryRequestTool tool = new JqueryRequestTool(handler);
         System.out.println(tool.jsonValue);
+
+        String sql =  tool.getInsertSql("email_list");
+        DataBaseOP.requestNoReturn(sql);
 
 
 

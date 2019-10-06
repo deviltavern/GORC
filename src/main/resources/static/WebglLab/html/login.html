@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=700px, user-scalable=no">
+    <title>贪吃蛇login</title>
+    <script src="../../Html/demo/ElementCreatorFrame/ZCElementer.js"></script>
+
+    <script src="../scripts/GluSocket.js"></script>
+    <style>
+        .mainDiv{
+            position: absolute;
+            width : 720px;
+            height: 100%;
+            background-size: 150%;
+            background-image:url("../../image/jbs.jpg");
+
+        }
+        .loginBtn{
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            top: 40%;
+            height: 30px;
+
+        }
+
+    </style>
+    <script >
+        window.onload = function (ev) {
+
+            var mainDiv = div();
+            var loginBtn = button("进入联机");
+            setParent(loginBtn,mainDiv);
+            setCSS(mainDiv,"mainDiv");
+
+
+            setCSS(loginBtn,"loginBtn");
+
+
+
+        }
+
+    </script>
+
+
+</head>
+<body>
+
+</body>
+</html>

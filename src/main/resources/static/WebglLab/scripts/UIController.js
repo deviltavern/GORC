@@ -147,12 +147,18 @@ function uiControl(snackHead) {
         console.info(uiControlDir);
     }
 
-    var beginBtn = findViewByID("begin");
+    var gameBeginBtn = document.getElementById("gameBegin");
+    var gameBeginInput = document.getElementById("gameBeginInput");
+    gameBeginBtn.onclick = function (ev) {
 
-    beginBtn.onclick = function (ev) {
+        console.info(gameBeginInput.value);
+        send(100,100,gameBeginInput.value);
 
-        s1.addBody();
-        console.info("添加了一个身体！");
 
     }
+
+
+
 }
+
+
