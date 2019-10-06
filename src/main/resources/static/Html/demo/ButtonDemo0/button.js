@@ -6,6 +6,7 @@
  */
 function bindButtonEf(origin,initCss,func) {
 
+
    setCSS ( origin,initCss);
     origin.onmouseenter = function (ev1) {
         setCSS(origin,initCss+" boxshadow2");
@@ -24,5 +25,7 @@ function bindButtonEf(origin,initCss,func) {
         setCSS(origin,initCss);
 
     }
+
+
 
 }

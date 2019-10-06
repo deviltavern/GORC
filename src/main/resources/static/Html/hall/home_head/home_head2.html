@@ -15,8 +15,28 @@
 
     <script src="../../../layui/layui.js" charset="utf-8"></script>
     <script src="../../demo/frameDemo/FrameCirculation.js"></script>
+    <script src="scripts/websocket.js"></script>
     <base target="_parent">
+    <style>
+        .emailDiv{
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            width: 25px;
+            height: 25px;
+            background-image: url("../../../image/scoreBac1.png");
+            background-size: 100%;
+            border-radius: 50%;
+        }
+        .emailInfo{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -70%;
+            text-align: center;
 
+        }
+    </style>
     <script>
 
         //获取某个html元素的定位
@@ -102,50 +122,84 @@
 
         }
 
-        $(document).ready(function(){
-        dv =  createBottom();
-        dv.hide();
-        hoverObj = {};
+        $(document).ready(function() {
+            dv = createBottom();
+            dv.hide();
+            hoverObj = {};
 
 
-
-        var front_train_label = document.getElementById("front_train_label");
-        var myself = document.getElementById("myself");
+            var front_train_label = document.getElementById("front_train_label");
+            var myself = document.getElementById("myself");
 
             myself.onclick = function (ev) {
 
-               window.parent.parent.location.href = "../../userInfo/userInfo.html";
+                window.parent.parent.location.href = "../../userInfo/userInfo.html";
 
 
             }
-        var score = document.getElementById("score");
-        var level = document.getElementById("level");
-        var task_publish = document.getElementById("task_publish");
-        //task_hall
+            var score = document.getElementById("score");
+            var level = document.getElementById("level");
+            var task_publish = document.getElementById("task_publish");
+            //task_hall
             var task_hall = document.getElementById("task_hall");
             var task_log = document.getElementById("task_log");
-            setElementEff("myself",myself);
-            setElementEff("front_train_label",front_train_label);
-            setElementEff("score",score);
-            setElementEff("level",level);
-            setElementEff("task_publish",task_publish);
-            setElementEff("task_log",task_log);
-            setElementEff("task_hall",task_hall);
+            setElementEff("myself", myself);
+            setElementEff("front_train_label", front_train_label);
+            setElementEff("score", score);
+            setElementEff("level", level);
+            setElementEff("task_publish", task_publish);
+            setElementEff("task_log", task_log);
+            setElementEff("task_hall", task_hall);
+
+            myself.infoNum = document.getElementById("infoNum");
+            var userInfo = localStorage.getItem("spxInfo");
+            var userObject = null;
+            if(userInfo != null){
+                userObject = JSON.parse(userInfo);
+
+            }else {
+                userObject = {};
+                userObject.user_acc = "ljy";
+            }
+            connect(userObject.user_acc);
+
+            localStorage.setItem("spxOp","none");
+            op = function () {
+                dv.expand();
+
+                var spxData = localStorage.getItem("spxOp");
+
+                if(spxData != "none"){
+                    var spxOpObj = JSON.parse(spxData);
+                    switch (spxOpObj.code) {
+                        case 0:
+                                console.info("发送邮件！");
+
+                                send(102,1,spxOpObj);
+
+                            break;
+
+                        default:
 
 
+                            break;
+
+                    }
+
+                }else {
 
 
+                }
 
-        op = function () {
-            dv.expand();
-
-
-        }
-
-        frame();
+                localStorage.setItem("spxOp","none");
 
 
-    });
+            }
+
+            frame();
+
+
+        });
 
 
 
@@ -165,7 +219,14 @@
     </li>
 
     <li class="layui-nav-item" lay-unselect="">
-        <a id = "myself" href="javascript:;"><img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+
+        <div class="emailDiv">
+            <p id="infoNum" class="emailInfo">123</p>
+
+        </div>
+        <a id = "myself" href="javascript:;">
+
+            <img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
 
     </li>
 

@@ -1,6 +1,14 @@
 var socket;
 var snackID;
+var infoNum;
 
+var emailArray = [];
+
+function addEmail(emailItem) {
+
+    emailArray.push(emailItem);
+
+}
 function getSnackID() {
 
     return snackID;
@@ -12,14 +20,14 @@ function connect(user_acc){
     if(window.WebSocket) {
 
         // socket = new WebSocket("ws://47.106.227.238:9001/websocket");
-        socket = new WebSocket("ws://192.168.43.34:9001/websocket");
+        socket = new WebSocket("ws://192.168.0.136:9001/websocket");
 
         console.info(socket.readyState+" = socket status");
 
 
         socket.onopen = function (event) {
             console.info("服务器开启完毕！")
-            alert("服务器开启");
+            //alert("服务器开启");
             send(102,0,user_acc);
 
         };
@@ -49,15 +57,37 @@ function connect(user_acc){
         var sub_code = reinfo.sub_code;
         var message = reinfo.message;
         var tempSnack = null;
-        console.info(reinfo);
-        switch (sub_code) {
 
-        }
+
+         if (main_code === 102){
+
+            switch (sub_code) {
+
+              case 3:
+                  addEmail(message);
+                  infoNum += 1;
+                  break;
+              case 4:
+                  infoNum = message.length;
+
+                  for (var i in message){
+
+                      addEmail(message[i]);
+                  }
+
+                  break;
+
+
+          }
+
+          myself.infoNum.innerText = infoNum +"";
+            console.info(emailArray);
+          console.info("更新信息");
+      }
+
 
     };
     function tax(value,v2){
-        alert(value)
-        alert(v2)
 
     }
 }

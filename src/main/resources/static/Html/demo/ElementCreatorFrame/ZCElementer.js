@@ -172,6 +172,13 @@ function button(value,src,width,height,left,top) {
 
 }
 
+
+function img() {
+    var ig = document.createElement("img");
+
+    return ig;
+
+}
 function canvas(width,height,x,y) {
     var canvasObj = {};
 
@@ -205,7 +212,6 @@ function table(width,caption) {
     ld.style.margin = "0 auto";
 
     var tb = document.createElement("table");
-
     var ltb = ld.appendChild(tb);
     ltb.style.alignment = "center";
     ltb.style.width = "100%";
@@ -221,7 +227,7 @@ function table(width,caption) {
        tb.trArray = new Array();
     tb.valueArray = new Array();
 
-
+    tb.parent = d1;
     tb.addCol = function(data){
 
         tb.valueArray.push(data);
@@ -450,6 +456,22 @@ function setCSS(origin,css) {
 
     origin.style = "";
     origin.className = css;
+}
+function setCSSWithoutDamage(origin,css) {
+    origin.className = css;
+}
+
+
+
+function setStyle_Top(origin,value) {
+
+    origin.style.top = value;
+
+}
+function addCSS(origin,css) {
+
+    origin.className += " "+css;
+
 }
 //---------------字体-------------------------------------------------------------------------------------------
 

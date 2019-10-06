@@ -5,6 +5,8 @@
     <title>Title</title>
     <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
     <link rel="stylesheet" href="../demo/ElementCreatorFrame/ZCElementer.css">
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/Config.js"></script>
     <style>
         .fontUnderline{
             position: absolute;
@@ -120,7 +122,9 @@
     </style>
     <script>
         window.onload = function (ev) {
-
+            var userInfo = localStorage.getItem("spxInfo");
+            userInfo = JSON.parse(userInfo);
+            console.info(userInfo);
             loadFont("zffg","../../font/www124.TTF");
             iframe("../hall/home_head/home_head2.html");
             var mainDiv = div(60,600);
@@ -147,7 +151,7 @@
             };
             emailBtn.onmousedown = function (ev1) {
                 setCSS(emailBtn,"emailBtn boxshadow1");
-
+                window.location.href = "../email/emailBox.html"
             }
             emailBtn.onmouseup = function (ev1) {
                 setCSS(emailBtn,"emailBtn boxshadow2");
@@ -268,6 +272,26 @@
             var taskInfoBtn = button("渡劫申请","",15,10,0,20);
             setParent(taskInfoBtn,mainDiv);
             setPositionWithPercent(taskInfoBtn,Vector3(80+offset,90));
+
+            //------------更新----------------------------------------------
+
+
+            requestServer("/getUserModel",function (ip) {
+                var reData = {};
+                reData.user_acc = userInfo.user_acc;
+                
+                $.post(ip,reData,function (dataFromServer) {
+                    nameInfo.innerText = dataFromServer.user_name;
+                    levelInfo.innerText = dataFromServer.user_stage;
+                    scoreInfo.innerText = dataFromServer.user_gold;
+                    permissionInfo.innerText = dataFromServer.user_permission_level;
+
+
+
+
+                });
+
+            });
 
             console.info(nameLabel.tagName);
 

@@ -146,7 +146,6 @@
     <script src="../demo/ButtonDemo0/button.js"></script>
     <script src="../../js/jquery-1.11.0.min.js"></script>
     <script src="../../js/Config.js"></script>
-    <script src="scripts/websocket.js"></script>
 
     <script>
        function email() {
@@ -185,21 +184,11 @@
     <script >
         window.onload = function (ev) {
 
-            connect();
+            iframe("../hall/home_head/home_head2.html")
             //初始化
             loadCSS("../demo/ButtonDemo0/button.css");
 
             //初始化用户信息
-            var userInfo = localStorage.getItem("spxInfo");
-            var userObject = null;
-            if(userInfo != null){
-                userObject = JSON.parse(userInfo);
-
-            }else {
-                userObject = {};
-                userObject.user_acc = "yk";
-
-            }
 
             var emailDiv = div();
             var headInput = textInput();
@@ -260,26 +249,34 @@
 
             bindButtonEf(sendBtn,"sendBtn",function () {
 
-                var formData = getFileSourceFromInputTag(fileInputBtn,"imgFile");
+             // var formData = getFileSourceFromInputTag(fileInputBtn,"imgFile");
 
-                var uuid = getRandomUUID(12);
-                formData.append("email_head_info",headInput.value);
-                formData.append("email_receiver",emailSender.value);
-                formData.append("email_type",emailType.value);
-                formData.append("email_content",emailContent.value);
-                formData.append("email_sender",userObject.user_acc);
-                formData.append("email_append_source",uuid);
-                formData.append("email_id",uuid);
-                uploadFormdata("http://localhost:8099/uploadEmailImg",formData);
-                console.info(formData.toString());
+              var uuid = getRandomUUID(12);
+             // formData.append("email_head_info",headInput.value);
+             // formData.append("email_receiver",emailSender.value);
+             // formData.append("email_type",emailType.value);
+             // formData.append("email_content",emailContent.value);
+             // formData.append("email_sender",userObject.user_acc);
+             // formData.append("email_append_source",uuid);
+             // formData.append("email_id",uuid);
+             // uploadFormdata("http://localhost:8099/uploadEmailImg",formData);
+             //   console.info(formData.toString());
 
                 var formData2Netty = {};
-               formData2Netty.email_head_info=headInput.value;
-               formData2Netty.email_receiver=emailSender.value;
-               formData2Netty.email_type=emailType.value;
-               formData2Netty.email_sender=userObject.user_acc;
+                formData2Netty.email_head_info=headInput.value;
+                formData2Netty.email_receiver=emailSender.value;
+                formData2Netty.email_type=emailType.value;
+                formData2Netty.email_id = uuid;
+                formData2Netty.code = 0;
 
-                send(102,1,formData2Netty);
+
+                localStorage.setItem("spxOp",JSON.stringify(formData2Netty));
+
+
+
+               //formData2Netty.email_sender=userObject.user_acc;
+
+
 
             });
         }

@@ -5,17 +5,42 @@
     <title>Title</title>
     <script src=" ZCElementer.js"></script>
     <link rel="stylesheet" href=" ZCElementer.css">
+    <style>
+
+        .table{
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            height: 30%;
+            table-layout: fixed;
+            background: #92B8B1;
+            border-radius: 12px;
+
+        }
+        .tableParent{
+            background: rgba(0,0,0,0);
+            width: 60%;
+            height: 100px;
+            margin: 0px auto;
+
+            overflow: auto;
+        }
+    </style>
     <script>
         window.onload = function (ev) {
 
 
-            var tb = table(800, "创建类型");
-            tb.className = "shadow_0";
-            tb.style.tableLayout = "fixed";
+            var tb = table(1300, "创建类型");
+
+            setCSS(tb,"table");
+            setCSS(tb.parent,"tableParent");
+
+
             tb.addCol("函数");
             tb.addCol("说明");
             tb.addCol("作者");
             tb.addCol("日期");
+            tb.addCol("demo");
             tb.inssertColum();
             tb.addCol("iframe");
             tb.addCol("创建一个iframe");
@@ -23,11 +48,17 @@
             tb.addCol("9.30");
             tb.inssertColum();
             tb.addCol("button");
-            tb.addCol("创建一个butto创建一个butto创建一个butto创建一tto创建一个butto创建一tto创建一个butto");
+            tb.addCol("创建一个按钮");
             tb.addCol("罗继业");
             tb.addCol("9.30");
             tb.inssertColum();
-            setColor(tb, Color24(123, 123, 123));
+            tb.addCol("button");
+            tb.addCol("创建一个按钮");
+            tb.addCol("罗继业");
+            tb.addCol("9.30");
+            tb.inssertColum();
+            var demoDiv = div();
+            setCSS(demoDiv,"tempJSON");
             tb.style.borderRadius = "12px";
 
 
