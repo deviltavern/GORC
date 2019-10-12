@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <style>
+        .mainDiv{
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            left: 20%;
+            top: 10%;
+            background: #edcc92;
+
+        }
+        .texEdit{
+            position: absolute;
+            width: 60%;
+            height: 60%;
+            left: 20%;
+            top: 10%;
+            background: #92B8B1;
+
+
+        }
+        .menuBar{
+            position: absolute;
+            width: 20%;
+            height: 100%;
+            left: 0%;
+
+            background: #FF00FF;
+
+
+
+        }
+
+        .textBox{
+            position: absolute;
+            width: 40%;
+            height: 25%;
+            left: 30%;
+            top: 10%;
+
+            background: #eccf92;
+
+
+        }
+        .statuLabel{
+            position: absolute;
+            right: 5%;
+            top: 10%;
+
+        }
+        .subDiv{
+            width: 40px;
+            height: 40px;
+            background: #aa1111;
+
+        }
+
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+
+            var texEdit = textareaInput()
+            setCSS(texEdit,"texEdit");
+            setParent(texEdit,mainDiv);
+
+            var menuBar = div();
+            setCSS(menuBar,"menuBar");
+            var textBox = button("文本框");
+            setCSS(textBox,"textBox");
+            setParent(textBox,menuBar);
+
+            var statuLabel = hilabel("状态",2);
+            setCSS(statuLabel,"statuLabel");
+            setParent(statuLabel,document.body);
+
+            textBox.onclick = function (ev1) {
+
+                statuLabel.innerText = "生成文本框";
+
+            }
+
+
+            window.onmousedown = function (ev1) {
+
+                switch (statuLabel.innerText) {
+
+                    case "生成文本框":
+                            console.info(ev1.clientX+"<>"+ev1.clientY);
+                           var subDiv =  div();
+                           setParent(subDiv,document.body);
+                           setCSS(subDiv,"subDiv");
+                           setPosition(subDiv,Vector3(ev1.clientX,ev1.clientY));
+
+
+
+                        break;
+
+                    default:
+
+                        break;
+
+                }
+
+                statuLabel.innerText = "0状态";
+
+            }
+
+
+
+
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -250,7 +250,7 @@
             bindButtonEf(sendBtn,"sendBtn",function () {
 
              // var formData = getFileSourceFromInputTag(fileInputBtn,"imgFile");
-
+                var userObject = JSON.parse(localStorage.getItem("spxInfo"));
               var uuid = getRandomUUID(12);
              // formData.append("email_head_info",headInput.value);
              // formData.append("email_receiver",emailSender.value);
@@ -268,7 +268,8 @@
                 formData2Netty.email_type=emailType.value;
                 formData2Netty.email_id = uuid;
                 formData2Netty.code = 0;
-
+                formData2Netty.email_send_time = new Date().Format("yy-MM-dd hh-mm-ss");
+                formData2Netty.email_sender = userObject.user_acc;
 
                 localStorage.setItem("spxOp",JSON.stringify(formData2Netty));
 

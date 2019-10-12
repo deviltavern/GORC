@@ -27,6 +27,15 @@ function loadCSS(src) {
 
 }
 
+function loadJS(src) {
+    var script=  document.createElement("script");
+
+    document.head.appendChild(script);
+
+    script.src = src;
+
+}
+
 //元素创建
 function createimg(src,width,height) {
     var img1 = document.createElement("img");
@@ -110,7 +119,7 @@ function iframe(src){
     var e2 = document.body.appendChild(e1);
     e2.frameBorder = "0";
     e2.scrolling = "no";
-    e2.width = "100%";
+    e2.width = 100+"%";
     e2.height = 70+"px";
     e2.marginHeight = "0px";
     e2.marginWidth = "0px";
@@ -301,7 +310,12 @@ function td(parent,text) {
     ld3.innerText = text;
     return _td;
 }
+function a(src) {
 
+    var a = document.createElement("a");
+    a.href = src;
+    return a;
+}
 function div(width,height) {
     var tempDiv = document.createElement("div");
     var ltempDiv = document.body.appendChild(tempDiv);
@@ -457,6 +471,18 @@ function setCSS(origin,css) {
     origin.style = "";
     origin.className = css;
 }
+
+function setBackGroundImage(origin,src) {
+
+    if(src === "none"){
+
+        origin.style.backgroundSize = "";
+        origin.style.backgroundImage = "";
+    }
+    origin.style.backgroundSize = "100%";
+    origin.style.backgroundImage = "url('"+src+"')";
+
+}
 function setCSSWithoutDamage(origin,css) {
     origin.className = css;
 }
@@ -471,6 +497,15 @@ function setStyle_Top(origin,value) {
 function addCSS(origin,css) {
 
     origin.className += " "+css;
+
+}
+
+function showElement(origin) {
+    origin.style.display = "";
+
+}
+function hideElement(origin) {
+    origin.style.display = "none";
 
 }
 //---------------字体-------------------------------------------------------------------------------------------
@@ -511,6 +546,20 @@ function Color24(r,g,b) {
     return rg;
 
 }
+
+function Color(r,g,b) {
+
+    var color = {};
+    color.r = r;
+    color.g = g;
+    color.b = b;
+
+    color.ox = (color.r << 16) | (color.g << 8) | color.b;
+
+    return color;
+}
+
+
 
 
 function log(obj) {
@@ -557,15 +606,18 @@ function initAnimation() {
 }
 var op;
 var start = null;
-
+var singleOp;
 var fps = 60
 var fpsInterval = 1000 / fps
 var last = new Date().getTime() //上次执行的时刻
+var elapsed;
 function frame() {
 
 
     var now = new Date().getTime()
-    var elapsed = now - last;
+    elapsed = now - last;
+
+    //console.info(elapsed);
     // 经过了足够的时间
     if (elapsed > fpsInterval) {
         last = now - (elapsed % fpsInterval); //校正当前时间
@@ -575,6 +627,11 @@ function frame() {
         if (op!= null){
 
             op();
+        }
+
+        if(singleOp!= null){
+
+            singleOp();
         }
     }
     requestAnimationFrame(frame);
@@ -707,7 +764,21 @@ function getDateFromSeconds(seconds) {
     return day+":"+ hour+":"+minit+":"+restSeconds;
 
 }
-
+Date.prototype.Format = function (fmt) {
+    var o = {
+        "M+": this.getMonth() + 1, //月份
+        "d+": this.getDate(), //日
+        "h+": this.getHours(), //小时
+        "m+": this.getMinutes(), //分
+        "s+": this.getSeconds(), //秒
+        "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+        "S": this.getMilliseconds() //毫秒
+    };
+    if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+    for (var k in o)
+        if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+    return fmt;
+};
 //---------------------------------------------------后端------------------------------------------------//
 /**
  * 从Input标签中获得数据源，绑定到Formdata中，可以直接上传到服务器
@@ -786,3 +857,10 @@ function getRandomUUID(length) {
 }
 
 
+//-------------------------------------------window相关--------------------------------
+
+function absoluteWindow() {
+    document.body.style.position = "absolute";
+    document.body.style.width = window.innerWidth*0.98+"px";
+    document.body.style.height = window.innerHeight+"px";
+}

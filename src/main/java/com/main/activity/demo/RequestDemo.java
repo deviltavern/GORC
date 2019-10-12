@@ -9,9 +9,10 @@ public class RequestDemo {
 
 
     @PostMapping("/requestDemo")
-    public void requestDemo(){
+    public void requestDemo(String key){
 
-        System.out.println("requestDemo");
+
+        System.out.println(key+":"+"requestDemo");
 
     }
 }

@@ -5,6 +5,7 @@
     <title>Title</title>
     <script src="../ElementCreatorFrame/ZCElementer.js"></script>
     <script src="../../../js/jquery-1.11.0.min.js"></script>
+
     <script src="../../../js/Config.js"></script>
     <link rel="stylesheet" href="../ElementCreatorFrame/ZCElementer.css">
     <link>
@@ -77,33 +78,27 @@
                                 console.info("登录成功");
 
                                 var setStatu = {};
-                                setStatu.key =detailObj.task_index;
-                                setStatu.value = 1+"";
-                                setStatu.task_solver = spxObj.user_acc;
-                                requestServer("/setTaskStatu",function (dpi) {
-                                    $.post(dpi,setStatu,function (reData2) {
+                                setStatu.task_application_content_index =detailObj.task_index;
+                                setStatu.task_resaon = "老子就想接了，怎么着吧？";
+                                setStatu.task_time =new Date().toString();
+                                setStatu.task_status = 0;
+                                setStatu.task_scheme = getRandomUUID(15);
+                                setStatu.task_type = 3;
+                                setStatu.task_sender_acc = spxObj.user_acc;
 
-                                        var reFromSetStatu = confirm("success");
+                                requestServer("/sendApplicationInfo",function (ip) {
 
-                                        if(reFromSetStatu == true){
+                                    $.post(ip,setStatu,function (data) {
 
-                                            console.info("接取完毕！");
+                                       console.info(data);
 
-                                            var goMainPage = confirm("回到主页？");
-
-                                            if(goMainPage == true){
-
-                                                requestServer("/login?skey="+spxObj.reValue,function (ip) {
-
-                                                    location.href = ip;
-
-                                                });
-                                            }
-                                        }
                                     });
 
-
                                 });
+
+
+
+
 
                             }
 

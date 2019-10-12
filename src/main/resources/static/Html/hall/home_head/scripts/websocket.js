@@ -66,6 +66,8 @@ function connect(user_acc){
               case 3:
                   addEmail(message);
                   infoNum += 1;
+
+                  localStorage.setItem("emailInfo",JSON.stringify(emailArray));
                   break;
               case 4:
                   infoNum = message.length;
@@ -74,6 +76,8 @@ function connect(user_acc){
 
                       addEmail(message[i]);
                   }
+
+                  localStorage.setItem("emailInfo",JSON.stringify(emailArray));
 
                   break;
 

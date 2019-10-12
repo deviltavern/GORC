@@ -47,9 +47,7 @@
         .emailHead_h{
 
 
-            position: absolute;
-            left: 50%;
-            top:0%;
+
             background: #FFB800;
             border-radius: 5px;
             text-align: center;
@@ -72,8 +70,19 @@
         }
     </style>
     <script>
-        function  insSubEmailDiv(parent,index) {
+        function email(type) {
+            var email = {};
+            email.email_sender = "123";//发送人的账号
+            email.email_content = "...";//发送内容
+            email.email_id = getRandomUUID(12);//发送邮件的ID，每一封邮件ID唯一
+            email.email_attouchment = email.email_id;//附件，比如要上传的合同的pdf将会以资源的形式上传到Springboot，通过这个资源符去访问它
+            email.email_upload_time = new Date();//上传时间
+            email.email_type = type;
+            return email;
+        }
 
+
+        function  insSubEmailDiv(parent,index) {
 
             var subEmailDiv = div();
 

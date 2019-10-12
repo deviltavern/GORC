@@ -342,6 +342,18 @@ public class TaskList {
 
     }
 
+
+    @PostMapping("/getTaskDataByIndex")
+    public JSONObject getTaskDataByIndex(String  index) throws Exception {
+
+
+        String sql = "select * from task_list where task_index = "+index+"";
+
+        return  DataBaseOP.requestSingle(sql);
+
+    }
+
+
     @PostMapping("/getTaskBeginTime")
     public JSONObject getTaskBeginTime() throws ParseException {
         Date date = new Date();
