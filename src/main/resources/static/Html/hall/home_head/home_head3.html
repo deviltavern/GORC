@@ -28,6 +28,7 @@
             height:100%;
 
             left: 50%;
+            cursor: pointer;
 
         }
 
@@ -137,7 +138,7 @@
             var homePage = insSubLabel(mainDiv,9,"首页");
             homePage.onmousedown = function(){
 
-                window.parent.location.href = "../../demo/tableDemo/BlackShield.html"
+                window.parent.location.href = "../../homepage/main.html"
 
 
             };
@@ -147,7 +148,10 @@
             insSubLabel(mainDiv,13,"权限");
             insSubLabel(mainDiv,14,"邮箱");
             insSubImg(mainDiv,8,"../../../image/ICON.png","subDivImgDiv","img1");
-            insSubImg(mainDiv,15,"../../../image/Ls.png","subDivImgDivForMe","img2");
+            var myself = insSubImg(mainDiv,15,"../../../image/headImg3.jpg","subDivImgDivForMe","img2");
+            myself.onmousedown =function (ev) {
+                window.parent.location.href = "../../userInfo/userInfo.html"
+            };
 
 
         }

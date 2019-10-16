@@ -11,37 +11,20 @@
 
         body{
 
-
+            background: whitesmoke;
 
         }
-        .mainDivLine{
+        .mainDiv{
             position: absolute;
-            width: 90%;
-            left: 5%;
-            top: 20%;
-            height: 2px;
-            background: #1b1e21;
-
-        }
-        .mainDivLien2{
-            position: absolute;
-            width: 80%;
-            left: 15%;
-            top: 45%;
-            height: 2px;
-            background: #1b1e21;
-
-        }
-
-        .mainDivLabel{
-            position: absolute;
-            font-family: zffg;
-            font-size: 60px;
-            left: 5%;
-            border-radius: 30px;
+            top: 10%;
+            width: 40%;
+            height: 40%;
+            background: white;
+            left: 30%;
 
 
         }
+
         .mainHeadImg{
             position: absolute;
             width: 100px;
@@ -49,6 +32,28 @@
             border-radius: 50%;
             top: 21%;
             left: 6%;
+
+        }
+
+        .mainDiv_HeadLabelDiv{
+            position: absolute;
+            width: 20%;
+            height: 10%;
+            background: rgba(0,0,0,0);
+            top: 3%;
+            font-size: 23px;
+
+        }
+        .mainDiv_HeadImgDiv{
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #ffe8a1;
+            top: 16%;
+            font-size: 23px;
+            border-radius: 50%;
+            background-image: url("../../image/headImg3.jpg");
+            background-size: 100%;
 
         }
         .fontUnderline{
@@ -86,6 +91,7 @@
             top: 30%;
 
         }
+
         .permissionInfo{
 
             position: absolute;
@@ -270,10 +276,11 @@
         .subFuncDiv{
             position: absolute;
 
-            width: 10%;
-            background: rgb(230 ,230, 250);
+            width: 5%;
+            top: 10%;
+            background: whitesmoke;
             height: 60%;
-            left: 9.6%;
+            left: 24.5%;
             overflow: auto;
 
 
@@ -282,8 +289,9 @@
             position: absolute;
 
             width: 100%;
-            background: rgb(230 ,230, 250);
+            background: white;
             height: 9%;
+            cursor: pointer;
 
 
 
@@ -297,7 +305,7 @@
             color: #FFB800;
             top: 15%;
             text-align: center;
-            font-size: 20px;
+            font-size: 16px;
             text-align: center;
             color: #1b1e21;
 
@@ -310,6 +318,33 @@
             bottom: 0%;
             background: #FFB800;
         }
+        .mainDiv_InfoDiv{
+            position: absolute;
+            width: 40%;
+            height: 7%;
+            background: rgba(0,0,0,0);
+
+
+        }
+        .mainDiv_InfoDiv_LabelDiv{
+
+            position: absolute;
+            width: 15%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            text-align: left;
+            font-size: 13px;
+        }
+        .mainDiv_InfoDiv_LabelDiv_info{
+
+            position: absolute;
+            left: 17%;
+            width: 70%;
+            height: 100%;
+            font-size: 13px;
+            background: rgba(0,0,0,0);
+        }
+
     </style>
     <script>
         //缓存
@@ -324,245 +359,64 @@
             userInfo = JSON.parse(userInfo);
             console.info(userInfo);
             loadFont("zffg","../../font/www124.TTF");
-            iframe("../hall/home_head/home_head2.html");
+            var i3 = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(i3,Vector3(0,-2));
+
+            //主界面
             var mainDiv = div(60,600);
-            setColor(mainDiv,Color24(230 ,230, 250));
-            setPositionWithPercent(mainDiv,Vector3(20,10));
+            setCSS(mainDiv,"mainDiv");
 
-            mainDiv.className = "mainDiv";
-
-            var mainDivLine = div();
-            setParent(mainDivLine,mainDiv);
-            setCSS(mainDivLine,"mainDivLine");
-
-            var mainDivLabel = hilabel("个人信息",3);
-
-            setParent(mainDivLabel,mainDiv);
-            setCSS(mainDivLabel,"mainDivLabel");
-
-            var mainDivLien2 = div();
-            setParent(mainDivLien2,mainDiv);
-            setCSS(mainDivLien2,"mainDivLien2");
-
-            //--------------------Tips---------------
-
-            var mainTipBox = div();
-            setCSS(mainTipBox,"mainTipBox");
-
-            var mainTipLabel = hilabel("1555555555555523",5);
-            setParent(mainTipLabel,mainTipBox);
-            setCSS(mainTipLabel,"mainTipLabel");
-            function onTips(parent,content) {
-
-
-                setText(mainTipLabel,content);
-                setParent(mainTipBox,parent);
-
-
-
-                
+            function drawLine(parent,height,vector3,width,color) {
+                var lineDiv = div();
+                setParent(lineDiv,parent);
+                lineDiv.style.position = "absolute";
+                lineDiv.style.width = width;
+                lineDiv.style.height = height;
+                lineDiv.style.zIndex = 34;
+                lineDiv.style.background = color;
+                setPositionWithPercent(lineDiv,vector3);
+                return lineDiv;
             }
-            
+            var mainDiv_HeadLabelDiv = div();
+            setParent(mainDiv_HeadLabelDiv,mainDiv);
+            setCSS(mainDiv_HeadLabelDiv,"mainDiv_HeadLabelDiv");
+            drawLine(mainDiv,"1px",Vector3(0,15),"100%",Color24(1,0,0));
+            setText(mainDiv_HeadLabelDiv,"个人信息");
+            var mainDiv_HeadImgDiv = div();
+            setParent(mainDiv_HeadImgDiv,mainDiv);
+            setCSS(mainDiv_HeadImgDiv,"mainDiv_HeadImgDiv");
 
 
-            //--------------------头像---------------------------
-            var headImg = createimg("../../image/dmw.jpeg",100,100);
+            function InsMainDIvInfoDiv(parent,prefix,subfix,vector3) {
+                var mainDiv_InfoDiv = div();
 
-            setCSS(headImg,"mainHeadImg");
-
-            //--------------------邮箱------------------
-            var emailDiv = div();
-            setParent(emailDiv,mainDiv);
-            setCSS(emailDiv,"emailDiv");
-
-            var emailBtn = createimg("../../image/pen0.png");
-
-
-            setParent(emailBtn,emailDiv);
-            setCSS(emailBtn,"emailBtn");
-            emailBtn.onmouseenter = function (ev1) {
-                setCSS(emailBtn,"emailBtn boxshadow2");
-
-            };
-            emailBtn.onmousedown = function (ev1) {
-                setCSS(emailBtn,"emailBtn boxshadow1");
-                window.location.href = "../email/emailBox.html"
-            };
-            emailBtn.onmouseup = function (ev1) {
-                setCSS(emailBtn,"emailBtn boxshadow2");
-
-            };
-            emailBtn.onmouseleave = function (ev1) {
-                setCSS(emailBtn,"emailBtn");
-
+                var mainDiv_InfoDiv_LabelDiv = div();
+                var mainDiv_InfoDiv_LabelDiv_info = div();
+                setParent(mainDiv_InfoDiv,parent);
+                setParent(mainDiv_InfoDiv_LabelDiv,mainDiv_InfoDiv);
+                setParent(mainDiv_InfoDiv_LabelDiv_info,mainDiv_InfoDiv);
+                mainDiv_InfoDiv_LabelDiv.innerText = prefix;
+                mainDiv_InfoDiv_LabelDiv_info.innerText = subfix;
+                setCSS(mainDiv_InfoDiv,"mainDiv_InfoDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv,"mainDiv_InfoDiv_LabelDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv_info,"mainDiv_InfoDiv_LabelDiv_info");
+                setPositionWithPercent(mainDiv_InfoDiv,vector3);
             }
 
+            InsMainDIvInfoDiv(mainDiv,"ID ","1234567",Vector3(10,17));
+            InsMainDIvInfoDiv(mainDiv,"Level ","S",Vector3(10,25));
+            InsMainDIvInfoDiv(mainDiv,"Gold ","9822",Vector3(10,33));
 
+            drawLine(mainDiv,"1px",Vector3(10,42),"90%",Color24(1,0,0));
+            InsMainDIvInfoDiv(mainDiv,"昵称: ","李二蛋",Vector3(10,47));
+            InsMainDIvInfoDiv(mainDiv,"性别: ","男",Vector3(10,55));
+            InsMainDIvInfoDiv(mainDiv,"生日: ","1998.3.3",Vector3(10,63));
+            InsMainDIvInfoDiv(mainDiv,"简介: ","感冒好累...................",Vector3(10,71));
 
-            //---------------属性--------------Info------------------
-            var nameLabel = createLabel("昵称: ",30,15);
-
-            setParent(nameLabel,mainDiv);
-            setCSS(nameLabel,"fontUnderline");
-            setParent(headImg,mainDiv);
-            setPositionWithPercent(nameLabel,Vector3(20,15));
-
-            var nameInfo = createLabel("王二麻子",30,40);
-            setParent(nameInfo,mainDiv);
-            setCSS(nameInfo,"fontUnderline");
-            setPositionWithPercent(nameInfo,Vector3(30,15));
-
-            var scoreLabel = createLabel("积分: ",30,40);
-            setParent(scoreLabel,mainDiv);
-            setCSS(scoreLabel,"fontUnderline");
-            setPositionWithPercent(scoreLabel,Vector3(20,20));
-            var scoreInfo = createLabel("10000",10,10);
-            scoreInfo.style.textAlign = "center";
-            setParent(scoreInfo,mainDiv);
-
-            setCSS(scoreInfo,"fontUnderline");
-            setPositionWithPercent(scoreInfo,Vector3(32,20));
-
-
-
-
-
-
-
-
-            //---------------位阶-----------------------------//
-            var levelLabel = createLabel("位阶: ");
-
-            setCSS(levelLabel,"fontUnderline");
-
-            setParent(levelLabel,mainDiv);
-            setPositionWithPercent(levelLabel,Vector3(20,25));
-            var levelInfo =  createLabel("Q-0",20,25);
-            setParent(levelInfo,mainDiv);
-            setCSS(levelInfo,"fontUnderline");
-            setPositionWithPercent(levelInfo,Vector3(33.3,25));
-            setFontColor(levelInfo,Color24(	155 ,205 ,155));
-
-
-            //---------------------权限------------------------------------//
-            var permissionLabel = createLabel("权限: ");
-
-            setCSS(permissionLabel,"permissionLabel");
-            setParent(permissionLabel,mainDiv);
-
-            var permissionInfo = createLabel("A");
-            setParent(permissionInfo,mainDiv);
-            setCSS(permissionInfo,"permissionInfo");
-
-
-
-
-            //-------------------------信件信息------------------------------------
-            // var emailListDiv = div();
-            // setCSS(emailListDiv,"emailListDiv");
-            //
-            // var emailInfoTipBox = div();
-            // setCSS(emailInfoTipBox,"emailInfoTipBox");
-            //
-            // var emailInfoTipBoxLine = div();
-            // setCSS(emailInfoTipBoxLine,"emailInfoTipBoxLine");
-            // setParent(emailInfoTipBoxLine,emailInfoTipBox);
-            // var emailInfoTipBoxHeadLabel = hilabel("信件信息",3);
-            // setCSS(emailInfoTipBoxHeadLabel,"emailInfoTipBoxHeadLabel");
-            // setParent(emailInfoTipBoxHeadLabel,emailInfoTipBox);
-            //
-            // var emailItemDivEmailHeadInfo = hilabel("主题：奥特曼打小怪兽",4);
-            // setCSS(emailItemDivEmailHeadInfo,"emailItemDivEmailHeadInfo");
-            // setParent(emailItemDivEmailHeadInfo,emailInfoTipBox);
-            //
-            // var emailItemDivSenderInfo = hilabel("发件人：罗继业",4);
-            // setCSS(emailItemDivSenderInfo,"emailItemDivSenderInfo");
-            // setParent(emailItemDivSenderInfo,emailInfoTipBox);
-            //
-            //
-            // var emailItemDivSenderTimeInfo = hilabel("发送时间：2019-8-12 8:43:32",4);
-            // setCSS(emailItemDivSenderTimeInfo,"emailItemDivSenderTimeInfo");
-            // setParent(emailItemDivSenderTimeInfo,emailInfoTipBox);
-            // hideElement(emailInfoTipBox);
-            //
-            //
-            // function updateEmailInfoTipBox(ev) {
-            //
-            //     var infoIndex = ev.target.infoIndex;
-            //     var emailInfo = emailCache[infoIndex];
-            //     setText(emailItemDivEmailHeadInfo,"主题："+emailInfo.email_head_info);
-            //     setText(emailItemDivSenderInfo,"发件人："+emailInfo.email_sender);
-            //     setText(emailItemDivSenderTimeInfo,"发送时间："+emailInfo.email_send_time);
-            //     console.info(emailInfo);
-            // }
-            //
-            // var emailItemDivList_ss = [];
-            //
-            //
-            // function insEmailItemDiv(index,headInfo) {
-            //
-            //     var emailItemDiv = div();
-            //
-            //     emailItemDiv.infoIndex = index;
-            //     setCSS(emailItemDiv,"emailItemDiv");
-            //     setParent(emailItemDiv,emailListDiv);
-            //     setPositionWithPercent(emailItemDiv,Vector3(10,2+index*8));
-            //     emailItemDivList_ss.push(emailItemDiv);
-            //
-            //
-            //     var emailItemDivHeadImg = createimg("../../image/Ls.png");
-            //     setParent(emailItemDivHeadImg,emailItemDiv);
-            //     setCSS(emailItemDivHeadImg,"emailItemDivHeadImg");
-            //
-            //     var emailItemDivDescribeInfo = hilabel(headInfo,4);
-            //     setParent(emailItemDivDescribeInfo,emailItemDiv);
-            //     setCSS(emailItemDivDescribeInfo,"emailItemDivDescribeInfo");
-            //
-            //
-            //
-            //
-            //
-            //     emailItemDiv.onmouseenter = function (ev1) {
-            //
-            //         showElement(emailInfoTipBox);
-            //
-            //         setPosition(emailInfoTipBox,Vector3(ev1.target.offsetLeft+250,ev1.clientY));
-            //         console.info(ev1.target.infoIndex);
-            //         console.info(ev1.clientX+"<>"+ev1.clientY);
-            //         console.info(ev1.target.offsetLeft+"<>"+ev1.target.offsetTop);
-            //         updateEmailInfoTipBox(ev1);
-            //
-            //     }
-            //
-            //     emailItemDiv.onmouseleave = function (ev1) {
-            //         hideElement(emailInfoTipBox);
-            //
-            //     }
-            //
-            //
-            //
-            // }
-            // insEmailItemDiv(0,"王二麻子");
-            // insEmailItemDiv(1,"李狗蛋");
-            // insEmailItemDiv(2,"苏平新");
-            //
-            // function deleteAllEmailItemDiv() {
-            //
-            //     for (var i in emailItemDivList_ss){
-            //
-            //         emailItemDivList_ss[i].remove();
-            //     }
-            //
-            //     emailItemDivList_ss.length = 0;
-            //
-            //
-            // }
-            // deleteAllEmailItemDiv();
             //-----------------------------------------子功能---------------------------------------
             var subFuncDiv = div();
             setCSS(subFuncDiv,"subFuncDiv");
             subFuncDiv.btnArray = [];
-
             var subFuncDivItemBeclickIndex = -1;
             function insFuncBtn(parent,index,content) {
                 var subFuncDivItem = div();
@@ -572,21 +426,19 @@
                 subFuncDiv.btnArray.push(subFuncDivItem);
                 subFuncDivItem.recoverColor = function(){
 
-                    setColor(subFuncDivItem,Color24(230 ,230, 250));
-                }
+                    setColor(subFuncDivItem,"white");
+                };
                 subFuncDivItem.itemIndex = index;
                 var subFuncDivItemLabelDiv = div();
 
                 setParent(subFuncDivItemLabelDiv,subFuncDivItem);
                 setCSS(subFuncDivItemLabelDiv,"subFuncDivItemLabelDiv");
                 setText(subFuncDivItemLabelDiv,content);
-                var subFuncDivLine = div();
-                setParent(subFuncDivLine,subFuncDivItem);
-                setCSS(subFuncDivLine,"subFuncDivLine");
+
                 subFuncDivItem.onmouseenter = function (ev1) {
                     if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex) {
 
-                        setColor(subFuncDivItem, Color24(255, 240, 245));
+                        setColor(subFuncDivItem, "whitesmoke");
                     }
                     console.info("change color");
 
@@ -597,7 +449,7 @@
 
                     if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex){
 
-                        setColor(subFuncDivItem,Color24(230 ,230, 250));
+                        setColor(subFuncDivItem,"white");
                     }
 
 
@@ -616,13 +468,15 @@
                 }
 
             }
+
+
             insFuncBtn(subFuncDiv,0,"个人信息");
             insFuncBtn(subFuncDiv,1,"当前任务");
             insFuncBtn(subFuncDiv,2,"任务记录");
             insFuncBtn(subFuncDiv,3,"积分记录");
             insFuncBtn(subFuncDiv,4,"渡劫申请");
             insFuncBtn(subFuncDiv,5,"我的训练营");
-            insFuncBtn(subFuncDiv,6,"我的技能树");
+            insFuncBtn(subFuncDiv,6,"实名认证");
 
 
 
@@ -673,27 +527,27 @@
 
             // }
 
-            requestServer("/getUserModel",function (ip) {
-                var reData = {};
-                reData.user_acc = userInfo.user_acc;
-                
-                $.post(ip,reData,function (dataFromServer) {
-                    nameInfo.innerText = dataFromServer.user_name;
-                    levelInfo.innerText = dataFromServer.user_stage;
-                    scoreInfo.innerText = dataFromServer.user_gold;
-                    permissionInfo.innerText = dataFromServer.user_permission_level;
-
-                });
-
-            });
-
-
+            // requestServer("/getUserModel",function (ip) {
+            //     var reData = {};
+            //     reData.user_acc = userInfo.user_acc;
+            //
+            //     $.post(ip,reData,function (dataFromServer) {
+            //         nameInfo.innerText = dataFromServer.user_name;
+            //         levelInfo.innerText = dataFromServer.user_stage;
+            //         scoreInfo.innerText = dataFromServer.user_gold;
+            //         permissionInfo.innerText = dataFromServer.user_permission_level;
+            //
+            //     });
+            //
+            // });
 
 
 
-            console.info(nameLabel.tagName);
 
-            console.info(localStorage.getItem("emailInfo"));
+            //
+            // console.info(nameLabel.tagName);
+            //
+            // console.info(localStorage.getItem("emailInfo"));
 
 
         }
