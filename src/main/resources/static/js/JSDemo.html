@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="GetDataFromTaskSystem.js"></script>
+    <script src="Config.js"></script>
+    <script src="jquery-1.11.0.min.js"></script>
+    <script >
+
+        window.onload = function (ev) {
+
+            getTaskList(function (data) {
+
+                console.info(data);
+            });
+
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

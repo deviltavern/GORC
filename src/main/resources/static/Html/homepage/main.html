@@ -1,0 +1,463 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../../js/GetDataFromTaskSystem.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <style>
+        body{
+            background: whitesmoke;
+
+        }
+        .mainDiv{
+            position: absolute;
+            width : 30%;
+            height :100%;
+            background: #6c757d;
+            top: 70px;
+            left: 30%;
+        }
+        .leftMenuDiv{
+            position: absolute;
+            width : 5%;
+            height :45%;
+            background: white;
+            top: 70px;
+            left: 24.5%;
+
+        }
+        .rightMenuDiv{
+
+            position: absolute;
+            width : 9%;
+            height :40%;
+            background-image: url("../../image/bac4.JPG");
+            background-size: 100%;
+            top: 70px;
+            left: 60.5%;
+        }
+        .mainDivMainImgDiv{
+            position: absolute;
+            width : 100%;
+            height : 150px;
+            background: #FFB800;
+
+
+        }
+        .mainDivMainInfoiv{
+
+            position: absolute;
+            width : 100%;
+            height : 100%;
+            background: whitesmoke;
+
+            top: 155px;
+        }
+        .mainDivMainImgDivImgBox{
+
+            position: absolute;
+            width : 100%;
+            height : 100%;
+            background-image: url("../../image/bac2.jpg");
+            background-size: 100%;
+        }
+        .mainDivMainImgDivLeftDiv{
+
+            position: absolute;
+            width : 7%;
+            height : 100%;
+            background: rgba(0,0,0,0);
+            z-index: 10;
+
+
+
+        }
+        .mainDivMainImgDivLeftDiv_ImgBox{
+            position: absolute;
+            width :100%;
+            top: 40%;
+            height: 20%;
+            background-image: url("../../image/jt1.png");
+            background-size: 100%;
+            -moz-transform:scaleX(-1);
+            -webkit-transform:scaleX(-1);
+            -o-transform:scaleX(-1);
+            transform:scaleX(-1);	    /*IE*/
+
+
+        }
+        .mainDivMainImgDivRightDiv{
+
+            position: absolute;
+            width : 7%;
+            height : 100%;
+            background: rgba(0,0,0,0);
+            z-index: 10;
+            right: 0%;
+        }
+        .mainDivMainImgDivRightDiv_ImgBox{
+
+            position: absolute;
+            width :100%;
+            top: 40%;
+            height: 20%;
+            background-image: url("../../image/jt1.png");
+            background-size: 100%;
+        }
+        .mainDivMainImgDivOcclusionDiv{
+            position: absolute;
+            width :100%;
+            height: 100%;
+            background:rgba(0,0,0,0.3);
+            z-index: 12;
+
+        }
+
+        /*---------------------------subInfoDiv--------------*/
+        .mainDIvMainInfoDivSubInfoDiv{
+            position: absolute;
+            width : 100%;
+            height: 13%;
+            background:white;
+
+        }
+        .mainDivMainInfoiv_HeadImgDiv{
+            position: absolute;
+            top: 10%;
+            left: 3%;
+            width : 6%;
+            height: 30%;
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_HeadTextDiv{
+            position: absolute;
+            top: 10%;
+            left: 10%;
+            width : 30%;
+            height: 30%;
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_mainTextDiv{
+            position: absolute;
+            top: 45%;
+            left: 3%;
+            width : 95%;
+            height: 20%;
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_TrailImgDiv{
+
+            position: absolute;
+            bottom: 3%;
+            left: 3%;
+            width : 6%;
+            height: 30%;
+            background:rgba(0,0,0,0);
+        }
+        .mainDivMainInfoiv_TrailTextDiv{
+
+            position: absolute;
+            bottom: 3%;
+            left: 10%;
+            width : 30%;
+            height: 30%;
+            background:rgba(0,0,0,0);
+        }
+
+        .mainDivMainInfoiv_HeadImgDiv_Img{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_HeadTextDiv_TextBox{
+            position: absolute;
+            top: 25%;
+            width: 100%;
+            height: 50%;
+
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_TrailImgDiv_Img{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_TrailTextDiv_TextBox{
+            position: absolute;
+            top: 25%;
+            width: 100%;
+            height: 50%;
+
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDivMainInfoiv_mainTextDiv_TextBox{
+            position: absolute;
+            top: 25%;
+            width: 100%;
+            height: 50%;
+
+            background:rgba(0,0,0,0);
+
+        }
+        .mainDIvMainInfoDivSubInfoDiv_OcclusionDiv{
+            position: absolute;
+
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 14;
+
+
+        }
+
+        /*左菜单栏..........................................................................................*/
+        .menuDiv_ButtonDiv{
+            position: absolute;
+            top: 0%;
+            width: 100%;
+            height: 7%;
+            background: rgba(0,0,0,0);
+
+        }
+
+
+        .menuDiv_ButtonDiv_LabelDiv{
+            position: absolute;
+            width: 100%;
+            height: 60%;
+            top: 20%;
+            font-size: 15px;
+            cursor: pointer;
+            text-align: center;
+            background: rgba(0,0,0,0);
+
+
+        }
+
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            absoluteWindow();
+            var headDiv = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+            var mainDiv = div();
+            var leftMenuDiv = div();
+
+            function menuButton(parent,text,index) {
+                var menuDiv_ButtonDiv = div();
+                setParent(menuDiv_ButtonDiv,parent);
+                setCSS(menuDiv_ButtonDiv,"menuDiv_ButtonDiv");
+                var menuDiv_ButtonDiv_LabelDiv = div();
+                setParent(menuDiv_ButtonDiv_LabelDiv,menuDiv_ButtonDiv);
+                setCSS(menuDiv_ButtonDiv_LabelDiv,"menuDiv_ButtonDiv_LabelDiv");
+                menuDiv_ButtonDiv_LabelDiv.innerText = text;
+                setPositionWithPercent(menuDiv_ButtonDiv,Vector3(0,7*index));
+                menuDiv_ButtonDiv.onmouseenter = function (ev1) {
+
+                    setColor(menuDiv_ButtonDiv,Color24(106,90,205));
+                    setFontColor(menuDiv_ButtonDiv_LabelDiv,Color24(255,255,255));
+
+                };
+                menuDiv_ButtonDiv.onmouseleave = function (ev1) {
+
+                    setColor(menuDiv_ButtonDiv,"white");
+                    setFontColor(menuDiv_ButtonDiv_LabelDiv,Color24(0,0,0));
+                };
+            }
+
+            function rightMenuButton(parent,text,index) {
+                var menuDiv_ButtonDiv = div();
+                setParent(menuDiv_ButtonDiv,parent);
+                setCSS(menuDiv_ButtonDiv,"menuDiv_ButtonDiv");
+                var menuDiv_ButtonDiv_LabelDiv = div();
+                setParent(menuDiv_ButtonDiv_LabelDiv,menuDiv_ButtonDiv);
+                setCSS(menuDiv_ButtonDiv_LabelDiv,"menuDiv_ButtonDiv_LabelDiv");
+                menuDiv_ButtonDiv_LabelDiv.innerText = text;
+                setPositionWithPercent(menuDiv_ButtonDiv,Vector3(0,7*index));
+                menuDiv_ButtonDiv.onmouseenter = function (ev1) {
+                    setColor(menuDiv_ButtonDiv,Color24(106,90,205));
+                    setFontColor(menuDiv_ButtonDiv_LabelDiv,Color24(255,255,255));
+
+                };
+                menuDiv_ButtonDiv.onmouseleave = function (ev1) {
+
+                    setColor(menuDiv_ButtonDiv,"white");
+                    setFontColor(menuDiv_ButtonDiv_LabelDiv,Color24(0,0,0));
+                };
+            }
+
+
+            menuButton(leftMenuDiv,"算法",0);
+            menuButton(leftMenuDiv,"web前端",1);
+            menuButton(leftMenuDiv,"web后端",2);
+
+            menuButton(leftMenuDiv,"Android",3);
+            menuButton(leftMenuDiv,"微信小程序",4);
+            menuButton(leftMenuDiv,"Unity",5);
+            menuButton(leftMenuDiv,"数据库",6);
+
+            var rightMenuDiv = div();
+            setCSS(mainDiv,"mainDiv");
+            setCSS(leftMenuDiv,"leftMenuDiv");
+            setCSS(rightMenuDiv,"rightMenuDiv");
+
+
+            //滑动标题栏窗口
+            var mainDivMainImgDiv = div();
+            var mainDivMainInfoiv = div();
+
+            setParent(mainDivMainImgDiv,mainDiv);
+            function imgHeadBar(parent) {
+
+
+                var mainDivMainImgDivOcclusionDiv = div();
+                setParent(mainDivMainImgDivOcclusionDiv,parent);
+                setCSS(mainDivMainImgDivOcclusionDiv,"mainDivMainImgDivOcclusionDiv");
+                hideElement(mainDivMainImgDivOcclusionDiv);
+                mainDivMainImgDiv.onmouseenter = function (ev1) {
+                    showElement(mainDivMainImgDivOcclusionDiv);
+                };
+                mainDivMainImgDiv.onmouseleave = function (ev1) {
+                    hideElement(mainDivMainImgDivOcclusionDiv);
+                };
+
+                var mainDivMainImgDivImgBox = div();
+                setParent(mainDivMainImgDivImgBox,mainDivMainImgDiv);
+                setCSS(mainDivMainImgDivImgBox,"mainDivMainImgDivImgBox");
+
+                var mainDivMainImgDivLeftDiv = div();
+                setParent(mainDivMainImgDivLeftDiv,mainDivMainImgDivOcclusionDiv);
+                setCSS(mainDivMainImgDivLeftDiv,"mainDivMainImgDivLeftDiv");
+
+                var mainDivMainImgDivLeftDiv_ImgBox = div();
+                setParent(mainDivMainImgDivLeftDiv_ImgBox,mainDivMainImgDivLeftDiv);
+                setCSS(mainDivMainImgDivLeftDiv_ImgBox,"mainDivMainImgDivLeftDiv_ImgBox");
+                mainDivMainImgDivLeftDiv.onmouseenter = function (ev1) {
+                    setColor(mainDivMainImgDivLeftDiv,Color32(255,255,255,0.3));
+                };
+                mainDivMainImgDivLeftDiv.onmouseleave = function (ev1) {
+                    setColor(mainDivMainImgDivLeftDiv,Color32(1,1,1,0.1));
+                };
+                var mainDivMainImgDivRightDiv = div();
+                mainDivMainImgDivRightDiv.onmouseenter = function (ev1) {
+                    setColor(mainDivMainImgDivRightDiv,Color32(255,255,255,0.3));
+                };
+                mainDivMainImgDivRightDiv.onmouseleave = function (ev1) {
+                    setColor(mainDivMainImgDivRightDiv,Color32(1,1,1,0.1));
+                };
+                setParent(mainDivMainImgDivRightDiv,mainDivMainImgDivOcclusionDiv);
+                setCSS(mainDivMainImgDivRightDiv,"mainDivMainImgDivRightDiv");
+                var mainDivMainImgDivRightDiv_ImgBox = div();
+                setParent(mainDivMainImgDivRightDiv_ImgBox,mainDivMainImgDivRightDiv);
+                setCSS(mainDivMainImgDivRightDiv_ImgBox,"mainDivMainImgDivRightDiv_ImgBox");
+                //mainDivMainImgDivRightDiv_ImgBox
+                setParent(mainDivMainImgDiv,mainDiv);
+                setCSS(mainDivMainImgDiv,"mainDivMainImgDiv");
+            }
+
+            imgHeadBar(mainDivMainImgDiv);
+
+
+
+            setParent(mainDivMainInfoiv,mainDiv);
+            setCSS(mainDivMainInfoiv,"mainDivMainInfoiv");
+            //主信息栏
+            function insInfoBox(parent,src1,text1,mainText,src2,text2,position) {
+
+
+                var mainDIvMainInfoDivSubInfoDiv = div();
+
+                var mainDIvMainInfoDivSubInfoDiv_OcclusionDiv = div();
+                setParent(mainDIvMainInfoDivSubInfoDiv_OcclusionDiv,mainDIvMainInfoDivSubInfoDiv);
+                setCSS(mainDIvMainInfoDivSubInfoDiv_OcclusionDiv,"mainDIvMainInfoDivSubInfoDiv_OcclusionDiv");
+                hideElement(mainDIvMainInfoDivSubInfoDiv_OcclusionDiv);
+                mainDIvMainInfoDivSubInfoDiv.onmouseenter = function (ev1) {
+                    showElement(mainDIvMainInfoDivSubInfoDiv_OcclusionDiv);
+                };
+                mainDIvMainInfoDivSubInfoDiv.onmouseleave = function (ev1) {
+                    hideElement(mainDIvMainInfoDivSubInfoDiv_OcclusionDiv);
+                };
+                var mainDivMainInfoiv_HeadImgDiv = div();
+                var mainDivMainInfoiv_HeadTextDiv = div();
+                var mainDivMainInfoiv_TrailImgDiv = div();
+                var mainDivMainInfoiv_TrailTextDiv = div();
+                var mainDivMainInfoiv_mainTextDiv = div();
+
+                var mainDivMainInfoiv_HeadImgDiv_Img = img();
+                var mainDivMainInfoiv_HeadTextDiv_TextBox = div();
+                var mainDivMainInfoiv_TrailImgDiv_Img = img();
+                var mainDivMainInfoiv_TrailTextDiv_TextBox = div();
+                var mainDivMainInfoiv_mainTextDiv_TextBox = div();
+                mainDivMainInfoiv_HeadImgDiv_Img.src = src1;
+                mainDivMainInfoiv_HeadTextDiv_TextBox.innerText = text1;
+                mainDivMainInfoiv_TrailImgDiv_Img.src = src2;
+                mainDivMainInfoiv_TrailTextDiv_TextBox.innerText = text2;
+                var text = mainText.substr(0,35);
+                mainDivMainInfoiv_mainTextDiv.innerText = text+"...";
+                setParent(mainDivMainInfoiv_HeadImgDiv_Img,mainDivMainInfoiv_HeadImgDiv);
+                setParent(mainDivMainInfoiv_HeadTextDiv_TextBox,mainDivMainInfoiv_HeadTextDiv);
+                setParent(mainDivMainInfoiv_TrailImgDiv_Img,mainDivMainInfoiv_TrailImgDiv);
+                setParent(mainDivMainInfoiv_TrailTextDiv_TextBox,mainDivMainInfoiv_TrailTextDiv);
+                setParent(mainDivMainInfoiv_mainTextDiv_TextBox,mainDivMainInfoiv_mainTextDiv);
+                setCSS(mainDivMainInfoiv_HeadImgDiv_Img,"mainDivMainInfoiv_HeadImgDiv_Img");
+                setCSS(mainDivMainInfoiv_HeadTextDiv_TextBox,"mainDivMainInfoiv_HeadTextDiv_TextBox");
+                setCSS(mainDivMainInfoiv_TrailImgDiv_Img,"mainDivMainInfoiv_TrailImgDiv_Img");
+                setCSS(mainDivMainInfoiv_TrailTextDiv_TextBox,"mainDivMainInfoiv_TrailTextDiv_TextBox");
+                setCSS(mainDivMainInfoiv_mainTextDiv_TextBox,"mainDivMainInfoiv_mainTextDiv_TextBox");
+
+
+
+
+                setParent(mainDIvMainInfoDivSubInfoDiv,parent);
+                setCSS(mainDIvMainInfoDivSubInfoDiv,"mainDIvMainInfoDivSubInfoDiv");
+                setParent(mainDivMainInfoiv_HeadImgDiv,mainDIvMainInfoDivSubInfoDiv);
+                setParent(mainDivMainInfoiv_HeadTextDiv,mainDIvMainInfoDivSubInfoDiv);
+                setParent(mainDivMainInfoiv_TrailImgDiv,mainDIvMainInfoDivSubInfoDiv);
+                setParent(mainDivMainInfoiv_TrailTextDiv,mainDIvMainInfoDivSubInfoDiv);
+                setParent(mainDivMainInfoiv_mainTextDiv,mainDIvMainInfoDivSubInfoDiv);
+                setCSS(mainDivMainInfoiv_HeadImgDiv,"mainDivMainInfoiv_HeadImgDiv");
+                setCSS(mainDivMainInfoiv_HeadTextDiv,"mainDivMainInfoiv_HeadTextDiv");
+                setCSS(mainDivMainInfoiv_TrailImgDiv,"mainDivMainInfoiv_TrailImgDiv");
+                setCSS(mainDivMainInfoiv_TrailTextDiv,"mainDivMainInfoiv_TrailTextDiv");
+                setCSS(mainDivMainInfoiv_mainTextDiv,"mainDivMainInfoiv_mainTextDiv");
+                setPositionWithPercent(mainDIvMainInfoDivSubInfoDiv,position);
+                return mainDIvMainInfoDivSubInfoDiv;
+            }
+
+            getTaskList(function (data) {
+
+                for(var i in data){
+
+                    insInfoBox(mainDivMainInfoiv,"../../image/"+data[i].task_difficute_level+".png",data[i].task_begin_time,data[i].task_describe,"../../image/pen0.png",data[i].task_master,Vector3(0,13*i));
+
+
+                };
+            });
+
+            //insInfoBox(mainDivMainInfoiv,"../../image/pen0.png","大王饶命,","..........","../../image/pen0.png","李狗蛋儿！",Vector3(0,13));
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

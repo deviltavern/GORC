@@ -121,9 +121,11 @@ function iframe(src){
     e2.scrolling = "no";
     e2.width = 100+"%";
     e2.height = 70+"px";
-    e2.marginHeight = "0px";
-    e2.marginWidth = "0px";
+
+
+
     e2.src = src;
+
 
 return e2;
 
@@ -401,6 +403,7 @@ function setColor(orign,rbg) {
 
     orign.style.backgroundColor = rbg;
 }
+
 function setFontColor(origin,rgb) {
     origin.style.color = rgb;
 
@@ -546,7 +549,12 @@ function Color24(r,g,b) {
     return rg;
 
 }
+function Color32(r,g,b,a) {
 
+    var rg = "rgba("+r+","+g+","+b+","+a+")";
+    return rg;
+
+}
 function Color(r,g,b) {
 
     var color = {};

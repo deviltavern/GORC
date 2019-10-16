@@ -11,30 +11,31 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.view.InternalResourceViewResolver;
 import springfox.documentation.spi.DocumentationType;
 import springfox.documentation.spring.web.plugins.Docket;
 import springfox.documentation.swagger2.annotations.EnableSwagger2;
 
 @Configuration
 @EnableWebMvc
-public class SpxConfig {
+public class SpxConfig extends WebMvcConfigurerAdapter{
 
-
-    @Configuration
-    public class WebMvcConfig extends WebMvcConfigurerAdapter {
         public void addResourceHandlers(ResourceHandlerRegistry registry) {
-
-
             registry.addResourceHandler("/static/**").addResourceLocations("classpath:/static/");
             registry.addResourceHandler("swagger-ui.html")
                     .addResourceLocations("classpath:/META-INF/resources/");
             registry.addResourceHandler("/webjars/**")
                     .addResourceLocations("classpath:/META-INF/resources/webjars/");
-
-        }
-
-
     }
+
+
+//    @Bean
+//    public InternalResourceViewResolver setupViewResolver(){
+//        InternalResourceViewResolver resolver = new InternalResourceViewResolver();
+//        resolver.setPrefix("/");
+//        resolver.setSuffix("");
+//        return resolver;
+//    }
 }
 
 

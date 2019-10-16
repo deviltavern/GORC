@@ -16,6 +16,7 @@
     <script src="../../../layui/layui.js" charset="utf-8"></script>
     <script src="../../demo/frameDemo/FrameCirculation.js"></script>
     <script src="scripts/websocket.js"></script>
+    <script src="../../demo/ElementCreatorFrame/ZCElementer.js"></script>
     <base target="_parent">
     <style>
         .emailDiv{
@@ -34,6 +35,17 @@
             height: 100%;
             top: -70%;
             text-align: center;
+
+        }
+        .auditDiv{
+            position:  absolute;
+            right: 0%;
+            bottom: 0%;
+            width: 70px;
+            height: 70px;
+            background-image: url("../../../image/yx.png");
+            background-size: 100%;
+
 
         }
     </style>
@@ -123,6 +135,7 @@
         }
 
         $(document).ready(function() {
+
             dv = createBottom();
             dv.hide();
             hoverObj = {};
@@ -137,6 +150,8 @@
 
 
             }
+
+            var mainDiv = document.getElementById("mainDiv");
             var score = document.getElementById("score");
             var level = document.getElementById("level");
             var task_publish = document.getElementById("task_publish");
@@ -162,6 +177,15 @@
                 userObject.user_acc = "ljy";
             }
             connect(userObject.user_acc);
+
+            var auditDiv = div();
+            setParent(auditDiv,mainDiv);
+            setCSS(auditDiv,"auditDiv");
+            auditDiv.onmousedown = function(){
+
+                window.parent.parent.location.href = "../../email/emailPage.html";
+
+            };
 
             localStorage.setItem("spxOp","none");
             op = function () {
@@ -194,7 +218,7 @@
                 localStorage.setItem("spxOp","none");
 
 
-            }
+            };
 
             frame();
 
@@ -211,7 +235,7 @@
 
 <!--<canvas style="height: 10px;width: 100px;background: #884400;position:absolute;z-index: 100;border-radius: 5px"></canvas>-->
 
-<ul class="layui-nav">
+<ul class="layui-nav" id = "mainDiv">
     <li  class="layui-nav-item"><a id = "task_hall" href="../../demo/tableDemo/BlackShield.html">任务大厅</a></li>
     <li class="layui-nav-item">
         <a id="front_train_label" href="javascript:;">技能训练营</a>

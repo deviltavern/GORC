@@ -13,13 +13,16 @@
 
     <script src="../frameDemo/FrameCirculation.js"></script>
     <script src = "../ComboBox/Combox.js"></script>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
 </head>
 <body>
 
 
-    <iframe  id="a1" name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="../../hall/home_head/home_head2.html" style="filter:chroma(color=#ffffff)" ></iframe>
+<!--<iframe  id="a1" name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="../../hall/home_head/home_head2.html" style="z-index: 20;filter:chroma(color=#ffffff)" ></iframe>-->
     <img id="title_01" src="title1.png  "width="220px" height="285px">
     <div id="bg_box" class="bg_box">
+
+
     </div>
 
 
@@ -31,7 +34,8 @@
         var localInfo = localStorage.getItem("spxInfo");
         console.info(localInfo);
         bacgroundInit();
-
+       var headDiv =iframe("../../hall/home_head/home_head3.html");
+       setPositionWithPercent(headDiv,Vector3(0,-2));
         var bg_box=document.getElementById("bg_box");
 
         getDataFromServer("web前端");
