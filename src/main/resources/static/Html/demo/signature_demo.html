@@ -62,7 +62,7 @@
             //封装base64字符串，将其提交到后端
             var postData={};
             postData.imgStr=datapair[1];
-            $.post("http://192.168.43.11:8099/SignatureSave",postData,function (data) {
+            $.post("http://localhost:8099/SignatureSave",postData,function (data) {
                 alert(data);
             })
         }
