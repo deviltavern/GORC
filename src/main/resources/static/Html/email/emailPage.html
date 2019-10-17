@@ -17,16 +17,16 @@
         }
         .mainDiv{
             position: absolute;
-            width: 200px;
+            width: 100px;
             height: 400px;
+            left: 5.5%;
             top: 17%;
-
             background: white;
 
         }
         .bodyLine1 {
             position: absolute;
-            width: 50%;
+            width: 75%;
             height: 2px;
 
             top: 16%;
@@ -37,6 +37,7 @@
         .bodyDescribeLabel{
             position: absolute;
             top: 8%;
+
         }
         .infoDiv{
             position: absolute;
@@ -119,7 +120,7 @@
             left: 0px;
             top: 45%;
 
-            font-size: 26px;
+            font-size: 20px;
 
         }
         .checkEmailDivEmailHeadInfoDiv_a{
@@ -373,7 +374,7 @@
             var checkEmailDivDescreibeInfoDiv = div();
             setParent(checkEmailDivDescreibeInfoDiv,checkEmailDiv);
             setCSS(checkEmailDivDescreibeInfoDiv,"checkEmailDivDescreibeInfoDiv");
-            setText(checkEmailDivDescreibeInfoDiv,overheadInfo)
+            setText(checkEmailDivDescreibeInfoDiv,overheadInfo);
 
             var checkEmailDivEmailHeadInfoDiv = div();
             setParent(checkEmailDivEmailHeadInfoDiv,checkEmailDiv);
@@ -399,15 +400,17 @@
             };
 
             checkEmailDivEmailHeadInfoDiv.onmousedown = function (ev) {
+                //
+                // selectDiv = checkEmailDiv;
+                // showElement(detailDiv)
+                //
+                // setParent(selectDiv,detailDiv);
+                // setPositionWithPercent(checkEmailDiv,checkEmailDiv.detailPos);
+                // console.info("显示细节窗口！");
+                //
+                // detailDiv.updateTaskDescribe(selectDiv.infoIndex);
 
-                selectDiv = checkEmailDiv;
-                showElement(detailDiv)
-
-                setParent(selectDiv,detailDiv);
-                setPositionWithPercent(checkEmailDiv,checkEmailDiv.detailPos);
-                console.info("显示细节窗口！");
-
-                detailDiv.updateTaskDescribe(selectDiv.infoIndex);
+                window.location.href = "../userInfo/userInfoForCheck.html"
             }
 
 
@@ -612,7 +615,7 @@
 
             setPositionWithPercent(headLabel,Vector3(0,-2));
 
-            var bodyDescribeLabel = hilabel("审核系统",1);
+            var bodyDescribeLabel = hilabel("邮箱",1);
 
             var mainDiv = div();
             var infoDiv = div();
@@ -621,8 +624,8 @@
             setCSS(bodyDescribeLabel,"bodyDescribeLabel");
             setCSS(infoDiv,"infoDiv");
             setCSS(mainDiv,"mainDiv");
-            var waitForAuditBtn =   insFuncBtn(mainDiv,0,"待审核");
-            var autitOver =  insFuncBtn(mainDiv,1,"审核完成");
+            var waitForAuditBtn =   insFuncBtn(mainDiv,0,"未读邮件");
+            var autitOver =  insFuncBtn(mainDiv,1,"已读邮件");
 
             waitForAuditBtn.onEvent = function(){
                 updateEmailDiv(0);
@@ -660,7 +663,7 @@
 
                                 di.task_type = "审核";
                             }
-                            var showInfo = "用户：@"+di.task_sender_acc+"请求接取任务ID = "+di.task_application_content_index;
+                            var showInfo = "用户：@"+di.task_sender_acc+"  提交项目申请";
                             di.task_sender_acc = "来自@"+di.task_sender_acc;
                             insEmalDiv(infoDiv,di.task_type,  di.task_sender_acc,showInfo,i,di.task_application_content_index,di.task_index);
 
@@ -719,6 +722,7 @@
 
 
             }
+
 
 
             updateEmailDiv(0);

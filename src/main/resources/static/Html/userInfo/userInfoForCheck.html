@@ -344,6 +344,16 @@
             font-size: 13px;
             background: rgba(0,0,0,0);
         }
+        .confirmDiv{
+            position: absolute;
+            width: 8%;
+            height: 5%;
+            top: 55%;
+            color: black;
+            cursor: pointer;
+            text-align: center;
+            right: 30%;
+        }
 
     </style>
     <script>
@@ -418,71 +428,10 @@
             setCSS(subFuncDiv,"subFuncDiv");
             subFuncDiv.btnArray = [];
             var subFuncDivItemBeclickIndex = -1;
-            function insFuncBtn(parent,index,content) {
-                var subFuncDivItem = div();
-                setCSS(subFuncDivItem,"subFuncDivItem");
-                setParent(subFuncDivItem,parent);
-                setPositionWithPercent(subFuncDivItem,Vector3(0,9.3*index));
-                subFuncDiv.btnArray.push(subFuncDivItem);
-                subFuncDivItem.recoverColor = function(){
-
-                    setColor(subFuncDivItem,"white");
-                };
-                subFuncDivItem.itemIndex = index;
-                var subFuncDivItemLabelDiv = div();
-
-                setParent(subFuncDivItemLabelDiv,subFuncDivItem);
-                setCSS(subFuncDivItemLabelDiv,"subFuncDivItemLabelDiv");
-                setText(subFuncDivItemLabelDiv,content);
-
-                subFuncDivItem.onmouseenter = function (ev1) {
-                    if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex) {
-
-                        setColor(subFuncDivItem, "whitesmoke");
-                    }
-                    console.info("change color");
-
-                }
-
-                subFuncDivItem.onmouseleave = function (ev1) {
-                //rgb(230 ,230, 250)
-
-                    if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex){
-
-                        setColor(subFuncDivItem,"white");
-                    }
-
-
-                }
-                subFuncDivItem.onmousedown = function (ev1) {
-                    //rgb(230 ,230, 250)
-
-
-                    for(var i in parent.btnArray){
-                        parent.btnArray[i].recoverColor();
-
-                    }
-                    setColor(subFuncDivItem,Color24(238,99, 99));
-                    subFuncDivItemBeclickIndex = subFuncDivItem.itemIndex;
-
-                }
-
-            }
-
-
-            insFuncBtn(subFuncDiv,0,"个人信息");
-            insFuncBtn(subFuncDiv,1,"当前任务");
-            insFuncBtn(subFuncDiv,2,"任务记录");
-            insFuncBtn(subFuncDiv,3,"积分记录");
-            insFuncBtn(subFuncDiv,4,"渡劫申请");
-            insFuncBtn(subFuncDiv,5,"我的训练营");
-            insFuncBtn(subFuncDiv,6,"实名认证");
-
-
 
 
             //------------更新----------------------------------------------
-          //  initAnimation();
+            //  initAnimation();
 
             var between = 0;
 
@@ -502,54 +451,16 @@
                 }
             }
 
-            
-            // singleOp = function(){
-            //     between+= 1;
+            var confirmDiv = div();
+            setCSS(confirmDiv,"confirmDiv");
+            setText(confirmDiv,"发送电子合同");
 
-                // if(between>1000){
-
-                    // between = 0;
-
-                    // var data = localStorage.getItem("emailInfo");
-
-                    // if (data != null){
-                    //     var d2 = JSON.parse(data);
-
-                        // emailCache = d2;
-                        // for(var i in emailCache){
-
-                        //     insEmailItemDiv(i,emailCache[i].email_head_info);
-                        // }
-
-
-                //     }
-                // }
-
-            // }
-
-            // requestServer("/getUserModel",function (ip) {
-            //     var reData = {};
-            //     reData.user_acc = userInfo.user_acc;
-            //
-            //     $.post(ip,reData,function (dataFromServer) {
-            //         nameInfo.innerText = dataFromServer.user_name;
-            //         levelInfo.innerText = dataFromServer.user_stage;
-            //         scoreInfo.innerText = dataFromServer.user_gold;
-            //         permissionInfo.innerText = dataFromServer.user_permission_level;
-            //
-            //     });
-            //
-            // });
-
-
-
-
-            //
-            // console.info(nameLabel.tagName);
-            //
-            // console.info(localStorage.getItem("emailInfo"));
-
-
+            confirmDiv.onmouseenter = function (ev1) {
+                setFontColor(confirmDiv,"red");
+            }
+            confirmDiv.onmouseleave = function (ev1) {
+                setFontColor(confirmDiv,"black");
+            }
         }
 
 

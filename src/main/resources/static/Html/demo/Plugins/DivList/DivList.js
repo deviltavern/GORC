@@ -1,7 +1,7 @@
 
 
 var subFuncDivItemBeclickIndex = -1;
-function insFuncBtn(parent,index,content) {
+function insFuncBtn(parent,index,content,width,height,color) {
 
     if (parent.btnArray == null){
 
@@ -10,11 +10,11 @@ function insFuncBtn(parent,index,content) {
     var subFuncDivItem = div();
     setCSS(subFuncDivItem,"subFuncDivItem");
     setParent(subFuncDivItem,parent);
-    setPositionWithPercent(subFuncDivItem,Vector3(0,9.3*index));
+    setPositionWithPercent(subFuncDivItem,Vector3(0,7*index));
     parent.btnArray.push(subFuncDivItem);
     subFuncDivItem.recoverColor = function(){
 
-        setColor(subFuncDivItem,Color24(230 ,230, 250));
+        setColor(subFuncDivItem,"white");
     }
     subFuncDivItem.itemIndex = index;
     var subFuncDivItemLabelDiv = div();
@@ -22,13 +22,11 @@ function insFuncBtn(parent,index,content) {
     setParent(subFuncDivItemLabelDiv,subFuncDivItem);
     setCSS(subFuncDivItemLabelDiv,"subFuncDivItemLabelDiv");
     setText(subFuncDivItemLabelDiv,content);
-    var subFuncDivLine = div();
-    setParent(subFuncDivLine,subFuncDivItem);
-    setCSS(subFuncDivLine,"subFuncDivLine");
+
     subFuncDivItem.onmouseenter = function (ev1) {
         if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex) {
 
-            setColor(subFuncDivItem, Color24(255, 240, 245));
+            setColor(subFuncDivItem, Color24(132 ,112 ,255));
         }
         console.info("change color");
 
@@ -39,7 +37,7 @@ function insFuncBtn(parent,index,content) {
 
         if(subFuncDivItemBeclickIndex !== subFuncDivItem.itemIndex){
 
-            setColor(subFuncDivItem,Color24(230 ,230, 250));
+            setColor(subFuncDivItem,"white");
         }
 
 
