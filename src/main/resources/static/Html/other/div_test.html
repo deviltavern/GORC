@@ -11,7 +11,26 @@
             text-align:center;
             padding:5px;
         }
-
+        body{
+            text-align: center;
+        }
+        .columnleft{
+            float: left;
+            font-size: 25px;
+        }
+        .columnright{
+            float: right;
+            font-size: 25px;
+        }
+        .row{
+            background-color: #6f4204;
+            margin:0 auto;
+            margin-top: 25px;
+            width:250px;
+            height: 40px;
+            border:1px solid #F00;
+            text-align: center;
+        }
     </style>
 </head>
 <script>
@@ -21,14 +40,46 @@
     });
 </script>
 <body id="bs">
-<div>
-    <div>
+<div style="">
+<div style="font-size: 30px;font-weight: bold">
+    个人信息
+</div>
+<div class="row">
+    <div class="columnleft">
+        <img src="../../image/gold.jpeg" style="width: 25px" alt="">
         账户名：
     </div>
-    <div>
+    <div class="columnright">
         123
     </div>
 </div>
-
+<div class="row">
+    <div class="columnleft">
+        <img src="../../image/gold.jpeg" style="width: 25px" alt="">
+        用户名：
+    </div>
+    <div class="columnright">
+        罗姐姐
+    </div>
+</div>
+<div class="row">
+    <div class="columnleft">
+        <img src="../../image/gold.jpeg" style="width: 25px" alt="">
+        积分值：
+    </div>
+    <div class="columnright">
+        9528
+    </div>
+</div>
+<div class="row">
+    <div class="columnleft">
+        <img src="../../image/gold.jpeg" style="width: 25px" alt="">
+        用户等级：
+    </div>
+    <div class="columnright">
+        渡劫
+    </div>
+</div>
+</div>
 </body>
 </html>
