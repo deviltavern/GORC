@@ -658,12 +658,19 @@
                         dataCache = data;
                         for (var i in dataCache){
                             var di = dataCache[i];
-
+                            var showInfo = "用户：@"+di.task_sender_acc+"";
                             if (di.task_type == 3){
 
-                                di.task_type = "审核";
+                                di.task_type = "申请";
+                                showInfo = showInfo+"  的项目申请";
                             }
-                            var showInfo = "用户：@"+di.task_sender_acc+"  提交项目申请";
+
+                            if (di.task_type == 2){
+
+                                di.task_type = "合同";
+                                showInfo = showInfo+"  的合同签署";
+                            }
+
                             di.task_sender_acc = "来自@"+di.task_sender_acc;
                             insEmalDiv(infoDiv,di.task_type,  di.task_sender_acc,showInfo,i,di.task_application_content_index,di.task_index);
 

@@ -455,6 +455,11 @@
             setCSS(confirmDiv,"confirmDiv");
             setText(confirmDiv,"发送电子合同");
 
+            confirmDiv.onmousedown = function (ev1) {
+
+              window.location.href = "../email/contract_sign2.html";
+            };
+
             confirmDiv.onmouseenter = function (ev1) {
                 setFontColor(confirmDiv,"red");
             }

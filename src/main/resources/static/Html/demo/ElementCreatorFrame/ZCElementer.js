@@ -323,6 +323,14 @@ function div(width,height) {
     var ltempDiv = document.body.appendChild(tempDiv);
     ltempDiv.style.width = width+"%";
     ltempDiv.style.height = height +"px";
+
+    tempDiv.addElement = function(element,cssName){
+
+        setParent(element,tempDiv);
+        setCSS(element,cssName);
+
+    };
+
     return ltempDiv;
 
 }

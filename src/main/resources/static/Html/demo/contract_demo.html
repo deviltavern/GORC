@@ -60,6 +60,22 @@
         top: 5%;
         left: 2.5%;
     }
+    .occlusionDiv_Layer2_ConfirmDiv{
+        position:  absolute;
+        width: 200px;
+        height: 50px;
+        bottom: 0%;
+        right: 0%;
+        color: black;
+        cursor: pointer;
+    }
+    .ADiv_Img{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+
+
+    }
 </style>
 <script>
     function imgOb(src){
@@ -104,7 +120,19 @@
             setCSS(occlusionDiv_Layer2, "occlusionDiv_Layer2");
             setParent(occlusionDiv_Layer2, occlusionDiv_Layer1);
 
+            var occlusionDiv_Layer2_ConfirmDiv = div();
+            setParent(occlusionDiv_Layer2_ConfirmDiv,occlusionDiv_Layer2);
+            setCSS(occlusionDiv_Layer2_ConfirmDiv,"occlusionDiv_Layer2_ConfirmDiv");
+            setText(occlusionDiv_Layer2_ConfirmDiv,"签字完毕");
+            occlusionDiv_Layer2_ConfirmDiv.onmousedown = function (ev1) {
 
+              hideElement(occlusionDiv);
+              //var tempImg = document.createElement("img");
+              //setCSS(img,"ADiv_Img");
+              //tempImg.src = "../../image/pen0.png";
+
+
+            };
             return occlusionDiv;
         }
 

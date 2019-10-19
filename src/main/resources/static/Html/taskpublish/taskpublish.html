@@ -36,7 +36,8 @@
             width: 80%;
             height: 15%;
             font-size: 20px;
-            background: #888888;
+            background: rgba(0,0,0,0);
+            cursor: pointer;
 
         }
         .mainDiv_HeadDiv_LabelDiv2{
@@ -85,6 +86,7 @@
             color: white;
             text-align: center;
             background: #1b1e21;
+            cursor: pointer;
 
 
         }
@@ -98,6 +100,7 @@
             color: white;
             text-align: center;
             background: #1b1e21;
+            cursor: pointer;
         }
         .mainDiv_HeadDiv_LabelDiv2_timeDiv
         {
@@ -109,6 +112,7 @@
             color: white;
             text-align: center;
             background: #1b1e21;
+            cursor: pointer;
 
         }
         .mainDiv_HeadDiv_LabelDiv3_div1{
@@ -120,6 +124,7 @@
             color: white;
             text-align: center;
             background: #1b1e21;
+            cursor: pointer;
 
         }
         .mainDiv_HeadDiv_LabelDiv3_div2{
@@ -131,6 +136,22 @@
             color: white;
             text-align: center;
             background: #1b1e21;
+            cursor: pointer;
+        }
+        .mainDiv_HeadDiv_LabelDiv3_div1_InputArea{
+            position: absolute;
+            width:  98%;
+            left: 0%;
+            height: 63%;
+            z-index: 20;
+            text-align: center;
+        }
+        .mainDiv_HeadDiv_LabelDiv_InputArea{
+            position: absolute;
+            width:  98%;
+            left: 0%;
+            height: 63%;
+            z-index: 20;
 
         }
     </style>
@@ -143,6 +164,7 @@
             var mainDiv = div();
             setCSS(mainDiv,"mainDiv");
 
+
             var mainDiv_HeadDiv = div();
             setCSS(mainDiv_HeadDiv,"mainDiv_HeadDiv");
             setParent(mainDiv_HeadDiv,mainDiv);
@@ -153,8 +175,21 @@
             setCSS(mainDiv_HeadDiv_LabelDiv,"mainDiv_HeadDiv_LabelDiv");
             setParent(mainDiv_HeadDiv_LabelDiv,mainDiv_HeadDiv);
             setText(mainDiv_HeadDiv_LabelDiv,"请输入任务名称");
+            var mainDiv_HeadDiv_LabelDiv_InputArea = textInput();
+            mainDiv_HeadDiv_LabelDiv.addElement(mainDiv_HeadDiv_LabelDiv_InputArea,"mainDiv_HeadDiv_LabelDiv_InputArea");
+            hideElement(mainDiv_HeadDiv_LabelDiv_InputArea);
+            mainDiv_HeadDiv_LabelDiv.onmousedown = function (ev1) {
 
+                showElement(mainDiv_HeadDiv_LabelDiv_InputArea);
+                console.info("点击事件！");
+            };
+            mainDiv_HeadDiv_LabelDiv_InputArea.onmouseleave = function (ev1) {
+                setText(mainDiv_HeadDiv_LabelDiv,mainDiv_HeadDiv_LabelDiv_InputArea.value);
+                mainDiv_HeadDiv_LabelDiv.addElement(mainDiv_HeadDiv_LabelDiv_InputArea,"mainDiv_HeadDiv_LabelDiv_InputArea");
+                hideElement(mainDiv_HeadDiv_LabelDiv_InputArea);
+                console.info("离开！");
 
+            };
 
 
 
@@ -167,6 +202,9 @@
             setCSS(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"mainDiv_HeadDiv_LabelDiv2_scoreDiv");
             setParent(mainDiv_HeadDiv_LabelDiv2_scoreDiv,mainDiv_HeadDiv_LabelDiv2);
             setText(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"请输入悬赏积分");
+            var mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea = div();
+            mainDiv_HeadDiv_LabelDiv2_scoreDiv.addElement(mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
+            hideElement(mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea);
 
             var mainDiv_HeadDiv_LabelDiv2_typeDiv = div();
             setCSS(mainDiv_HeadDiv_LabelDiv2_typeDiv,"mainDiv_HeadDiv_LabelDiv2_typeDiv");
@@ -190,6 +228,19 @@
             setCSS(mainDiv_HeadDiv_LabelDiv3_div2,"mainDiv_HeadDiv_LabelDiv3_div2");
             setParent(mainDiv_HeadDiv_LabelDiv3_div2,mainDiv_HeadDiv_LabelDiv3);
 
+            var mainDiv_HeadDiv_LabelDiv3_div1_InputArea = textInput();
+            mainDiv_HeadDiv_LabelDiv3_div1.addElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
+            var mainDiv_HeadDiv_LabelDiv3_div2_InputArea = textInput();
+            mainDiv_HeadDiv_LabelDiv3_div2.addElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
+            setPositionWithPercent(mainDiv_HeadDiv_LabelDiv3_div2,Vector3(50,0));
+            hideElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea);
+            hideElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea);
+            mainDiv_HeadDiv_LabelDiv3_div1.onmousedown = function (ev1) {
+                showElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea);
+            };
+            mainDiv_HeadDiv_LabelDiv3_div2.onmousedown = function (ev1) {
+                showElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea);
+            };
 
 
             var mainDiv_HeadDiv_ReceiveBtnDiv = div();
