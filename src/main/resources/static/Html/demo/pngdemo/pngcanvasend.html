@@ -1,12 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
+<link>
     <meta charset="UTF-8">
     <title>Title</title>
     <script src="../ElementCreatorFrame/ZCElementer.js"></script>
     <script src="../../../js/jquery-1.11.0.min.js"></script>
     <script src="../../../js/Config.js"></script>
     <script src="../ElementCreatorFrame/ZCCanvas.js"></script>
+    <script src="../ElementCreatorFrame/ZCElementerEX.js"></script>
+    <script src="../ElementCreatorFrame/ZCCanvas.js"></script>
+    <link rel="stylesheet" href="../ElementCreatorFrame/ZCElementerEX.css">
     <style>
         .nameDiv{
             position: absolute;
@@ -30,91 +33,201 @@
             left: 30%;
 
         }
+        .menuBar{
+            width: 150px;
+            height: 700px;
+            top: 3px;
+            background: white;
+            position: absolute;
+            left: 480px;
+
+        }
+        .areaBox{
+            position: absolute;
+            width: 100px;
+            height: 35px;
+            background: #888888;
+            z-index: 15;
+        }
+        .occlusion{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.3);
+            z-index: 22;
+
+        }
+        .erweiMa{
+            position: absolute;
+            width: 300px;
+            height: 300px;
+            background-image: url("erw.jpg");
+            left: 40%;
+            top: 30%;
+            background-size: 100%;
+        }
 
     </style>
+    <script>
+        function signatureBoard(parent,src) {
+
+            var signatureBoard = {};
+
+            var imgCanvas = null;
+            var bacground = new Image();
+            var contextWidth = 0;
+            var contextHeight = 0;
+            var showImg = img();
+            bacground.src = src;
+
+            bacground.onload = function (ev1) {
+
+                console.info("加载完毕！");
+
+                var proportion = bacground.width / bacground.height;
+                contextWidth = window.innerHeight * 0.8 * proportion;
+                contextHeight = window.innerHeight * 0.8;
+                imgCanvas = canvas(bacground.width, bacground.height);
+
+                var leftValue = (1- (bacground.width/window.innerWidth))/2;
+                if(leftValue>0){
+
+                    imgCanvas.canvas.style.left = window.innerWidth*leftValue+"px";
+                }
+
+                imgCanvas.context.drawImage(bacground, 0, 0, bacground.width, bacground.height);
+                signatureBoard.imgCanvas = imgCanvas;
+                signatureBoard.canvas = imgCanvas.canvas;
+                setParent(imgCanvas.canvas,parent);
+                // imgCanvas = mainCanvas;
+
+                // setCSS(imgCanvas.canvas, "mainCanvas");
+
+                imgCanvas.signatureRes = showImg;
+
+
+                signatureBoard.writeSignature = function (src,position,rotation) {
+
+                    imgCanvas.signatureRes = img();
+                    imgCanvas.signatureRes.src = src;
+                    imgCanvas.signatureRes.onload = function (ev2) {
+                        imgCanvas.context.translate(position.x, position.y);
+                        imgCanvas.context.rotate(rotation);
+                        imgCanvas.context.drawImage(imgCanvas.signatureRes, 0, 0, 50, 100);
+
+                        console.info("加载签名完毕！");
+
+                    };
+
+                };
+            };
+
+            return signatureBoard;
+        }
+
+        function beginSignature() {
+            var animationOp = {};
+            var timeSecond = 0;
+            animationOp.doAnimation = function () {
+
+                timeSecond+= 1;
+                if(timeSecond>120){
+
+                    console.info("轮询请求");
+                    timeSecond= 0;
+
+                    requestServer("/requestSignatureStatus",function (ip) {
+                        var requestData = {};
+                        requestData.name = "罗继业";
+                        $.post(ip,requestData,function (data) {
+                            console.info(data);
+                        });
+                    });
+                }
+
+            };
+
+            addAnimation(animationOp);
+        }
+    </script>
     <script>
         window.onload = function (ev) {
 
 
-
-
-
             var parent = mainContainer();
 
+            var sb = signatureBoard(parent, "flh.jpg");
 
 
-            var imgCanvas = null;
-            var bacground =new Image();
-            var contextWidth = 0;
-            var contextHeight = 0;
-            var showImg = img();
-            bacground.src = "../../../image/tamg.jpg";
-            bacground.onload = function (ev1) {
-                var proportion = bacground.width/bacground.height;
-                contextWidth = window.innerHeight*0.8*proportion;
-                contextHeight = window.innerHeight*0.8;
-                imgCanvas = canvas(window.innerHeight*0.8*proportion,window.innerHeight*0.8);
-                imgCanvas.context.drawImage(bacground,0,0,window.innerHeight*0.8*proportion,window.innerHeight*0.8);
-                setParent(imgCanvas.canvas,parent);
-               // imgCanvas = mainCanvas;
+            var menuBar = div();
+            setCSS(menuBar, "menuBar");
+            setParent(menuBar, parent);
 
-                setCSS(imgCanvas.canvas,"mainCanvas");
-            };
-            console.info("123");
-            var nameDiv = div();
-            setCSS(nameDiv,"nameDiv");
+            var selectSignPos = menuButton(menuBar, "选择签署位置", 0);
+            var signOver = menuButton(menuBar, "签署完毕", 1);
 
-            var drawboard = null;
-            nameDiv.onmousedown = function (ev1) {
+            var areaBox = div();
 
-                showImg.src = "signature.png";
+            setCSS(areaBox,"areaBox");
+            setParent(areaBox,parent);
+            hideElement(areaBox);
+            var allowMove = false;
+            var signaturePosition = Vector3(0,0);
+            selectSignPos.onmousedown = function(ev){
+                showElement(areaBox);
+                setPosition(areaBox,getMouse(ev));
+                allowMove = true;
+                beginSignature();
 
-                showImg.onload = function (ev2) {
-                    imgCanvas.context.translate(contextWidth-100,window.innerHeight*0.8);
-                    imgCanvas.context.rotate(-Math.PI / 2);
-
-                    imgCanvas.context.drawImage(showImg,0,0,50,100);
-                    imgCanvas.context.translate(-50,-100);
+                sb.canvas.onmousedown = function (ev1) {
+                    allowMove = false;
+                    showElement(occlusion);
+                    requestServer("/onSignature",function (ip) {
+                        var requestData = {};
+                        requestData.name = "罗继业";
+                        $.post(ip,requestData,function (data) {
+                            console.info(data);
+                        });
+                    });
                 };
+            };
+
+
+            var occlusion = div();
+
+            setCSS(occlusion,"occlusion");
+            setParent(occlusion,parent);
+
+            var erweiMa = div();
+            setCSS(erweiMa,"erweiMa");
+            setParent(erweiMa,occlusion);
+
+            hideElement(occlusion);
+
+            window.onmousemove = function (ev1) {
+
+
+                if(allowMove == true){
+
+                    setPosition(areaBox,getMouse(ev1));
+                    signaturePosition= getMouse(ev1);
+                }
+            };
+
+
+            signOver.onmousedown = function (ev1) {
+                console.info("签署完毕！");
+                sb.writeSignature("signature.png", Vector3(100, 700), (-Math.PI / 2));
 
             };
 
-            //setParent(showImg,document.body);
-            setCSS(showImg,"showImg");
+            initAnimation();
 
 
 
 
 
 
-
-            var saveBtn = button("保存");
-            saveBtn.onmousedown = function (ev1) {
-
-               var data64 = getBase64ImageFromCanvas(mainCanvas.canvas);
-               var uploadData ={};
-               uploadData.key = data64;
-               $.post("http://localhost:8099/uploadImgDemo",uploadData,function (data) {
-               });
-
-            };
-
-            var okBtn = button("ok");
-            setPosition(okBtn,Vector3(0,50));
-
-            setParent(saveBtn,parent);
-            setParent(okBtn,parent);
-            //setParent(imgCanvas,parent);
-            okBtn.onmousedown = function (ev1) {
-                hideElement(drawboard.canvas);
-                hideElement(nameDiv);
-                showImg.src = drawboard.canvas.toDataURL("image/png");
-                showImg.onload = function (ev2) {
-                    imgCanvas.context.drawImage(showImg,contextWidth - 100,contextHeight - 50,100,50);
-                    console.info(imgCanvas);
-                };
-
-            };
 
         };
         </script>

@@ -115,6 +115,7 @@ function  mainContainer() {
     container.style.height = window.innerHeight*0.98+"px";
     container.style.margin = "0 auto";
     container.style.position = "relative";
+    container.style.background = "whitesmoke";
 
 
     return container;
