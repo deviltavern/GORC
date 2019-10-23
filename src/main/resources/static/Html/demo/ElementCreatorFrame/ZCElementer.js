@@ -108,7 +108,17 @@ function createLabel(content,width,height) {
     return t2;
 
 }
+function  mainContainer() {
+    var container = div();
 
+    container.style.width = window.innerWidth*0.98+"px";
+    container.style.height = window.innerHeight*0.98+"px";
+    container.style.margin = "0 auto";
+    container.style.position = "relative";
+
+
+    return container;
+}
 /**
  * 创建iframe
  * @param src

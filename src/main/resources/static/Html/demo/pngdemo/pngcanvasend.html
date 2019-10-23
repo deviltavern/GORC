@@ -37,6 +37,12 @@
 
 
 
+
+
+            var parent = mainContainer();
+
+
+
             var imgCanvas = null;
             var bacground =new Image();
             var contextWidth = 0;
@@ -49,6 +55,7 @@
                 contextHeight = window.innerHeight*0.8;
                 imgCanvas = canvas(window.innerHeight*0.8*proportion,window.innerHeight*0.8);
                 imgCanvas.context.drawImage(bacground,0,0,window.innerHeight*0.8*proportion,window.innerHeight*0.8);
+                setParent(imgCanvas.canvas,parent);
                // imgCanvas = mainCanvas;
 
                 setCSS(imgCanvas.canvas,"mainCanvas");
@@ -94,6 +101,10 @@
 
             var okBtn = button("ok");
             setPosition(okBtn,Vector3(0,50));
+
+            setParent(saveBtn,parent);
+            setParent(okBtn,parent);
+            //setParent(imgCanvas,parent);
             okBtn.onmousedown = function (ev1) {
                 hideElement(drawboard.canvas);
                 hideElement(nameDiv);
