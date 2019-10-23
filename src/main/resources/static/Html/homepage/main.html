@@ -7,6 +7,8 @@
     <script src="../../js/GetDataFromTaskSystem.js"></script>
     <script src="../../js/Config.js"></script>
     <script src="../../js/jquery-1.11.0.min.js"></script>
+    <link rel="prefetch" href="http://www.webhek.com/misc/3d-album/" />
+
     <style>
         body{
             background: whitesmoke;
@@ -21,11 +23,11 @@
         }
         .mainDiv{
             position: absolute;
-            width : 40%;
+            width : 60%;
             height :100%;
             background: whitesmoke;
             top: 5%;
-            left: 30%;
+            left: 20%;
 
 
 
@@ -36,7 +38,7 @@
             height :45%;
             background: white;
             top: 5%;
-            left: 24.5%;
+            left: 14.5%;
 
         }
         .rightMenuDiv{
@@ -138,7 +140,7 @@
             position: absolute;
             top: 10%;
             left: 3%;
-            width : 6%;
+            width : 4%;
             height: 30%;
             background:rgba(0,0,0,0);
 
@@ -166,7 +168,7 @@
             position: absolute;
             bottom: 3%;
             left: 3%;
-            width : 6%;
+            width : 4%;
             height: 30%;
             background:rgba(0,0,0,0);
         }
@@ -252,7 +254,7 @@
             width: 100%;
             height: 60%;
             top: 20%;
-            font-size: 15px;
+            font-size: 1rem;
             cursor: pointer;
             text-align: center;
             background: rgba(0,0,0,0);
@@ -280,7 +282,7 @@
 
             setCSS(container,"container");
 
-            container.style.width =  window.innerWidth*0.98+"px";
+            container.style.width = window.innerWidth*0.98+"px";
             container.style.height = window.innerHeight*0.98+"px";
             var ct = document.createElement("center");
             setParent(ct,document.body);
@@ -289,9 +291,8 @@
 
             setParent(headDiv,container);
             //setCSS(headDiv,"headDiv");
-            setPositionWithPercent(headDiv,Vector3(0,-3));
-            headDiv.style.left = "-1%";
-            headDiv.style.width = "101%";
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
 
 
 
