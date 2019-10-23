@@ -13,13 +13,13 @@
             font-size:1px;
         }
         .mainDiv{
-            position: absolute;
-            width : 101%;
+            position: relative;
+            width : 1380px;
             height:50px;
             background: white;
 
-            //box-shadow:5px 5px 5px -5px #000;
-
+            box-shadow:5px 5px 5px -5px #000;
+            margin: 0 auto;
 
 
 
@@ -97,8 +97,8 @@
             setParent(mainDiv,parent);
             setCSS(mainDiv,"mainDiv");
 
-            // mainDiv.style.width = "100%";
-            // mainDiv.style.height = 50+"px";
+            mainDiv.style.width = window.innerWidth*0.99+"px";
+            mainDiv.style.height = 50+"px";
 
 
             function insSubLabel(parent,x_offset,content) {

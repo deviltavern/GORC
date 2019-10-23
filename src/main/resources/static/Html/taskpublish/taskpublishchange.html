@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+    <style>
+
+        body{
+
+            background: whitesmoke;
+            font-size: 100px;
+        }
+        .mainDiv{
+            position: absolute;
+            background: white;
+            top: 8%;
+            width: 35%;
+            height: 90%;
+            left: 32.5%;
+            border-radius: 4px;
+            box-shadow: 1px 1px  #888888;
+
+
+        }
+        .mainDiv_HeadDiv{
+            position: absolute;
+            width: 100%;
+            height: 22%;
+            background: rgb(230, 230 ,250);
+        }
+        .mainDiv_HeadDiv_LabelDiv{
+
+            position: absolute;
+            top: 5%;
+            width: 80%;
+            height: 15%;
+            font-size: 20px;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2{
+
+            position: absolute;
+            top: 24%;
+            width: 35%;
+            height: 9%;
+            background: #888888;
+        }
+        .mainDiv_HeadDiv_LabelDiv3{
+            position: absolute;
+            top: 40%;
+            width: 50%;
+            height: 9%;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_ReceiveBtnDiv{
+            position: absolute;
+            top: 40%;
+            width: 15%;
+            height:15%;
+            right: 5%;
+            text-align: center;
+            font-size: 20px;
+            background: #888888;
+            cursor: pointer;
+
+        }
+        .mainDiv_HeadDiv_ReceiverNumAccount{
+            position: absolute;
+            top: 63%;
+            width: 15%;
+            height:26%;
+            right: 5%;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2_scoreDiv{
+            position: absolute;
+
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2_typeDiv{
+
+            position: absolute;
+            left: 33.5%;
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+        }
+        .mainDiv_HeadDiv_LabelDiv2_timeDiv
+        {
+            position: absolute;
+            left: 67%;
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv3_div1{
+            position: absolute;
+            left: 0%;
+            width: 49.8%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv3_div2{
+            position: absolute;
+            left: 50.2%;
+            width: 49.8%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+        .input1{
+            position: absolute;
+            width: 300px;
+            height: 50px;
+            background: #ffe8a1;
+
+
+
+        }
+        .typeSelect{
+            position: absolute;
+            top: 8%;
+            height: 2.5%;
+            left: 1%;
+
+
+        }
+    </style>
+    <script>
+        window.onload = function (ev) {
+
+            var headDiv = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+
+            var mainDiv_HeadDiv = div();
+            setCSS(mainDiv_HeadDiv,"mainDiv_HeadDiv");
+            setParent(mainDiv_HeadDiv,mainDiv);
+            drawLine(mainDiv_HeadDiv,"0.1rem",Vector3(0,70),"10rem",Color24(0,0,0));
+
+
+            var t1 = textInputWithPlaceHolder(mainDiv,"","20px",Vector3(15,1),RelativeScale(30,2.5));
+            var t2 = textInputWithPlaceHolder(mainDiv,"#积分","6px",Vector3(15,4),RelativeScale(10,2.5));
+            var t3 = textInputWithPlaceHolder(mainDiv,"#周期","6px",Vector3(15,7),RelativeScale(10,2.5));
+
+
+            var tipDiv = div();
+            setParent(tipDiv,mainDiv);
+
+
+            var tipFontSize = "1rem";
+
+            tipLabel(tipDiv,"任务名称：",tipFontSize,Vector3(3,1));
+            tipLabel(tipDiv,"积分：",tipFontSize,Vector3(7,4));
+            tipLabel(tipDiv,"周期：",tipFontSize,Vector3(7,7));
+            tipLabel(tipDiv,"处理人：",tipFontSize,Vector3(5,10));
+
+
+             var personSelect = select();
+             setParent(personSelect,tipDiv);
+             setPositionWithPercent(personSelect,Vector3(15,10));
+             setScale(personSelect,Vector2(10.7,3));
+             personSelect.addElement("罗继业");
+             personSelect.addElement("陈一");
+             personSelect.addElement("帆远安");
+             personSelect.addElement("罗文希");
+             personSelect.addElement("刘向荣");
+
+
+
+
+
+
+
+
+
+
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

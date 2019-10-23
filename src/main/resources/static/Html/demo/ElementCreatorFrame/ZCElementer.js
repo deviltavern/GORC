@@ -209,12 +209,30 @@ function canvas(width,height,x,y) {
     canvasObj.context = e2.getContext("2d");
 
     canvasObj.origin = Vector2(width/2,height/2);
-
+    canvasObj.width = width;
+    canvasObj.height = height;
 
     return canvasObj;
 
 
 }
+function select() {
+
+    var sle = document.createElement("select");
+
+
+    sle.addElement = function (value) {
+
+        var tempOption = document.createElement("option");
+        tempOption.innerText = value;
+        setParent(tempOption,sle);
+
+    };
+    return sle;
+
+
+}
+
 function table(width,caption) {
 
     var d1 = document.createElement("div");
@@ -551,6 +569,21 @@ function Vector2(x,y) {
     temp.y = y;
     return temp;
 }
+function AbsoluteScale(width,height) {
+    var scale = {};
+
+    scale.width = width+"px";
+    scale.height = height +"px";
+    return scale;
+}
+function RelativeScale(width,height) {
+    var scale = {};
+
+    scale.width = width+"%";
+    scale.height = height +"%";
+    return scale;
+}
+
 function Color24(r,g,b) {
 
     var rg = "rgb("+r+","+g+","+b+")";
@@ -806,7 +839,7 @@ function getFileSourceFromInputTag(fileInputTag,fileName) {
     var $icon = $(".upload-icon");
     var formData = new FormData(),
         fs = fileInputTag.files;
-    var max_size = 1024 * 1024 * 100
+    var max_size = 1024 * 1024 * 100;
 
     for (var i = 0; i < fs.length; i++) {
         var d = fs[0]
@@ -825,6 +858,30 @@ function getFileSourceFromInputTag(fileInputTag,fileName) {
 
 
 }
+function getFileSourceFromImgTag(fileInputTag,fileName) {
+    var $icon = $(".upload-icon");
+    var formData = new FormData(),
+        fs = fileInputTag.files;
+    var max_size = 1024 * 1024 * 100;
+
+    for (var i = 0; i < fs.length; i++) {
+        var d = fs[0]
+        if(d.size <= max_size){  //文件必须小于100M
+
+            formData.append(fileName, fs[i]);
+            console.info(formData);
+
+        }else{
+            alert('上传文件过大！');
+            return false
+        }
+    }
+
+    return formData;
+
+
+}
+
 
 function uploadFormdata(url,formData) {
 
@@ -856,6 +913,26 @@ function getObjectURL(file)
     }
     return url;
 }
+
+
+function getBase64ImageFromImgTag(img) {
+    var canvas = document.createElement("canvas");
+    canvas.width = img.width;
+    canvas.height = img.height;
+    var ctx = canvas.getContext("2d");
+    ctx.drawImage(img, 0, 0, img.width, img.height);
+    var dataURL = canvas.toDataURL("image/png");
+    // return dataURL
+    return dataURL.replace("data:image/png;base64,", "");
+}
+
+function getBase64ImageFromCanvas(canvas){
+
+   var dataURL = canvas.toDataURL("image/png");
+    return dataURL.replace("data:image/png;base64,", "");
+}
+
+
 
 //---------------------------随机序列-------------------------------------------------
 function getRandomUUID(length) {

@@ -7,9 +7,6 @@ function setCanvas(canvas) {
     opCanvas = canvas;
 }
 
-function drawLine() {
-
-}
 
 function drawBackgroundColor(width,height,color) {
     opCanvas.fillStyle = color
@@ -85,5 +82,94 @@ function lineTo(vector3) {
 
 
 //-------------------------------------坐标图纸------------------------------------
+function getMouse(ev) {
 
 
+    return Vector3(ev.clientX,ev.clientY);
+}
+function getTouchPosition(ev1) {
+
+    return Vector3(ev1.changedTouches[0].screenX,ev1.changedTouches[0].screenY);
+}
+/**
+ * 画板
+ * @param width
+ * @param height
+ * @param position
+ * @returns {{}}
+ */
+function drawBoard(width,height,position) {
+
+    var mainCanvas = canvas(width,height,position.x,position.y);
+    setCanvas(mainCanvas.context);
+    var allowDraw = false;
+    var allowDrawCounter = 0;
+    window.onmousedown = function (ev1) {
+
+        pointList.length = 0;
+        if(allowDrawCounter%2 == 0){
+
+            allowDraw = true;
+        }else {
+
+            allowDraw = false;
+        }
+        allowDrawCounter++;
+        console.info(allowDrawCounter)
+    };
+    var lastPoint = null;
+    window.onmousemove = function (ev1) {
+
+        if(allowDraw == true){
+
+            if (pointList.length >=6){
+
+                var tempLine = line(flushPointList());
+                drawLine(tempLine);
+
+                lastPoint = tempLine.data[tempLine.data.length-1];
+
+
+                feedPoint(lastPoint);
+            }
+            feedPoint(getMouse(ev1));
+            mainCanvas.ondraw(getMouse(ev1));
+
+        }
+
+    };
+
+    window.ontouchstart =function (ev1) {
+
+        pointList.length = 0;
+        if(allowDrawCounter%2 == 0){
+
+            allowDraw = true;
+        }else {
+
+            allowDraw = false;
+        }
+        allowDrawCounter++;
+        console.info(allowDrawCounter)
+    };
+    window.ontouchmove = function (ev1) {
+
+            if (pointList.length >=20){
+
+                var tempLine = line(flushPointList());
+                drawLine(tempLine);
+
+                lastPoint = tempLine.data[tempLine.data.length-1];
+
+
+                feedPoint(lastPoint);
+            }
+            feedPoint(getTouchPosition(ev1));
+        mainCanvas.ondraw(getTouchPosition(ev1));
+
+
+
+    };
+    return mainCanvas;
+
+}

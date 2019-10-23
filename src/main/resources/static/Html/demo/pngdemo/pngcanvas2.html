@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
+    <script src="../ElementCreatorFrame/ZCCanvas.js"></script>
+    <style>
+        .nameDiv{
+            position: absolute;
+            width: 10%;
+            height: 5%;
+            bottom: 22%;
+            background: #aa1111;
+            z-index: 10;
+
+        }
+        .showImg{
+            position: absolute;
+            width: 400px;
+            height: 200px;
+            left: 40%;
+            background: #aa1111;
+
+        }
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+
+
+
+            var imgCanvas = null;
+            var bacground =new Image();
+            var contextWidth = 0;
+            var contextHeight = 0;
+            bacground.src = "../../../image/tamg.jpg";
+            bacground.onload = function (ev1) {
+                var proportion = bacground.width/bacground.height;
+                contextWidth = window.innerHeight*0.8*proportion;
+                contextHeight = window.innerHeight*0.8;
+                imgCanvas = canvas(window.innerHeight*0.8*proportion,window.innerHeight*0.8);
+                imgCanvas.context.drawImage(bacground,0,0,window.innerHeight*0.8*proportion,window.innerHeight*0.8);
+               // imgCanvas = mainCanvas;
+            };
+            console.info("123");
+            var nameDiv = div();
+            setCSS(nameDiv,"nameDiv");
+
+            var drawboard = null;
+            nameDiv.onmousedown = function (ev1) {
+
+                drawboard = drawBoard(400,200,Vector3(0,0));
+
+            };
+            var showImg = img();
+            setParent(showImg,document.body);
+            setCSS(showImg,"showImg");
+
+
+
+
+
+
+
+            var saveBtn = button("保存");
+            saveBtn.onmousedown = function (ev1) {
+
+               var data64 = getBase64ImageFromCanvas(mainCanvas.canvas);
+               var uploadData ={};
+               uploadData.key = data64;
+               $.post("http://localhost:8099/uploadImgDemo",uploadData,function (data) {
+               });
+
+            };
+
+            var okBtn = button("ok");
+            setPosition(okBtn,Vector3(0,50));
+            okBtn.onmousedown = function (ev1) {
+                hideElement(drawboard.canvas);
+                hideElement(nameDiv);
+                showImg.src = drawboard.canvas.toDataURL("image/png");
+                showImg.onload = function (ev2) {
+                    imgCanvas.context.drawImage(showImg,contextWidth - 100,contextHeight - 50,100,50);
+                    console.info(imgCanvas);
+                };
+
+            };
+
+        };
+        </script>
+
+</head>
+<body>
+
+</body>
+</html>

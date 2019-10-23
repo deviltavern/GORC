@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
+    <style>
+        .imgDiv{
+            width: 300px;
+            height: 300px;
+            position: absolute;
+            top: 10%;
+            background: #aa1111;
+        }
+        .img2{
+            width: 100%;
+            height: auto;
+
+        }
+    </style>
+    <script>
+        window.onload = function (ev) {
+
+            var file = fileInput();
+
+
+            var img2 = img();
+            img2.src = "../../../image/pen0.png";
+            setCSS(img2,"img2");
+            var imgDiv = div();
+            setCSS(imgDiv,"imgDiv");
+            setParent(img2,imgDiv);
+            file.files[0] = img2.src;
+            console.info(file.files);
+            setParent(file,document.body);
+            img2.onload = function (ev1) {
+              console.info(img2.data);
+
+              //var url =  img2.toDataURL("image/png");
+            };
+
+
+            function getBase64ImageFromImgTag(img) {
+                var canvas = document.createElement("canvas");
+                canvas.width = img.width;
+                canvas.height = img.height;
+                var ctx = canvas.getContext("2d");
+                ctx.drawImage(img, 0, 0, img.width, img.height);
+                var dataURL = canvas.toDataURL("image/png");
+               // return dataURL
+                return dataURL.replace("data:image/png;base64,", "");
+            }
+
+            function getBase64ImageFromCanvas(canvas){
+
+                canvas.toDataURL("image/png");
+                return dataURL.replace("data:image/png;base64,", "");
+            }
+
+
+
+            file.onchange = function (ev1) {
+                console.info(file.files);
+
+                var formData = new FormData();
+                var url =  getBase64Image(img2);
+
+                console.info(url);
+                // formData.append("file",url);
+                // uploadFormdata("http://localhost:8099/uploadImgDemo",formData);
+                var uploadData = {};
+                uploadData.key = url;
+
+                $.post("http://localhost:8099/uploadImgDemo",uploadData,function (data) {
+                        console.info(data);
+                });
+
+
+                console.info(file);
+            };
+
+            file.onmousedown = function (ev1) {
+
+                var fileInput2 = fileInput();
+                fileInput2.src = img2.src;
+
+                console.info(fileInput2);
+                var formData = getFileSourceFromInputTag(fileInput2,"file");
+
+
+                //console.info(formData);
+                //uploadFormdata("http://localhost:8099/uploadImgDemo",formData);
+            }
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

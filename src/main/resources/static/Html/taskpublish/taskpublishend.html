@@ -173,33 +173,16 @@
 
             var mainDiv_HeadDiv_LabelDiv = div();
 
-            setCSS(mainDiv_HeadDiv_LabelDiv,"mainDiv_HeadDiv_LabelDiv");
-            setParent(mainDiv_HeadDiv_LabelDiv,mainDiv_HeadDiv);
-            setText(mainDiv_HeadDiv_LabelDiv,"请输入任务名称");
-            var mainDiv_HeadDiv_LabelDiv_InputArea = textInput();
-            mainDiv_HeadDiv_LabelDiv.addElement(mainDiv_HeadDiv_LabelDiv_InputArea,"mainDiv_HeadDiv_LabelDiv_InputArea");
-            hideElement(mainDiv_HeadDiv_LabelDiv_InputArea);
-            mainDiv_HeadDiv_LabelDiv.onmousedown = function (ev1) {
-
-                showElement(mainDiv_HeadDiv_LabelDiv_InputArea);
-                console.info("点击事件！");
-            };
-            mainDiv_HeadDiv_LabelDiv_InputArea.onmouseleave = function (ev1) {
-                setText(mainDiv_HeadDiv_LabelDiv,mainDiv_HeadDiv_LabelDiv_InputArea.value);
-                mainDiv_HeadDiv_LabelDiv.addElement(mainDiv_HeadDiv_LabelDiv_InputArea,"mainDiv_HeadDiv_LabelDiv_InputArea");
-                hideElement(mainDiv_HeadDiv_LabelDiv_InputArea);
-                console.info("离开！");
-
-            };
 
 
-            function insInputLabel_1(parent,width,height,position,bacgroundColor,fontSize) {
+            function insInputLabel_1(parent,width,height,position,bacgroundColor,fontSize,tip) {
                 var tempDiv = div();
 
                 var property = {};
                 property.width = width;
                 property.height = height;
                 property.position = position;
+                property.tip = tip;
                 setParent(tempDiv,parent);
                 tempDiv.position = "absolute";
                 tempDiv.style.width = width;
@@ -212,15 +195,27 @@
                 tempDivInput.position = "absolute";
                 tempDivInput.style.width ="100%";
                 tempDivInput.style.height ="100%";
+
                 tempDivInput.style.fontSize = fontSize;
                 tempDiv.onmousedown = function (ev1) {
 
                     showElement(tempDivInput);
-
+                   var fos=  tempDivInput.focus();
                     hideElement(textShowLabel);
                 };
                 tempDivInput.onmouseleave = function (ev1) {
-                    textShowLabel.innerText = tempDivInput.value;
+                    if (tempDivInput.value !== ""){
+
+                        if (property.tip!= null){
+
+                            textShowLabel.innerText = property.tip+":"+tempDivInput.value;
+                        }else {
+                            textShowLabel.innerText = tempDivInput.value;
+
+                        }
+
+                    }
+
                     showElement(textShowLabel);
                     hideElement(tempDivInput);
                 };
@@ -233,73 +228,37 @@
                 textShowLabel.style.background = bacgroundColor;
                 textShowLabel.style.fontSize = fontSize;
                 hideElement(tempDivInput);
+
+
                 tempDiv.style.cursor = "pointer";
+
 
                 tempDiv.input = tempDivInput;
                 tempDiv.show = textShowLabel;
+
                 return tempDiv;
 
             }
 
-            var ins2 = insInputLabel_1(mainDiv,"50%","3%",Vector3(0,20),Color32(123,123,123,0),"15px");
+            var ins2 = insInputLabel_1(mainDiv,"50%","3%",Vector3(0,0),Color32(123,123,123,0),"22px");
 
             ins2.show.innerText = "请输入任务名称";
             ins2.show.style.textAlign= "left";
 
-            var mainDiv_HeadDiv_LabelDiv2 = div();
-            setCSS(mainDiv_HeadDiv_LabelDiv2,"mainDiv_HeadDiv_LabelDiv3");
-            setParent(mainDiv_HeadDiv_LabelDiv2,mainDiv_HeadDiv);
+            var score = insInputLabel_1(mainDiv,"10%","1%",Vector3(0,5),Color32(123,123,123,0),"14px","积分");
+            score.show.innerText = "#积分";
+            ins2.show.style.textAlign= "left";
+            score.input.style.textAlign = "center";
 
-            var mainDiv_HeadDiv_LabelDiv2_scoreDiv = div();
-            setCSS(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"mainDiv_HeadDiv_LabelDiv2_scoreDiv");
-            setParent(mainDiv_HeadDiv_LabelDiv2_scoreDiv,mainDiv_HeadDiv_LabelDiv2);
-            setText(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"请输入悬赏积分");
-            var mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea = div();
-            mainDiv_HeadDiv_LabelDiv2_scoreDiv.addElement(mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
-            hideElement(mainDiv_HeadDiv_LabelDiv2_scoreDiv_InputArea);
+            var score = insInputLabel_1(mainDiv,"10%","1%",Vector3(10,5),Color32(123,123,123,0),"14px","周期");
+            score.show.innerText = "#周期";
+            ins2.show.style.textAlign= "left";
+            score.input.style.textAlign = "center";
 
-            mainDiv_HeadDiv_LabelDiv2_scoreDiv.onmousedown = function (ev1) {
-
-
-
-            };
-
-            var mainDiv_HeadDiv_LabelDiv2_typeDiv = div();
-            setCSS(mainDiv_HeadDiv_LabelDiv2_typeDiv,"mainDiv_HeadDiv_LabelDiv2_typeDiv");
-            setParent(mainDiv_HeadDiv_LabelDiv2_typeDiv,mainDiv_HeadDiv_LabelDiv2);
-            setText(mainDiv_HeadDiv_LabelDiv2_typeDiv,"请选择任务类型");
-            var mainDiv_HeadDiv_LabelDiv2_timeDiv = div();
-            setCSS(mainDiv_HeadDiv_LabelDiv2_timeDiv,"mainDiv_HeadDiv_LabelDiv2_timeDiv");
-            setParent(mainDiv_HeadDiv_LabelDiv2_timeDiv,mainDiv_HeadDiv_LabelDiv2);
-            setText(mainDiv_HeadDiv_LabelDiv2_timeDiv,"请确定任务周期");
-
-            var mainDiv_HeadDiv_LabelDiv3 = div();
-            setCSS(mainDiv_HeadDiv_LabelDiv3,"mainDiv_HeadDiv_LabelDiv2");
-            setParent(mainDiv_HeadDiv_LabelDiv3,mainDiv_HeadDiv);
-
-            var mainDiv_HeadDiv_LabelDiv3_div1 = div();
-            var mainDiv_HeadDiv_LabelDiv3_div2 = div();
-            setText(mainDiv_HeadDiv_LabelDiv3_div1,"#random-任务id");
-            setText(mainDiv_HeadDiv_LabelDiv3_div2,"请确定工程师要求");
-            setCSS(mainDiv_HeadDiv_LabelDiv3_div1,"mainDiv_HeadDiv_LabelDiv3_div1");
-            setParent(mainDiv_HeadDiv_LabelDiv3_div1,mainDiv_HeadDiv_LabelDiv3);
-            setCSS(mainDiv_HeadDiv_LabelDiv3_div2,"mainDiv_HeadDiv_LabelDiv3_div2");
-            setParent(mainDiv_HeadDiv_LabelDiv3_div2,mainDiv_HeadDiv_LabelDiv3);
-
-            var mainDiv_HeadDiv_LabelDiv3_div1_InputArea = textInput();
-            mainDiv_HeadDiv_LabelDiv3_div1.addElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
-            var mainDiv_HeadDiv_LabelDiv3_div2_InputArea = textInput();
-            mainDiv_HeadDiv_LabelDiv3_div2.addElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea,"mainDiv_HeadDiv_LabelDiv3_div1_InputArea");
-            setPositionWithPercent(mainDiv_HeadDiv_LabelDiv3_div2,Vector3(50,0));
-            hideElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea);
-            hideElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea);
-            mainDiv_HeadDiv_LabelDiv3_div1.onmousedown = function (ev1) {
-                showElement(mainDiv_HeadDiv_LabelDiv3_div1_InputArea);
-            };
-            mainDiv_HeadDiv_LabelDiv3_div2.onmousedown = function (ev1) {
-                showElement(mainDiv_HeadDiv_LabelDiv3_div2_InputArea);
-            };
-
+            var score = insInputLabel_1(mainDiv,"10%","1%",Vector3(20,5),Color32(123,123,123,0),"14px","类型");
+            score.show.innerText = "#类型";
+            score.show.style.textAlign = "center";
+            score.input.style.textAlign = "center";
 
             var mainDiv_HeadDiv_ReceiveBtnDiv = div();
             setCSS(mainDiv_HeadDiv_ReceiveBtnDiv,"mainDiv_HeadDiv_ReceiveBtnDiv");
