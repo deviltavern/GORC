@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+
+          precision mediump float;
+             #endif
+             uniform sampler2D u_Sampler;
+             varying vec2 v_TexCoord;
+             void main() {
+               gl_FragColor = texture2D(u_Sampler, v_TexCoord);
+             }
+
+
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+          uniform mat4 u_MvpMatrix;
+          varying vec2 v_TexCoord;
+          void main() {
+
+           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+           v_TexCoord = mvPosition.xy;
+           gl_Position = projectionMatrix * mvPosition;
+
+
+         }
+
+    </script>
+</head>
+<body>
+
+<div id="img"></div>
+<canvas id="canvas" style="width: 800px;height: 400px">
+
+
+</canvas>
+
+
+
+</body>
+
+<script>
+
+    var canvas = document.getElementById("canvas");
+    var glContext =canvas.getContext("webgl");
+    var texture = glContext.createTexture();
+
+
+
+    // 获取 id为 img 的元素
+    var img = document.getElementById('img');
+    // 创建 Image对象
+    var imgObj = new Image();
+    // 为 src 属性赋值
+    imgObj.src = "https://hbimg.huabanimg.com/559f90088bd004f4eeeb9428edada73bf07db8b310495c-SeL6r0_fw658";
+
+    imgObj.onload = function (ev) {
+
+        glContext.activeTexture(glContext.TEXTURE0);
+        glContext.bindTexture   (glContext.TEXTURE_2D,texture);
+        glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MAG_FILTER, glContext.LINEAR);// 纹理放大方式
+        glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MIN_FILTER, glContext.LINEAR);// 纹理缩小方式
+        glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_S,     glContext.CLAMP_TO_EDGE);// 纹理水平填充方式
+        glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_T,     glContext.CLAMP_TO_EDGE);// 纹理垂直填充方式
+
+
+        glContext.texImage2D(glContext.TEXTURE_2D, 0, glContext.RGB, glContext.RGB, glContext.UNSIGNED_BYTE, image);
+
+    }
+
+
+
+</script>
+</body>
+</html>

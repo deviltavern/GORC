@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Netty WebSocket 时间服务器</title>
+</head>
+<body>
+
+<script src="js/websocket.js"></script>
+<script type="text/javascript">
+
+
+    function getsendvalue(ms){
+        var a = ms.form.message.value;
+        var b = "send&";
+
+        return a+b;
+    }
+
+</script>
+
+<form>
+    <input type="text" name="message" value="Netty 最佳实践"/>
+    <br>
+    <br>
+    <input type="button" value="发送Netty请求消息" onclick="send(0,0,333)" />
+    <hr color="blue"/>
+    <h3>服务端返回的应答消息</h3>
+    <textarea id="responseText" style="width: 500px;height: 300px;"></textarea>
+</form>
+
+</body>
+</html>

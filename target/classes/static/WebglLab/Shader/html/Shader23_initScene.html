@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../core/WebglManager.js"></script>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+</head>
+<body>
+
+
+<script>
+    window.onload = function (ev) {
+        createGLCanvas();
+
+        //加载贴图
+        var textureLoader = new THREE.TextureLoader();
+        var sprite1 = textureLoader.load( 'textures/snowflake2.png' );
+
+        //创建粒子管理器
+        var sp  =createSprite(sprite1);
+
+        function update(ev) {
+            //转webgl坐标
+            var mouse = screen2WebglCoordinate(ev,800,800);
+            //转视口坐标
+            var viewPort = screenConvertToWorld(mouse);
+
+            //生成粒子
+            for (var i = 0;i<10;i++)
+            {
+                sp.updateVerticesBuf(Vector3((Math.random()-0.5)*10+viewPort.x,(Math.random()-0.5)*10+viewPort.y,0),1024);
+
+            }
+            //更新位置
+
+            sp.updateParticalWithRandom(0.1);
+
+        }
+
+        glCanvas.onmousemove = function(ev){
+
+            update(ev);
+        }
+
+    }
+
+
+</script>
+</body>
+</html>

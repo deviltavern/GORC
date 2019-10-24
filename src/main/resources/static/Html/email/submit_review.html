@@ -1,0 +1,316 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>用户接取任务资格审核</title>
+    <script src="../demo/ButtonDemo0/button.js"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <link rel="stylesheet" href="../demo/ElementCreatorFrame/ZCElementer.css">
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/Config.js"></script>
+    <style>
+
+        body{
+
+            background: whitesmoke;
+
+        }
+        .mainDiv{
+            position: absolute;
+            top: 10%;
+            width: 50%;
+            height: 90%;
+            background: white;
+            left: 30%;
+
+
+        }
+        .userinfodiv{
+            position: absolute;
+            width: 100%;
+            height: 30%;
+        }
+        .mainDiv_HeadLabelDiv{
+            position: absolute;
+            left: 4%;
+            width: 18%;
+            height: 14%;
+            top: 8%;
+            font-size: 28px;
+            border-left-style: solid;
+            border-left-width: 10px;
+            border-left-color: #1E9FFF;
+            text-align: center;
+
+
+        }
+        .userinfo{
+            position: absolute;
+            left: 4%;
+            width: 50%;
+            height: 55%;
+            top: 33%;
+            font-size: 28px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1bb0c6;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: #1E9FFF;
+
+        }
+        .mainDiv_HeadImgDiv{
+            position: absolute;
+            width: 70px;
+            left: 5%;
+            height: 70px;
+            top: 20%;
+            border-radius: 50%;
+            background-image: url("../../image/headImg3.jpg");
+            background-size: 100%;
+        }
+        .mainDiv_InfoDiv{
+            position: absolute;
+            width: 40%;
+            height: 7%;
+            background: rgba(0,0,0,0);
+
+
+        }
+        .mainDiv_InfoDiv_LabelDiv{
+
+            position: absolute;
+            top: 100%;
+            width: 15%;
+            left: 10%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            text-align: left;
+            font-size: 13px;
+        }
+        .mainDiv_InfoDiv_LabelDiv_info{
+            position: absolute;
+            top: 100%;
+            width: 15%;
+            left: 30%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            text-align: left;
+            font-size: 13px;
+        }
+        .requestinfo{
+            position: absolute;
+            width: 100%;
+            top: 30%;
+            height: 30%;
+        }
+        .taskinfo{
+            position: absolute;
+            left: 4%;
+            width: 35%;
+            height: 70%;
+            top: 10%;
+            font-size: 28px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1bb0c6;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: #1E9FFF;
+
+        }
+        .taskstrategy{
+             position: absolute;
+             left: 50%;
+             width: 40%;
+             height: 70%;
+             top: 10%;
+             font-size: 28px;
+             border-style: solid;
+             border-width: 1px;
+             border-color: #1bb0c6;
+             border-radius: 30px;
+             text-align: center;
+             box-shadow: #1E9FFF;
+
+         }
+        .reason{
+            position: absolute;
+            width: 100%;
+            top: 60%;
+            height: 30%;
+        }
+        .reasoninfo{
+            position: absolute;
+            left: 4%;
+            width: 60%;
+            height: 80%;
+            top: 10%;
+            font-size: 28px;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1bb0c6;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: #1E9FFF;
+            overflow: auto;
+        }
+        .attitude{
+            position: absolute;
+            width: 100%;
+            top: 90%;
+            height: 10%;
+        }
+        .unpass{
+            position: absolute;
+            width: 10%;
+            height: 40%;
+            top: 20%;
+            color: black;
+            cursor: pointer;
+            right: 30%;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1bb0c6;
+            border-radius: 30px;
+            text-align: center;
+            box-shadow: #1E9FFF;
+            background-color: #3181ff;
+            font-size: 18px;
+
+        }
+        .confirmDiv{
+            position: absolute;
+            width: 10%;
+            height: 40%;
+            top: 20%;
+            color: black;
+            cursor: pointer;
+            left: 30%;
+            border-style: solid;
+            border-width: 1px;
+            border-color: #1bb0c6;
+            border-radius: 30px;
+            text-align: center;
+            background-color: #3181ff;
+            box-shadow: #1E9FFF;
+            font-size: 18px;
+
+        }
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            var userInfo = localStorage.getItem("spxInfo");
+            userInfo = JSON.parse(userInfo);
+            loadFont("zffg","../../font/www124.TTF");
+            var i3 = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(i3,Vector3(0,-4));
+            function drawLine(parent,height,vector3,width,color) {
+                var lineDiv = div();
+                setParent(lineDiv,parent);
+                lineDiv.style.position = "absolute";
+                lineDiv.style.width = width;
+                lineDiv.style.height = height;
+                lineDiv.style.zIndex = 34;
+                lineDiv.style.background = color;
+                setPositionWithPercent(lineDiv,vector3);
+                return lineDiv;
+            }
+            //主界面
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+            var userinfodiv = div();
+            setCSS(userinfodiv,"userinfodiv");
+            setParent(userinfodiv,mainDiv);
+            var requestinfo = div();
+            setCSS(requestinfo,"requestinfo");
+            setParent(requestinfo,mainDiv);
+            var reason = div();
+            setCSS(reason,"reason");
+            setParent(reason,mainDiv);
+            var attitude = div();
+            setCSS(attitude,"attitude");
+            setParent(attitude,mainDiv);
+            drawLine(mainDiv,"7px",Vector3(0,0),"100%",Color24(135,206,235))
+            var mainDiv_HeadLabelDiv = div();
+            setParent(mainDiv_HeadLabelDiv,userinfodiv);
+            setCSS(mainDiv_HeadLabelDiv,"mainDiv_HeadLabelDiv");
+            setText(mainDiv_HeadLabelDiv,"资格审核");
+            // drawLine(mainDiv,"1px",Vector3(0,15),"100%",Color24(1,0,0));
+            var userinfo = div();
+            setCSS(userinfo,"userinfo");
+            setParent(userinfo,userinfodiv);
+
+            var mainDiv_HeadImgDiv = div();
+            setParent(mainDiv_HeadImgDiv,userinfo);
+            setCSS(mainDiv_HeadImgDiv,"mainDiv_HeadImgDiv");
+
+
+            function InsMainDIvInfoDiv(parent,prefix,subfix,vector3) {
+                var mainDiv_InfoDiv = div();
+                var mainDiv_InfoDiv_LabelDiv = div();
+                var mainDiv_InfoDiv_LabelDiv_info = div();
+                setParent(mainDiv_InfoDiv,parent);
+                setParent(mainDiv_InfoDiv_LabelDiv,mainDiv_InfoDiv);
+                setParent(mainDiv_InfoDiv_LabelDiv_info,mainDiv_InfoDiv);
+                mainDiv_InfoDiv_LabelDiv.innerText = prefix;
+                mainDiv_InfoDiv_LabelDiv_info.innerText = subfix;
+                setCSS(mainDiv_InfoDiv,"mainDiv_InfoDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv,"mainDiv_InfoDiv_LabelDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv_info,"mainDiv_InfoDiv_LabelDiv_info");
+                setPositionWithPercent(mainDiv_InfoDiv,vector3);
+            }
+
+            InsMainDIvInfoDiv(userinfo,"ID ","1234567",Vector3(25,25));
+            InsMainDIvInfoDiv(userinfo,"Level ","S",Vector3(25,40));
+            InsMainDIvInfoDiv(userinfo,"Gold ","9822",Vector3(25,55));
+
+            var taskinfo = div();
+            setCSS(taskinfo,"taskinfo");
+            setParent(taskinfo,requestinfo);
+
+            var taskstrategy = div();
+            setCSS(taskstrategy,"taskstrategy");
+            setParent(taskstrategy,requestinfo);
+
+            var reasoninfo = div();
+            setCSS(reasoninfo,"reasoninfo");
+            setParent(reasoninfo,reason);
+
+
+            var confirmDiv = button("通过");
+            setCSS(confirmDiv,"confirmDiv");
+            setParent(confirmDiv,attitude);
+            confirmDiv.onmousedown = function (ev1) {
+                window.location.href = "../email/contract_sign2.html";
+            };
+            confirmDiv.onmouseenter = function (ev1) {
+                setFontColor(confirmDiv,"red");
+            };
+            confirmDiv.onmouseleave = function (ev1) {
+                setFontColor(confirmDiv,"black");
+            };
+
+            var unpass = button("拒绝");
+            setCSS(unpass,"unpass");
+            setParent(unpass,attitude);
+            unpass.onmousedown = function (ev1) {
+                window.location.href = "../email/contract_sign2.html";
+            };
+            unpass.onmouseenter = function (ev1) {
+                setFontColor(unpass,"red");
+            };
+            unpass.onmouseleave = function (ev1) {
+                setFontColor(unpass,"black");
+            };
+        }
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

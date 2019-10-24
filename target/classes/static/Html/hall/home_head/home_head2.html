@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../../layui/css/layui.css" media="all">
+
+    <link rel="stylesheet" href="../../../css/img.css" media="all">
+    <script src="../../../js/rd.js"></script>
+
+    <script src="../../../layui/layui.js" charset="utf-8"></script>
+    <script src="../../demo/frameDemo/FrameCirculation.js"></script>
+    <script src="scripts/websocket.js"></script>
+    <script src="../../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <base target="_parent">
+    <style>
+        .emailDiv{
+            position: absolute;
+            top: 0%;
+            right: 0%;
+            width: 25px;
+            height: 25px;
+            background-image: url("../../../image/scoreBac1.png");
+            background-size: 100%;
+            border-radius: 50%;
+        }
+        .emailInfo{
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -70%;
+            text-align: center;
+
+        }
+        .auditDiv{
+            position:  absolute;
+            right: 0%;
+            bottom: 0%;
+            width: 70px;
+            height: 70px;
+            background-image: url("../../../image/yx.png");
+            background-size: 100%;
+
+
+        }
+    </style>
+    <script>
+
+        //获取某个html元素的定位
+        function GetPos(obj) {
+            var pos = new Object();
+            pos.x = obj.offsetLeft;
+            pos.y = obj.offsetTop;
+            while (obj = obj.offsetParent) {
+                pos.x += obj.offsetLeft;
+                pos.y += obj.offsetTop;
+            }
+            pos.x += 8;
+            pos.y += 55;
+            return pos;
+        };
+        function createBottom() {
+
+            var dx = document.createElement("canvas");
+            var dv = document.body.appendChild(dx);
+
+            dv.style.height = 5+"px";
+
+            dv.w = 100;
+            dv.style.width =  dv.w+"px";
+            dv.style.background = "#FFD700";
+            dv.style.position = "absolute";
+            dv.style.zIndex = "100";
+            dv.style.borderRadius = "5px";
+            dv.style.left = "0px";
+            dv.style.top = "0px";
+
+
+            dv.move = function (x,y) {
+
+                dv.style.left = x+"px";
+                dv.style.top = y + "px";
+            }
+
+            dv.hide = function () {
+
+                dv.style.display = "none";
+            }
+            dv.show = function () {
+
+                dv.style.display = "";
+
+                dv.w =0;
+                dv.style.width =  dv.w+"px";
+
+            }
+
+            dv.expand = function () {
+                if (dv.w<100){
+
+                    dv.w += 5;
+                    dv.style.width =  dv.w+"px";
+                }
+
+            }
+
+            return dv;
+
+
+        }
+        function onExit(){
+            dv.hide();
+            localStorage.setItem("hover_value","");
+
+        }
+        var dv;
+        var hoverObj;
+        function setElementEff(hoveCode,domValue){
+
+            domValue.onmouseenter = function (ev) {
+
+                hoverObj.code = hoveCode;
+                hoverObj.pos = GetPos(ev.target);
+                localStorage.setItem("hover_value",JSON.stringify(hoverObj));
+                dv.move((GetPos(ev.target)).x,(GetPos(ev.target)).y);
+                dv.show();
+            }
+            domValue.onmouseleave = onExit;
+
+        }
+
+        $(document).ready(function() {
+
+            dv = createBottom();
+            dv.hide();
+            hoverObj = {};
+
+
+            var front_train_label = document.getElementById("front_train_label");
+            var myself = document.getElementById("myself");
+
+            myself.onclick = function (ev) {
+
+                window.parent.parent.location.href = "../../userInfo/userInfo.html";
+
+
+            }
+
+            var mainDiv = document.getElementById("mainDiv");
+            var score = document.getElementById("score");
+            var level = document.getElementById("level");
+            var task_publish = document.getElementById("task_publish");
+            //task_hall
+            var task_hall = document.getElementById("task_hall");
+            var task_log = document.getElementById("task_log");
+            setElementEff("myself", myself);
+            setElementEff("front_train_label", front_train_label);
+            setElementEff("score", score);
+            setElementEff("level", level);
+            setElementEff("task_publish", task_publish);
+            setElementEff("task_log", task_log);
+            setElementEff("task_hall", task_hall);
+
+            myself.infoNum = document.getElementById("infoNum");
+            var userInfo = localStorage.getItem("spxInfo");
+            var userObject = null;
+            if(userInfo != null){
+                userObject = JSON.parse(userInfo);
+
+            }else {
+                userObject = {};
+                userObject.user_acc = "ljy";
+            }
+            connect(userObject.user_acc);
+
+            var auditDiv = div();
+            setParent(auditDiv,mainDiv);
+            setCSS(auditDiv,"auditDiv");
+            auditDiv.onmousedown = function(){
+
+                window.parent.parent.location.href = "../../email/emailPage.html";
+
+            };
+
+            localStorage.setItem("spxOp","none");
+            op = function () {
+                dv.expand();
+
+                var spxData = localStorage.getItem("spxOp");
+
+                if(spxData != "none"){
+                    var spxOpObj = JSON.parse(spxData);
+                    switch (spxOpObj.code) {
+                        case 0:
+                                console.info("发送邮件！");
+
+                                send(102,1,spxOpObj);
+
+                            break;
+
+                        default:
+
+
+                            break;
+
+                    }
+
+                }else {
+
+
+                }
+
+                localStorage.setItem("spxOp","none");
+
+
+            };
+
+            frame();
+
+
+        });
+
+
+
+    </script>
+
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+</head>
+<body style="background-color:transparent" >
+
+<!--<canvas style="height: 10px;width: 100px;background: #884400;position:absolute;z-index: 100;border-radius: 5px"></canvas>-->
+
+<ul class="layui-nav" id = "mainDiv">
+    <li  class="layui-nav-item"><a id = "task_hall" href="../../demo/tableDemo/BlackShield.html">任务大厅</a></li>
+    <li class="layui-nav-item">
+        <a id="front_train_label" href="javascript:;">技能训练营</a>
+
+    </li>
+
+    <li class="layui-nav-item" lay-unselect="">
+
+        <div class="emailDiv">
+            <p id="infoNum" class="emailInfo">123</p>
+
+        </div>
+        <a id = "myself" href="javascript:;">
+
+            <img src="//t.cn/RCzsdCq" class="layui-nav-img">我</a>
+
+    </li>
+
+
+    <li class="layui-nav-item" lay-unselect="">
+        <a id = "score" href="javascript:;" ><img src="../../../image/gold.jpeg" class="layui-nav-img"><span id="gold_label">1000</span></a>
+
+    </li>
+
+    <li class="layui-nav-item" lay-unselect="">
+        <a id = "level" href="javascript:;" ><img id="levelICO" src="../../../image/l1.jpeg" class="layui-nav-img"><span id="levelTxt">练气</span></a>
+
+    </li>
+    <li id = "task_publish" class="layui-nav-item"><a href="../upload_task_info_form.html" id="sendTask">发布任务</a></li>
+    <li id = "task_log" class="layui-nav-item"><a href="../../logsystem/loglist_view.html" >日志</a></li>
+
+
+</ul>
+
+
+</body>
+</html>

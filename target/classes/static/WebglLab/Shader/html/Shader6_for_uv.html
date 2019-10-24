@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+        varying vec3 suv;
+        float dynamic;
+        void main( void ) {
+
+          gl_FragColor = vec4(suv.x*suv.y,suv.x*suv.y,suv.x*suv.y, 1.0 );
+
+
+        }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+        varying vec3 suv;
+        void main()
+        {
+        suv = position;
+        vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+        gl_Position = projectionMatrix * mvPosition;
+
+        }
+
+    </script>
+
+    <script >
+
+        window.onload = function (ev) {
+
+            create(document.getElementById("canvas-frame"));//创建了一个View，也就是指定了Camera，lisght，Scene,renderer
+            setViewport(20);//设定Camera的z值为20，保证我们的cube在裁剪空间里面
+
+            var material = new THREE.ShaderMaterial({
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+
+            });
+            geometryCachePush(Vector3(0,0,0));
+            geometryCachePush(Vector3(5,0,0));
+            geometryCachePush(Vector3(5,5,0));
+            geometryCachePush(Vector3(0,5,0));
+            var mesh = createMeshWithoutMaterial();
+            mesh.material =material;
+
+            var texture = glContext.createTexture();
+            var image = new Image();
+            image.onload = function () {
+                onLoadTexture(glContext, shaderProgram, n, texture, u_Sampler, image);
+            };
+            image.src = "res/image/sky.jpg";
+
+
+
+            // var geometry = new THREE.Geometry(); //声明一个空几何体对象
+            // var p1 = new THREE.Vector3(0,0,0); //顶点1坐标
+            // var p2 = new THREE.Vector3(5,0,0); //顶点2坐标
+            // var p3 = new THREE.Vector3(5,5,0); //顶点3坐标
+            // var p4 = new THREE.Vector3(0,5,0); //顶点4坐标
+            // geometry.vertices.push(p1,p2,p3,p4); //顶点坐标添加到geometry对象
+            // var normal = new THREE.Vector3( 0, 0, 1 ); //三角面法向量
+            // var face0 = new THREE.Face3( 0, 1, 2, normal); //创建三角面0
+            // var face1 = new THREE.Face3( 0, 2, 3, normal); //创建三角面1
+            // geometry.faces.push( face0,face1 ); //三角面添加到几何体
+            // var material=new THREE.MeshLambertMaterial({
+            //     color:0x0000ff,//三角面颜色
+            //     side:THREE.DoubleSide//两面可见
+            // });//材质对象
+            // var mesh=new THREE.Mesh(geometry,material);//网格模型对象
+            //         addObject(mesh);
+            frame();//循环渲染
+
+
+        }
+    </script>
+<body>
+
+
+<div id="canvas-frame"></div>
+
+
+</body>
+</html>

@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>任务详情</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+    <script src="../../js/GetDataFromTaskSystem.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+<!--    <link rel="prefetch" href="http://www.webhek.com/misc/3d-album/" />-->
+    <style>
+
+        body{
+
+            background: whitesmoke;
+        }
+        .mainDiv{
+            position: absolute;
+            background: white;
+            top: 10%;
+            width: 70%;
+            height: 90%;
+            left: 15%;
+            border-radius: 4px;
+            box-shadow: 2px 2px  #888888;
+
+
+        }
+
+        .tasknamediv{
+            position: absolute;
+            top: 15%;
+            left: 5%;
+            width: 90%;
+            height:60%;
+            font-size: 23px;
+            color: black;
+            text-align: left;
+        }
+        .solvestatus{
+            position: absolute;
+            top: 2%;
+            right: 2%;
+            width: 10%;
+            height:10%;
+            font-size: 15px;
+            color: red;
+            text-align: right;
+        }
+        .taskdiv{
+            position: absolute;
+            width: 100%;
+            height:30%;
+            background-color:#ddeeff;
+        }
+        .taskdiv1{
+            position: absolute;
+            width: 100%;
+            height:20%;
+            text-align: left;
+        }
+        .taskdiv2{
+            position: absolute;
+            top: 25%;
+            width: 100%;
+            height:8%;
+            text-align: left;
+
+        }
+        .taskid{
+            position: absolute;
+            left: 5%;
+            width: 8%;
+            height:90%;
+            text-align: center;
+            background-color: #98c0e8;
+            font-size: 12px;
+            border-radius: 3px;
+        }
+        .taskpubllish{
+            position: absolute;
+            left: 15%;
+            width: 20%;
+            height:70%;
+            font-size: 12px;
+            text-align: left;
+
+        }
+        .begintime{
+            position: absolute;
+            left: 25%;
+            width: 30%;
+            height:70%;
+            font-size: 12px;
+            text-align: left;
+        }
+        .taskdiv3{
+            position: absolute;
+            top: 38%;
+            width: 100%;
+            height:25%;
+            text-align: left;
+
+
+        }
+        .tasktype{
+            position: absolute;
+            top: 10%;
+            left: 5%;
+            width: 15%;
+            height:40%;
+            text-align: left;
+            border-right-style: dashed;
+            border-width: 1.5px;
+            border-right-color: #1E9FFF;
+
+        }
+        .taskreward{
+            position: absolute;
+            top: 10%;
+            left: 22%;
+            width: 13%;
+            height:40%;
+            border-right-style: dashed;
+            border-width: 1.5px;
+            border-right-color: #1E9FFF;
+            text-align: left;
+        }
+        .tasklevel{
+            position: absolute;
+            top: 10%;
+            left: 37%;
+            width: 10%;
+            height:40%;
+            border-right-style: dashed;
+            border-width: 1.5px;
+            border-right-color: #1E9FFF;
+            text-align: left;
+        }
+        .endtime{
+            position: absolute;
+            top: 10%;
+            left: 49%;
+            width: 27%;
+            height:40%;
+            border-right-style: dashed;
+            border-width: 1.5px;
+            border-right-color: #1E9FFF;
+            text-align: left;
+        }
+        .submit{
+            position: absolute;
+            left: 88%;
+            width: 10%;
+            height: 90%;
+            background-color: #1E9FFF;
+            text-align: center;
+            font-size: 15px;
+            border-radius: 15px;
+            box-shadow: 1px 1px #98c0e8;
+
+
+        }
+        .taskdiv4{
+            position: absolute;
+            top: 65%;
+            width: 100%;
+            height:20%;
+        }
+        .taskdetail{
+            position: absolute;
+            top:  30%;
+            width: 100%;
+            height:70%;
+        }
+        .detail{
+            position: absolute;
+            top: 8%;
+            left: 3%;
+            width: 97%;
+            height:10%;
+            font-size: 30px;
+            color: black;
+            text-align: left;
+        }
+        .publishdetail{
+            position: absolute;
+            top:20%;
+            left: 3%;
+            width: 97%;
+            height:30%;
+            font-size: 15px;
+            color: black;
+            text-align: left;
+            overflow: auto;
+
+        }
+        .request{
+            position: absolute;
+            top: 50%;
+            left: 3%;
+            width: 97%;
+            height:10%;
+            font-size: 30px;
+            color: black;
+            text-align: left;
+        }
+        .taskrequest{
+            position: absolute;
+            top:60%;
+            left: 3%;
+            width: 97%;
+            height:30%;
+            font-size: 15px;
+            color: black;
+            text-align: left;
+            overflow: auto;
+        }
+
+
+        .solver{
+            position: absolute;
+            top: 14%;
+            left: 2%;
+            width: 100%;
+            height:10%;
+            text-align: left;
+        }
+        .solvetime{
+            position: absolute;
+            top: 26%;
+            left: 2%;
+            width: 100%;
+            height:10%;
+            text-align: left;
+        }
+        .solvestrategy{
+            position: absolute;
+            top: 38%;
+            left: 2%;
+            width: 100%;
+            height:40%;
+            text-align: left;
+            overflow: auto;
+        }
+
+
+
+
+
+
+
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            absoluteWindow();
+            var headDiv = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+            var taskdiv = div();
+            var taskdetail = div();
+            var taskdiv1 = div();
+            var taskdiv2 = div();
+            var taskdiv3 = div();
+            var taskdiv4 = div();
+
+            setCSS(taskdiv1,"taskdiv1");
+            setCSS(taskdiv2,"taskdiv2");
+            setCSS(taskdiv3,"taskdiv3");
+            setCSS(taskdiv4,"taskdiv4");
+            setCSS(taskdiv,"taskdiv");
+            setCSS(taskdetail,"taskdetail");
+            setParent(taskdiv1,taskdiv);
+            setParent(taskdiv2,taskdiv);
+            setParent(taskdiv3,taskdiv);
+            setParent(taskdiv4,taskdiv);
+            setParent(taskdiv,mainDiv);
+            setParent(taskdetail,mainDiv);
+            var index = 1;
+
+            getTaskList(function (data) {
+                for(var i in data){
+                    console.info(data[i].task_index);
+                    if(data[i].task_index==index)
+                    {
+                        console.info("okokokoko");
+                        showinfo(data[i].task_index,data[i].task_status,data[i].task_index,data[i].task_master
+                        ,data[i].task_begin_time,data[i].task_type,data[i].task_reward,data[i].task_solve_time,
+                            data[i].task_difficute_level,data[i].task_describe,data[i].task_describe);
+
+                    }
+
+                };
+
+            });
+
+            function showinfo(taskname,solvestate,taskindex,taskmaster,begin,type,reward,end,level,taskdescribe,req) {
+
+                var tasknamediv = div();
+                setCSS(tasknamediv, "tasknamediv");
+                setParent(tasknamediv, taskdiv1);
+                setText(tasknamediv, taskname);
+
+                var solvestatus = div();
+                setCSS(solvestatus, "solvestatus");
+                setParent(solvestatus, tasknamediv);
+                if(solvestate=="1")
+                {
+                    setText(solvestatus, "已解决");
+
+                }
+                else
+                    setText(solvestatus, "未解决");
+                var taskid = div();
+                setCSS(taskid, "taskid");
+                setParent(taskid, taskdiv2);
+                // setText(taskid, "No." + "123456");
+                setText(taskid, taskindex);
+
+                var taskpubllish = div();
+                setCSS(taskpubllish, "taskpubllish");
+                setParent(taskpubllish, taskdiv2);
+                setText(taskpubllish,taskmaster);
+                var begintime = div();
+                setCSS(begintime, "begintime");
+                setParent(begintime, taskdiv2);
+                setText(begintime, "开始时间:" + begin);
+
+                var tasktype = div();
+                setCSS(tasktype, "tasktype");
+                setParent(tasktype, taskdiv3);
+                setText(tasktype, "任务类型:" + type);
+
+                var taskreward = div();
+                setCSS(taskreward, "taskreward");
+                setParent(taskreward, taskdiv3);
+                setText(taskreward, "任务奖励:" + reward);
+
+                var endtime = div();
+                setCSS(endtime, "endtime");
+                setParent(endtime, taskdiv3);
+                setText(endtime, "结束时间:" + end);
+
+                var tasklevel = div();
+                setCSS(tasklevel, "tasklevel");
+                setParent(tasklevel, taskdiv3);
+                setText(tasklevel, "难度级别:" + level);
+
+                var submit = button("接取任务");
+                setCSS(submit, "submit");
+                setParent(submit, taskdiv3);
+                drawLine(taskdiv, "1px", Vector3(0, 75), "100%", Color24(1, 0, 0));
+
+                var detail = div();
+                var publishdetail = div();
+                setCSS(detail, "detail");
+                setCSS(publishdetail, "publishdetail");
+                setParent(detail, taskdetail);
+                setParent(publishdetail, taskdetail);
+                setText(detail, "任务描述");
+                setText(publishdetail, taskdescribe);
+
+                var request = div();
+                var taskrequest = div();
+                setCSS(request, "request");
+                setCSS(taskrequest, "taskrequest");
+                setParent(request, taskdetail);
+                setParent(taskrequest, taskdetail);
+                setText(request, "详细要求");
+                setText(taskrequest, taskdescribe);
+
+            }
+
+
+
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+             uniform sampler2D u_Sampler;
+             varying vec2 v_TexCoord;
+             uniform float coe;
+             vec4 tp = vec4(1.0,1.0,1.0,1.0);
+
+
+             uniform float vx;
+             uniform float vy;
+             void main() {
+
+
+            gl_FragColor = vec4(0.5,1.0,1.0,1.0);
+            //if(distance(vec2(vx,vy),v_TexCoord)<0.1)
+            //{
+            //
+            //}
+
+             }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+          uniform float vt;
+          uniform mat4 u_MvpMatrix;
+          varying vec2 v_TexCoord;
+          attribute vec2 a_Position;
+
+          void main() {
+
+           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+
+           v_TexCoord = a_Position;
+
+          // v_TexCoord = vec2(cos(3.14159/4.0)*v_TexCoord.x+sin(3.14159/4.0)*v_TexCoord.y,-sin(3.14159/4.0)*v_TexCoord.x + cos(3.14159/4.0)*v_TexCoord.y);
+
+
+           gl_Position = projectionMatrix * mvPosition;
+
+
+         }
+
+    </script>
+
+    <script >
+
+        window.onload = function (ev) {
+            fps = 120;
+            create(document.getElementById("canvas-frame"));//创建了一个View，也就是指定了Camera，lisght，Scene,renderer
+            setViewport(20);//设定Camera的z值为20，保证我们的cube在裁剪空间里面
+            glContext.enable(glContext.BLEND);
+            glContext.blendFunc(glContext.SRC_ALPHA, glContext.ONE_MINUS_SRC_ALPHA);
+
+          // var b = createCube();
+
+            brt = {
+                vt: { value: 1.0 },
+                coe:{value : 0.0},
+                vx:{value:0.0},
+                vy:{value:0.0},
+                vec2ArrayPoint:{value:1}
+
+            };
+
+
+            var material = new THREE.ShaderMaterial({
+                uniforms :brt,
+
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+
+            });
+
+
+
+           var border = screenConvertToWorld(Vector3(0,1,0));
+           console.info(border);
+            geometryCachePush(Vector3(-border.y,-border.y,0));
+            geometryCachePush(Vector3(border.y,-border.y,0));
+            geometryCachePush(Vector3(border.y,border.y,0));
+            geometryCachePush(Vector3(-border.y,border.y,0));
+            var mesh = createBufferGeometry();
+
+            mesh.material =material;
+                console.info(mesh);
+
+            var ta = new Float32Array([0.5,0.5,0.5,0.5]);
+            var mousePose = new THREE.BufferAttribute( ta, 1 );
+            mesh.geometry.addAttribute("a_Position",mousePose);
+            var texture = glContext.createTexture();
+
+
+            // 创建 Image对象
+            var imgObj = new Image();
+            // 为 src 属性赋值
+            imgObj.src = "../../../image/bac2x.jpg";
+
+
+            imgObj.onload = function (ev) {
+
+                glContext.activeTexture(glContext.TEXTURE0);
+                glContext.bindTexture   (glContext.TEXTURE_2D,texture);
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MAG_FILTER, glContext.LINEAR);// 纹理放大方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MIN_FILTER, glContext.LINEAR);// 纹理缩小方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_S,     glContext.CLAMP_TO_EDGE);// 纹理水平填充方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_T,     glContext.CLAMP_TO_EDGE);// 纹理垂直填充方式
+
+                glContext.texImage2D(glContext.TEXTURE_2D, 0, glContext.RGB, glContext.RGB, glContext.UNSIGNED_BYTE, imgObj);
+
+            }
+
+            var evenx = null;
+
+            glCanvas.onmousedown = function(eve){
+
+                evenx = eve;
+
+            }
+
+
+           // var a_Position = gl.getAttribLocation(gl.program, "a_Position");
+
+            //----------------attribute------------------//
+            //g_points = [];
+
+
+            //-------------------------------------------//
+
+            var ccs ;
+            var vxs = document.createElement("p");
+           var LVxs = document.getElementById("canvas-frame").appendChild(vxs);
+           var frameValue = 0;
+            LVxs.innerText = "0"
+            glCanvas.onmousemove = function(evx){
+                ccs = evx;
+                var t1 = Vector3(evx.clientX,evx.clientY,0);
+                //t1 = Rotation2D(t1,3.14159/4);
+
+                var t2 = Division(t1,400);
+                var t3 = Substraction(t2,Vector3(1,1,0));
+                //   var t4 = Division(t3,2);
+                //  console.info(t3);
+                t3 = Rotation2D(t3,3.14159/2);
+                var border = screenConvertToWorld(Vector3(0,1,0));
+                brt.vx.value = t3.x*border.y*0.2;
+                brt.vy.value = t3.y*border.y*0.2;
+
+                if(brt.vec2ArrayPoint <1023){
+                    brt.vec2ArrayPoint += 1;
+
+                }else {
+                    brt.vec2ArrayPoint = 1;
+
+                }
+                console.info("123");
+                var worldVec = (screenConvertToWorld(t3));
+               // console.info(worldVec);
+               // setPosition(b,worldVec)
+                //console.info(t3.x*border.y+"<>"+t3.y*border.y);
+                opView.renderer.render(opView.scene,opView.camera);
+            }
+          // op = function(){
+
+          //     brt.vt.value += 0.1;
+
+          //     brt.coe.value = -3.14159/2;
+          //    // if(ccs!=null)
+          //    // console.info(ccs.clientX);
+          //    // console.info("统计");
+          //     frameValue++;
+
+          //     LVxs.innerText = frameValue+"";
+
+
+
+
+
+
+
+
+
+          // }
+
+            frame();//循环渲染
+
+
+        }
+    </script>
+<body>
+
+
+<div id="canvas-frame"></div>
+
+
+</body>
+</html>

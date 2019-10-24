@@ -1,0 +1,751 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src=" ../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/Plugins/DivList/DivList.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <style>
+
+        body{
+
+            background: whitesmoke;
+
+        }
+        .mainDiv{
+            position: absolute;
+            width: 100px;
+            height: 400px;
+            left: 5.5%;
+            top: 17%;
+            background: white;
+
+        }
+        .bodyLine1 {
+            position: absolute;
+            width: 75%;
+            height: 2px;
+
+            top: 16%;
+            background: #1b1e21;
+
+        }
+
+        .bodyDescribeLabel{
+            position: absolute;
+            top: 8%;
+
+        }
+        .infoDiv{
+            position: absolute;
+            top: 17%;
+            left: 11%;
+            width: 60%;
+            height: 60%;
+            background: white;
+
+
+
+        }
+        .detailDiv{
+            position: absolute;
+            top: 17%;
+            left: 11%;
+            width: 60%;
+            height: 60%;
+            background: rgb(240,255,255);
+            z-index: 10;
+        }
+        .checkEmailDiv{
+
+            position: absolute;
+            width: 80%;
+            height: 14%;
+            background: rgba(0,0,0,0);
+            left: 2%;
+
+
+        }
+        .checkEmailDivLine1{
+            position: absolute;
+            width: 100%;
+            height: 1px;
+            bottom: 0px;
+            background:#1b1e21;
+
+
+        }
+        .checkEmailDivType{
+            position: absolute;
+            width: 50px;
+            height: 20px;
+            top: 7%;
+            border:2px solid;
+            border-color:#bcbcbc;
+
+            text-align: center;
+
+
+        }
+        .checkEmailDivDescreibeInfoDiv{
+
+            position: absolute;
+            width: 400px;
+            height: 20px;
+            left: 58px;
+            top: 7%;
+
+
+        }
+        .checkEmailDivEmailSenderDiv{
+
+
+            position: absolute;
+            width: 300px;
+            height: 15px;
+            right: 0%;
+            bottom: 0%;
+            text-align: right;
+
+        }
+        .checkEmailDivEmailHeadInfoDiv{
+
+
+            position: absolute;
+            width: 900px;
+            height: 35px;
+            left: 0px;
+            top: 45%;
+
+            font-size: 20px;
+
+        }
+        .checkEmailDivEmailHeadInfoDiv_a{
+            color: #6c757d;
+            text-decoration:none;
+
+        }
+        .detailLine{
+            position: absolute;
+            width: 30%;
+            height: 1px;
+
+            top: 23%;
+            left: 2%;
+            background: #1b1e21;
+
+        }
+        .detailLine2{
+            position: absolute;
+            width: 20%;
+            height: 1px;
+
+            top: 23%;
+            left: 50%;
+            background: #1b1e21;
+
+        }
+        .detailDivTaskDescribe{
+            position: absolute;
+            width: 20%;
+            height: 35px;
+
+            top: 16%;
+            left: 2%;
+            font-size: 27px;
+
+
+        }
+        .detailDivDescribeBox{
+
+            position: absolute;
+            width: 30%;
+            height: 70%;
+
+            top: 24%;
+            left: 2%;
+            font-size: 15px;
+            background: rgba(0,0,0,0);
+
+
+        }
+        .detailDivDescribeBoxTexarea{
+
+            position: absolute;
+            width: 99%;
+            height: 99%;
+
+            font-size: 15px;
+            overflow: auto;
+
+        }
+        .detailDivTaskSchemeLabel{
+
+            position: absolute;
+            width: 20%;
+            height: 35px;
+
+            top: 16%;
+            left: 50%;
+            font-size: 27px;
+
+        }
+        .detailDivSchemeBox{
+            position: absolute;
+            width: 40%;
+            height: 70%;
+
+            top: 24%;
+            left: 50%;
+            font-size: 27px;
+             background: #6c757d;
+            background-size: 100%;
+            border: 2px solid;
+            overflow: auto;
+
+
+        }
+        .detailDivMenu{
+            position: absolute;
+            right: 0%;
+            width: 60px;
+            height: 100%;
+
+            background: #6c757d;
+
+
+        }
+        .detailDivMenu_AllowBtn{
+            position: absolute;
+            width: 60px;
+            height: 25px;
+            text-align: center;
+            font-size: 20px;
+            z-index: 12;
+            background:#ffe8a1;
+
+        }
+
+        .updateEmailTypeInfoDiv{
+            position: absolute;
+            width :20%;
+            height: 30%;
+            left: 40%;
+            top: 25%;
+
+
+        }
+        .updateEmailTypeInfoDiv_img{
+            position: absolute;
+            width :80%;
+            height: 75%;
+            left: 8%;
+            top: 0%;
+
+        }
+        .updateEmailTypeInfoDiv_describeLabel{
+            position: absolute;
+            text-align: center;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            bottom: 7%;
+
+
+        }
+        .schemeImgMagnifyParent{
+
+            position: absolute;
+            width: 100%;
+            height: 100%;
+
+            background: rgba(0,0,0,0.5);
+
+            z-index: 15;
+
+
+
+        }
+        .schemeImgMagnifyBox{
+
+            position: absolute;
+            width: 80%;
+            height: 80%;
+            left: 10%;
+            top: 10%;
+            background: #FFB800;
+            border: 1px solid;
+            z-index: 16;
+
+        }
+
+        .schemeImgMagnifyImg{
+
+            position: absolute;
+            width: 50%;
+            left: 25%;
+            height: auto;
+        }
+        .schemeImgMagnifyParentEndDiv{
+            position: absolute;
+            right: 0%;
+            top: 0%;
+            width: 75px;
+            height: 50px;
+            background-image: url("../../image/x1.png");
+            background-size: 100%;
+            z-index: 17;
+
+        }
+        .detailDivSchemeImg{
+            position: absolute;
+            width: 100%;
+
+            height: auto;
+
+
+        }
+    </style>
+    <script>
+       var dataCache = [];
+       var selectDiv;
+       var detailDiv ;
+
+       var emailDivList = [];
+
+       var emailContentTips;
+
+       //函数类型，用于更新emailDiv的状态
+       var updateEmailDiv;
+
+       /**
+        * 用于描述显示状态，待审核是状态0，审核完成时状态1
+        */
+       var showStatu;
+       function clearEmailDivList() {
+
+           for(var i in emailDivList){
+
+               emailDivList[i].remove();
+           }
+            emailDivList.length = 0;
+            hideElement(detailDiv);
+       }
+    </script>
+    <script>
+
+        /**
+         *
+         * @param infoDiv
+         * @param type
+         * @param overheadInfo
+         * @param headInfo：对应的是这一条审核任务显示的审核请求描述
+         * @param index：对应的这一条审核任务在前端中显示的顺序
+         * @param infoIndex：对应的是数据库中这一条审核记录对应的分派任务的索引号
+         * @param task_index:对应的是数据库中，这一条审核记录的索引号
+         */
+        function insEmalDiv(infoDiv,type,overheadInfo,headInfo,index,infoIndex,task_index) {
+
+
+
+            var checkEmailDiv = div();
+            checkEmailDiv.parent = infoDiv;
+            checkEmailDiv.infoIndex = infoIndex;
+
+            checkEmailDiv.task_index = task_index;
+            emailDivList.push(checkEmailDiv);
+
+            setParent(checkEmailDiv,infoDiv);
+            setCSS(checkEmailDiv,"checkEmailDiv");
+            setPositionWithPercent(checkEmailDiv,Vector3(2,15*index));
+            var checkEmailDivLine1 = div();
+            setParent(checkEmailDivLine1,checkEmailDiv);
+            setCSS(checkEmailDivLine1,"checkEmailDivLine1");
+
+            var checkEmailDivType = div();
+            setParent(checkEmailDivType,checkEmailDiv);
+            setCSS(checkEmailDivType,"checkEmailDivType");
+            setText(checkEmailDivType,type);
+
+
+            var checkEmailDivDescreibeInfoDiv = div();
+            setParent(checkEmailDivDescreibeInfoDiv,checkEmailDiv);
+            setCSS(checkEmailDivDescreibeInfoDiv,"checkEmailDivDescreibeInfoDiv");
+            setText(checkEmailDivDescreibeInfoDiv,overheadInfo);
+
+            var checkEmailDivEmailHeadInfoDiv = div();
+            setParent(checkEmailDivEmailHeadInfoDiv,checkEmailDiv);
+            setCSS(checkEmailDivEmailHeadInfoDiv,"checkEmailDivEmailHeadInfoDiv");
+
+            setText(checkEmailDivEmailHeadInfoDiv,headInfo);
+
+
+
+
+                checkEmailDiv.initPos = Vector3(2,15*index);
+
+            checkEmailDiv.detailPos = Vector3(2,0);
+            //oElement.style.cursor = "pointer";
+            checkEmailDivEmailHeadInfoDiv.onmouseenter = function (ev) {
+                checkEmailDivEmailHeadInfoDiv.style.cursor =  "pointer";
+            };
+
+            checkEmailDiv.recover = function(){
+
+                setParent(checkEmailDiv,checkEmailDiv.parent);
+                setPositionWithPercent(checkEmailDiv,checkEmailDiv.initPos);
+            };
+
+            checkEmailDivEmailHeadInfoDiv.onmousedown = function (ev) {
+                //
+                // selectDiv = checkEmailDiv;
+                // showElement(detailDiv)
+                //
+                // setParent(selectDiv,detailDiv);
+                // setPositionWithPercent(checkEmailDiv,checkEmailDiv.detailPos);
+                // console.info("显示细节窗口！");
+                //
+                // detailDiv.updateTaskDescribe(selectDiv.infoIndex);
+
+                window.location.href = "../userInfo/userInfoForCheck.html"
+            }
+
+
+        }
+
+
+
+        function insDetailDiv() {
+
+            detailDiv = div();
+            //显示的方案图
+            detailDiv.schemeImg = null;
+
+
+            function genSchemeImgBox( parent ){
+                parent.schemeImgMagnifyParent = div();
+                setCSS(detailDiv.schemeImgMagnifyParent,"schemeImgMagnifyParent");
+                detailDiv.schemeImgMagnifyParent.imgBox = div();
+                setParent(detailDiv.schemeImgMagnifyParent.imgBox,detailDiv.schemeImgMagnifyParent);
+                setCSS(detailDiv.schemeImgMagnifyParent.imgBox,"schemeImgMagnifyBox");
+                detailDiv.schemeImgMagnifyParent.imgBox.img = img();
+                setParent(detailDiv.schemeImgMagnifyParent.imgBox.img,detailDiv.schemeImgMagnifyParent.imgBox);
+                setCSS(detailDiv.schemeImgMagnifyParent.imgBox.img,"schemeImgMagnifyImg");
+                detailDiv.schemeImgMagnifyParent.imgBox.img.src = "../../image/pen0.png";
+
+                var endDiv = div();
+                setParent(endDiv,parent.schemeImgMagnifyParent);
+                setCSS(endDiv,"schemeImgMagnifyParentEndDiv");
+
+
+                parent.schemeImgHide = function () {
+
+                    hideElement(parent.schemeImgMagnifyParent);
+                };
+                parent.schemeImgShow = function () {
+
+                    showElement(parent.schemeImgMagnifyParent);
+                };
+
+                parent.schemeSrcChange = function (src) {
+                    detailDiv.schemeImgMagnifyParent.imgBox.img.src = src;
+                };
+                endDiv.onmousedown = function (ev) {
+
+                    parent.schemeImgHide();
+                };
+            }
+
+
+
+            //用来放大图像
+             genSchemeImgBox(detailDiv);
+            //
+            detailDiv.schemeImgHide();
+
+            setCSS(detailDiv,"detailDiv");
+            hideElement(detailDiv);
+
+            var detailLine = div();
+            setCSS(detailLine,"detailLine");
+            setParent(detailLine,detailDiv);
+
+            var detailDivTaskDescribe = div();
+            setCSS(detailDivTaskDescribe,"detailDivTaskDescribe");
+            setParent(detailDivTaskDescribe,detailDiv);
+            setText(detailDivTaskDescribe,"任务描述");
+
+            var detailDivDescribeBox = div();
+            setCSS(detailDivDescribeBox,"detailDivDescribeBox");
+            setParent(detailDivDescribeBox,detailDiv);
+            var detailDivDescribeBoxTexarea = textareaInput();
+
+            setCSS(detailDivDescribeBoxTexarea,"detailDivDescribeBoxTexarea");
+            setParent(detailDivDescribeBoxTexarea,detailDivDescribeBox);
+
+
+            var detailDivTaskSchemeLabel = div();
+            setCSS(detailDivTaskSchemeLabel,"detailDivTaskSchemeLabel");
+            setParent(detailDivTaskSchemeLabel,detailDiv);
+
+            setText(detailDivTaskSchemeLabel,"方案");
+            var detailLine2 = div();
+            setCSS(detailLine2,"detailLine2");
+            setParent(detailLine2,detailDiv);
+            var detailDivTaskScheme = div();
+            setCSS(detailDivTaskScheme,"detailDivTaskScheme");
+            setParent(detailDivTaskScheme,detailDiv);
+
+            var detailDivSchemeBox = div();
+            setCSS(detailDivSchemeBox,"detailDivSchemeBox");
+            setParent(detailDivSchemeBox,detailDiv);
+
+
+
+            var detailDivMenu = div();
+
+            detailDiv.showMenu = function (type) {
+
+                if(type === 1){
+
+                    showElement(detailDivMenu);
+
+                }else {
+
+                    hideElement(detailDivMenu);
+                }
+            }
+            setCSS(detailDivMenu,"detailDivMenu");
+            setParent(detailDivMenu,detailDiv);
+
+
+            function createDetailDetailMenuBtn(index,content) {
+                var detailDivMenu_AllowBtn = div();
+                setCSS(detailDivMenu_AllowBtn,"detailDivMenu_AllowBtn");
+                setParent(detailDivMenu_AllowBtn,detailDivMenu);
+                setPositionWithPercent(detailDivMenu_AllowBtn,Vector3(0,5+6*index));
+
+                setText(detailDivMenu_AllowBtn,content);
+
+                detailDivMenu_AllowBtn.onmouseenter = function (ev) {
+
+                    detailDivMenu_AllowBtn.style.cursor =  "pointer";
+                }
+
+
+                return detailDivMenu_AllowBtn;
+            }
+            var allowBtn = createDetailDetailMenuBtn(0,"通过");
+
+
+            createDetailDetailMenuBtn(1,"不通过");
+
+            detailDiv.updateTaskDescribe = function (id) {
+
+                var requestData = {};
+                requestData.index = id;
+                requestServer("/getTaskDataByIndex",function (ip) {
+                    $.post(ip,requestData,function (data) {
+
+                        setText(detailDivDescribeBoxTexarea,data.task_describe);
+
+                        if(detailDiv.schemeImg=== null){
+
+                            detailDiv.schemeImg = img();
+                            setParent(detailDiv.schemeImg,detailDivSchemeBox);
+                            setCSS( detailDiv.schemeImg,"detailDivSchemeImg")
+                        }
+
+                        detailDiv.schemeImg.src = "../../image/pen0.png";
+
+                        detailDiv.schemeImg.onmousedown = function () {
+
+                            detailDiv.schemeSrcChange(detailDiv.schemeImg.src);
+                            detailDiv.schemeImgShow();
+                        };
+
+
+                    });
+                });
+
+            };
+            allowBtn.onmousedown = function () {
+
+                console.info("同意申请!");
+
+                var requestData = {};
+                requestData.statu = 1;
+                requestData.answer = 100;
+                requestData.task_index = selectDiv.task_index;
+                requestServer("/updateAppliacationStatus",function (ip) {
+
+                    $.post(ip,requestData,function (data) {
+
+                        console.info(data);
+
+                        updateEmailDiv(showStatu);
+                    });
+                });
+
+                hideElement(detailDiv);
+                //selectDiv.recover();
+
+
+
+
+            };
+
+
+            return detailDiv;
+        }
+
+    </script>
+    <script>
+        window.onload = function (ev) {
+
+            //absoluteWindow();
+
+            var container = div();
+
+            setCSS(container,"container");
+            var bodyLine1 = div();
+            setCSS(bodyLine1,"bodyLine1");
+
+            loadCSS("../demo/Plugins/DivList/DivList.css");
+            var headLabel = iframe("../hall/home_head/home_head3.html");
+
+            setPositionWithPercent(headLabel,Vector3(0,-2));
+
+            var bodyDescribeLabel = hilabel("邮箱",1);
+
+            var mainDiv = div();
+            var infoDiv = div();
+
+            setParent(bodyDescribeLabel,document.body);
+            setCSS(bodyDescribeLabel,"bodyDescribeLabel");
+            setCSS(infoDiv,"infoDiv");
+            setCSS(mainDiv,"mainDiv");
+            var waitForAuditBtn =   insFuncBtn(mainDiv,0,"未读邮件");
+            var autitOver =  insFuncBtn(mainDiv,1,"已读邮件");
+
+            waitForAuditBtn.onEvent = function(){
+                updateEmailDiv(0);
+                //这里需要把菜单显示出来
+                detailDiv.showMenu(1);
+            }
+            autitOver.onEvent = function(){
+
+                updateEmailDiv(1);
+                //这里需要把菜单隐藏
+                detailDiv.showMenu(0);
+            }
+            //insEmalDiv(infoDiv,"审核", " di.task_sender_acc","showInfo",0,6);
+            //
+            // insEmalDiv(infoDiv,"审核", " di.task_sender_acc","showInfo",1,8);
+
+            insDetailDiv();
+
+
+            updateEmailDiv = function updateEmailDiv(type){
+
+                showStatu = type;
+                clearEmailDivList();
+                var requestData = {};
+                requestData.type = type;
+                requestServer("/getApplicationInfoByStatus",function (ip) {
+
+                    $.post(ip,requestData,function (data) {
+
+                        dataCache = data;
+                        for (var i in dataCache){
+                            var di = dataCache[i];
+                            var showInfo = "用户：@"+di.task_sender_acc+"";
+                            if (di.task_type == 3){
+
+                                di.task_type = "申请";
+                                showInfo = showInfo+"  的项目申请";
+                            }
+
+                            if (di.task_type == 2){
+
+                                di.task_type = "合同";
+                                showInfo = showInfo+"  的合同签署";
+                            }
+
+                            di.task_sender_acc = "来自@"+di.task_sender_acc;
+                            insEmalDiv(infoDiv,di.task_type,  di.task_sender_acc,showInfo,i,di.task_application_content_index,di.task_index);
+
+                        }
+
+
+                        /**
+                         * 描述当前的审核页面是否存在消息
+                         */
+
+
+                        function showEmailInfoStatu() {
+                            var updateEmailTypeInfoDiv = div();
+                            setParent(updateEmailTypeInfoDiv,infoDiv);
+                            setCSS(updateEmailTypeInfoDiv,"updateEmailTypeInfoDiv");
+
+                            var updateEmailTypeInfoDiv_img = img();
+                            updateEmailTypeInfoDiv_img.src = "../../image/emptyBox2.png";
+                            setParent(updateEmailTypeInfoDiv_img,updateEmailTypeInfoDiv);
+                            setCSS(updateEmailTypeInfoDiv_img,"updateEmailTypeInfoDiv_img");
+                            var updateEmailTypeInfoDiv_describeLabel = hilabel("木有任何消息",3);
+
+                            setParent(updateEmailTypeInfoDiv_describeLabel,updateEmailTypeInfoDiv);
+                            setCSS(updateEmailTypeInfoDiv_describeLabel,"updateEmailTypeInfoDiv_describeLabel");
+                            updateEmailTypeInfoDiv.updateStatu = function(type){
+                                if (type === 0){
+                                    setText(updateEmailTypeInfoDiv_describeLabel,"木有任何消息");
+                                    showElement(updateEmailTypeInfoDiv);
+
+                                }else {
+
+                                    hideElement(updateEmailTypeInfoDiv);
+                                }
+
+
+                            };
+
+                            return updateEmailTypeInfoDiv;
+
+                        }
+                        if(emailContentTips!= null){
+
+
+                        }else {
+
+                            emailContentTips = showEmailInfoStatu();
+                        }
+
+
+                        emailContentTips.updateStatu(dataCache.length);
+
+                    });
+
+                });
+
+
+
+            }
+
+
+
+            updateEmailDiv(0);
+            // updateEmailDiv(1);
+
+        }
+
+
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

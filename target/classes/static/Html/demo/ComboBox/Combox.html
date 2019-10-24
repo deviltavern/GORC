@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../frameDemo/FrameCirculation.js"></script>
+    <script src="Combox.js"></script>
+
+    <script>
+
+        window.onload = function (ev) {
+            var x = new Array();
+            var cb = createCombox(x);
+            x.push("123");
+            x.push("234");
+            x.push("23x4");
+            x.push("2324");
+            cb.move(333,333);
+            cb.ins();
+            cb.show();
+            cb.allowDead = false;
+            var selectBtn = cb.getLabel("123");
+            selectBtn.onclick = function () {
+
+                console.info("hello world！");
+            }
+        }
+
+        //传入项目名称
+
+
+    </script>
+</head>
+<body>
+
+<!--<div style="width: 110px;height: 200px;background: #eccf92;border-radius: 10px">-->
+
+<!--    <div id = 'idh1' style= "z-index: 10; position:relative;left: 3px;top: 5px; width: 104px;height:20px;background: #884400;border-radius: 5px">-->
+
+<!--        <input  style="position:relative; z-index: 20;width: 100%;height: 100%;border-radius: 5px;text-align: center;font-size: 7px"type="button" value="角色信息">-->
+
+<!--    </div>-->
+<!--    <div id = 'idh2' style= "z-index: 10; position:relative;left: 3px;top:10px; width: 104px;height:20px;background: #884400;border-radius: 5px">-->
+
+<!--        <input  style="position:absolute; z-index: 20;width: 100%;height: 100%;border-radius: 5px;text-align: center;font-size: 7px"type="button" value="角色积分">-->
+
+<!--    </div>-->
+
+
+
+<!--</div>-->
+
+</body>
+</html>

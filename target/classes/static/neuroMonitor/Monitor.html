@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../Html/demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../Html/demo/ElementCreatorFrame/ZCCanvas.js"></script>
+    <script src="../js/Config.js"></script>
+    <script src="../js/jquery-1.11.0.min.js"></script>
+    <style>
+        .mainDiv{
+            position: absolute;
+            width: 1000px;
+            height: 500px;
+            left: 20%;
+            top: 15%;
+            background: #edcc92;
+
+        }
+        .subCanvas{
+
+            position: absolute;
+            width: 90%;
+            height: 90%;
+            left: 5%;
+            top: 5%;
+            background: #92B8B1;
+
+        }
+    </style>
+        
+    <script>
+        
+        function CoordinatePaper(parent) {
+
+            console.info("123");
+            var mainDiv = div();
+            var subCanvas = canvas(900,450);
+            setParent(mainDiv,parent);
+
+            setCSS(mainDiv,"mainDiv");
+            setParent(subCanvas.canvas,mainDiv);
+            setCSS(subCanvas.canvas,"subCanvas");
+
+            setCanvas(subCanvas.context);
+            drawBackgroundColor(900,450,Color24(14,123,123));
+
+
+            feedPoint(Vector3(10,10));
+            feedPoint(Vector3(10,420));
+            feedPoint(Vector3(890,420));
+            var line1 = line(flushPointList());
+            console.info(line1);
+            drawLine(line1);
+
+            function coordinateTransform(vector3) {
+                var p =vector3;
+                p = Vector3(p.x + 10,p.y - 420);
+                p = Vector3(p.x,-p.y);
+
+                return p;
+
+            }
+
+            for (var i=1;i<88;i++){
+
+                feedPoint(Vector3(10+i*10,410));
+                feedPoint(Vector3(10+i*10,420));
+                var tl = line(flushPointList());
+
+                drawLine(tl);
+
+
+            }
+
+            for (var i = 1;i<40;i++){
+                feedPoint(Vector3(10,10*i + 20));
+                feedPoint(Vector3(20,10*i + 20));
+                var tl = line(flushPointList());
+                drawLine(tl);
+
+            }
+
+            var p = hilabel("0",3);
+            setParent(p,mainDiv);
+
+            mainDiv.drawLine = function (line) {
+
+                for (var i in line.data){
+
+                    line.data[i] = coordinateTransform(line.data[i]);
+
+                }
+                drawLine(line);
+            }
+
+            return mainDiv;
+
+        }
+        
+    </script>
+    <script>
+        
+        window.onload = function (ev) {
+
+            absoluteWindow();
+              var coo =  CoordinatePaper(document.body);
+
+              var requestData = {};
+              requestData.trainDate = "2019-10-10 18:24:40";
+              requestServer("/getTrainInfo",function (ip) {
+
+                $.post(ip,requestData,function (data) {
+
+                    for(var i in data){
+
+                        var accuracy = data[i].train_accuracy;
+
+                        accuracy = parseFloat(accuracy);
+                        feedPoint(Vector3(i*10,accuracy*400));
+
+
+                    }
+                    var li = line(flushPointList());
+                    coo.drawLine(li);
+                    console.info(data);
+
+                });
+            });
+
+             initAnimation();
+
+             //
+             // var i =0;
+             // var j = 0
+             //
+             // var lastPoint = Vector3(0,0,0);
+             //
+             //
+             // for (var i =0;i<100;i++){
+             //
+             //     i+=Math.random()*10;
+             //     j+= Math.random()*10;
+             //     feedPoint(Vector3(i,j));
+             //
+             // }
+             // var tempLine =  line(flushPointList());
+             // coo.drawLine(tempLine);
+             // opCanvas.doAnimation = function(){
+             //
+             // }
+             //
+             // addAnimation(opCanvas);
+
+
+
+
+
+
+        }
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=" ../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <style>
+        .mainDiv{
+            position: absolute;
+            width: 28%;
+            height: 70%;
+            background-image: url("../../image/des3.png");
+            background-size: 100%;
+            top: 15%;
+            left: 30%;
+
+
+
+        }
+        .subDiv{
+            position: absolute;
+            width: 200px;
+            height: 70px;
+            background:rgba(1,0,0,0);
+            cursor: pointer;
+
+        }
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            absoluteWindow();
+            var i3 = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(i3, Vector3(0, -2));
+
+            var mainDiv = div();
+            setCSS(mainDiv, "mainDiv");
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

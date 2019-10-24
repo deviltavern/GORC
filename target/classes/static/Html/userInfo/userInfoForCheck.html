@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <link rel="stylesheet" href="../demo/ElementCreatorFrame/ZCElementer.css">
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/Config.js"></script>
+    <style>
+
+        body{
+
+            background: whitesmoke;
+
+        }
+        .mainDiv{
+            position: absolute;
+            top: 10%;
+            width: 40%;
+            height: 40%;
+            background: white;
+            left: 30%;
+
+
+        }
+
+        .mainHeadImg{
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            top: 21%;
+            left: 6%;
+
+        }
+
+        .mainDiv_HeadLabelDiv{
+            position: absolute;
+            width: 20%;
+            height: 10%;
+            background: rgba(0,0,0,0);
+            top: 3%;
+            font-size: 23px;
+
+        }
+        .mainDiv_HeadImgDiv{
+            position: absolute;
+            width: 70px;
+            height: 70px;
+            background: #ffe8a1;
+            top: 16%;
+            font-size: 23px;
+            border-radius: 50%;
+            background-image: url("../../image/headImg3.jpg");
+            background-size: 100%;
+
+        }
+        .fontUnderline{
+            position: absolute;
+            font-family: zffg;
+
+            font-size: 35px;
+
+            left: 20%;
+
+
+        }
+        .stageInfo{
+            position: absolute;
+
+            font-size: 60px;
+            left: 40%;
+            border-radius: 30px;
+            top: 30%;
+            font-family: "Anonymous Pro", "Menlo", "Consolas", "Bitstream Vera Sans Mono", "Courier New", monospace;
+
+
+        }
+        .fontCenter{
+
+
+        }
+
+        .permissionLabel{
+            position: absolute;
+            font-family: zffg;
+            font-size: 35px;
+            left: 20%;
+            border-radius: 30px;
+            top: 30%;
+
+        }
+
+        .permissionInfo{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 35px;
+            left: 35%;
+            border-radius: 30px;
+            top: 30%;
+        }
+        .emailDiv{
+            position: absolute;
+            font-family: zffg;
+            font-size: 80px;
+            left: 15%;
+            border-radius: 30px;
+            top: 47%;
+            width: 6%;
+            height: 12%;
+
+            background-size: 100%;
+
+        }
+        .emailBtn{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 80px;
+
+            border-radius: 30px;
+
+            width: 100%;
+            height: 100%;
+
+            background-size: 100%;
+
+
+        }
+
+        .emailEnumeratorLabel{
+
+            position: absolute;
+            font-family: zffg;
+            font-size: 30px;
+            bottom: -10%;
+            border-radius: 30px;
+            right: 5%;
+            color: #FFB800;
+            text-shadow: 0 0 0.2em #87F, 0 0 0.2em #87F,
+            0 0 0.2em #87F;
+            background-size: 100%;
+
+        }
+        .xshadow0{
+
+            box-shadow:-10px 0px 10px gray,   /*左边阴影*/
+            0px -10px 10px #000,  /*上边阴影*/
+            10px 0px 10px gray,  /*右边阴影*/
+            0px 10px 10px gray;" /*下边阴影*/
+        }
+
+        .box {  background-color: #CCCCCC;  width: 200px; height: 200px;  }
+
+        .boxshadow1{
+            box-shadow:inset 0px 15px 15px -15px #000,
+            inset 0px -15px 15px -15px #000;
+        }
+        .boxshadow2{
+            box-shadow:15px 0 15px -15px #000,
+            -15px 0 15px -15px #000;
+        }
+        .boxshadow3{ border-radius:10px;
+            box-shadow:0px 0px 0px 3px #bb0a0a,
+            0px 0px 0px 6px #2e56bf,
+            0px 0px 0px 9px #ea982e;
+        }
+        .emailListDiv{
+            position: absolute;
+            width: 15%;
+            height: 70%;
+            background: #edcc92;
+            border-radius: 20px;
+            overflow: auto;
+
+        }
+        .emailItemDiv{
+            position: absolute;
+            left: 10%;
+            width: 80%;
+            height: 7%;
+            background: #92B8B1;
+            border-radius:8px;
+
+
+
+        }
+        .emailItemDivHeadImg{
+            position: absolute;
+            top: 2.5px;
+            left: 0%;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+
+
+
+        }
+        .emailItemDivDescribeInfo{
+            position: absolute;
+
+            left: 44px;
+            top: -20%;
+
+        }
+
+        .emailInfoTipBox{
+            position: absolute;
+            bottom: 0%;
+            right: 0%;
+            width: 300px;
+            height: 140px;
+            border-radius: 30px;
+            background: #8877FF;
+        }
+        .emailInfoTipBoxLine{
+            position: absolute;
+            top: 40%;
+            right: 10%;
+            width: 80%;
+            height: 1.5px;
+            border-radius: 30px;
+            background: #FFB800;
+
+        }
+
+        .emailInfoTipBoxHeadLabel{
+            position: absolute;
+            top: 8%;
+            left: 10%;
+
+
+
+        }
+        .emailItemDivEmailHeadInfo{
+
+            position: absolute;
+            top: 30%;
+            left: 10%;
+
+        }
+        .emailItemDivSenderInfo{
+
+            position: absolute;
+            top: 44%;
+            left: 10%;
+        }
+        .emailItemDivSenderTimeInfo{
+            position: absolute;
+            top: 58%;
+            left: 10%;
+
+        }
+        .mainTipBox{
+            position: absolute;
+            right: 0%;
+            bottom: 0%;
+            width: 150px;
+            height: 20px;
+            background: #2F4056;
+            text-align: center;
+
+        }
+
+        .mainTipLabel{
+
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: -100%;
+
+
+        }
+        .subFuncDiv{
+            position: absolute;
+
+            width: 5%;
+            top: 10%;
+            background: whitesmoke;
+            height: 60%;
+            left: 24.5%;
+            overflow: auto;
+
+
+        }
+        .subFuncDivItem{
+            position: absolute;
+
+            width: 100%;
+            background: white;
+            height: 9%;
+            cursor: pointer;
+
+
+
+
+        }
+        .subFuncDivItemLabelDiv{
+            position: absolute;
+            width: 100%;
+            background: rgba(0,0,0,0);
+            height: 9%;
+            color: #FFB800;
+            top: 15%;
+            text-align: center;
+            font-size: 16px;
+            text-align: center;
+            color: #1b1e21;
+
+        }
+        .subFuncDivLine{
+            position: absolute;
+            width: 100%;
+            height: 1px;
+
+            bottom: 0%;
+            background: #FFB800;
+        }
+        .mainDiv_InfoDiv{
+            position: absolute;
+            width: 40%;
+            height: 7%;
+            background: rgba(0,0,0,0);
+
+
+        }
+        .mainDiv_InfoDiv_LabelDiv{
+
+            position: absolute;
+            width: 15%;
+            height: 100%;
+            background: rgba(0,0,0,0);
+            text-align: left;
+            font-size: 13px;
+        }
+        .mainDiv_InfoDiv_LabelDiv_info{
+
+            position: absolute;
+            left: 17%;
+            width: 70%;
+            height: 100%;
+            font-size: 13px;
+            background: rgba(0,0,0,0);
+        }
+        .confirmDiv{
+            position: absolute;
+            width: 8%;
+            height: 5%;
+            top: 55%;
+            color: black;
+            cursor: pointer;
+            text-align: center;
+            right: 30%;
+        }
+
+    </style>
+    <script>
+        //缓存
+        var emailCache = [];
+
+        var emailDataFromServer = [];
+
+    </script>
+    <script>
+        window.onload = function (ev) {
+            var userInfo = localStorage.getItem("spxInfo");
+            userInfo = JSON.parse(userInfo);
+            console.info(userInfo);
+            loadFont("zffg","../../font/www124.TTF");
+            var i3 = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(i3,Vector3(0,-4));
+            //主界面
+            var mainDiv = div(60,600);
+
+            setCSS(mainDiv,"mainDiv");
+
+            function drawLine(parent,height,vector3,width,color) {
+                var lineDiv = div();
+                setParent(lineDiv,parent);
+                lineDiv.style.position = "absolute";
+                lineDiv.style.width = width;
+                lineDiv.style.height = height;
+                lineDiv.style.zIndex = 34;
+                lineDiv.style.background = color;
+                setPositionWithPercent(lineDiv,vector3);
+                return lineDiv;
+            }
+            var mainDiv_HeadLabelDiv = div();
+            setParent(mainDiv_HeadLabelDiv,mainDiv);
+            setCSS(mainDiv_HeadLabelDiv,"mainDiv_HeadLabelDiv");
+            drawLine(mainDiv,"1px",Vector3(0,15),"100%",Color24(1,0,0));
+            setText(mainDiv_HeadLabelDiv,"个人信息");
+            var mainDiv_HeadImgDiv = div();
+            setParent(mainDiv_HeadImgDiv,mainDiv);
+            setCSS(mainDiv_HeadImgDiv,"mainDiv_HeadImgDiv");
+
+
+            function InsMainDIvInfoDiv(parent,prefix,subfix,vector3) {
+                var mainDiv_InfoDiv = div();
+
+                var mainDiv_InfoDiv_LabelDiv = div();
+                var mainDiv_InfoDiv_LabelDiv_info = div();
+                setParent(mainDiv_InfoDiv,parent);
+                setParent(mainDiv_InfoDiv_LabelDiv,mainDiv_InfoDiv);
+                setParent(mainDiv_InfoDiv_LabelDiv_info,mainDiv_InfoDiv);
+                mainDiv_InfoDiv_LabelDiv.innerText = prefix;
+                mainDiv_InfoDiv_LabelDiv_info.innerText = subfix;
+                setCSS(mainDiv_InfoDiv,"mainDiv_InfoDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv,"mainDiv_InfoDiv_LabelDiv");
+                setCSS(mainDiv_InfoDiv_LabelDiv_info,"mainDiv_InfoDiv_LabelDiv_info");
+                setPositionWithPercent(mainDiv_InfoDiv,vector3);
+            }
+
+            InsMainDIvInfoDiv(mainDiv,"ID ","1234567",Vector3(10,17));
+            InsMainDIvInfoDiv(mainDiv,"Level ","S",Vector3(10,25));
+            InsMainDIvInfoDiv(mainDiv,"Gold ","9822",Vector3(10,33));
+
+            drawLine(mainDiv,"1px",Vector3(10,42),"90%",Color24(1,0,0));
+            InsMainDIvInfoDiv(mainDiv,"昵称: ","李二蛋",Vector3(10,47));
+            InsMainDIvInfoDiv(mainDiv,"性别: ","男",Vector3(10,55));
+            InsMainDIvInfoDiv(mainDiv,"生日: ","1998.3.3",Vector3(10,63));
+            InsMainDIvInfoDiv(mainDiv,"简介: ","感冒好累...................",Vector3(10,71));
+
+            //-----------------------------------------子功能---------------------------------------
+            var subFuncDiv = div();
+            setCSS(subFuncDiv,"subFuncDiv");
+            subFuncDiv.btnArray = [];
+            var subFuncDivItemBeclickIndex = -1;
+
+
+            //------------更新----------------------------------------------
+            //  initAnimation();
+
+            var between = 0;
+
+
+            var data = localStorage.getItem("emailInfo");
+
+            if (data != null){
+                var d2 = JSON.parse(data);
+
+                emailCache = d2;
+                for(var i in emailCache){
+
+                    insEmailItemDiv(i,emailCache[i].email_head_info);
+
+
+
+                }
+            }
+
+            var confirmDiv = div();
+            setCSS(confirmDiv,"confirmDiv");
+            setText(confirmDiv,"发送电子合同");
+
+            confirmDiv.onmousedown = function (ev1) {
+
+              window.location.href = "../email/contract_sign2.html";
+            };
+
+            confirmDiv.onmouseenter = function (ev1) {
+                setFontColor(confirmDiv,"red");
+            }
+            confirmDiv.onmouseleave = function (ev1) {
+                setFontColor(confirmDiv,"black");
+            }
+        }
+
+
+    </script>
+</head>
+<body style="position: absolute;width: 1900px;height:720px; overflow: auto">
+
+</body>
+</html>

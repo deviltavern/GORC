@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layui</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <!-- 注意：如果你直接复制所有代码到本地，上述css路径需要改成你本地的 -->
+
+    <style type="text/css">
+        #juzhong{
+            /*绝对定位：居中*/
+    position: absolute;
+    width: 1200px;
+    background: none;
+    margin: 0 auto;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;"
+    }
+    </style>
+
+</head>
+<body>
+
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+
+
+
+
+
+
+
+
+<div class="layui-row"   id="juzhong" >
+    <table class="layui-hide" id="test2" lay-filter="demoEvent"></table>
+</div>
+
+<script src="../../layui/layui.js" charset="utf-8"></script>
+<!-- 注意：如果你直接复制所有代码到本地，上述js路径需要改成你本地的 -->
+
+<script>
+    layui.use('table', function(){
+        var table = layui.table;
+        String.prototype.replaceAll=function(a,b){//吧a替换成b
+            var reg=new RegExp(a,"g"); //创建正则RegExp对象
+            return this.replace(reg,b);
+        }
+        layui.use('table', function(){
+            var table = layui.table;
+
+            table.render({
+                elem: '#test2'
+
+                ,url:'http://localhost:8099/getSubmitList'
+
+                ,toolbar: true
+                ,title: '用户数据表'
+                ,totalRow: true
+
+            ,cols: [[
+                {field:'user_acc ', title:'ID', width:80, sort: true, unresize: true,  totalRowText: '合计行'}
+                ,{field:'user_name ', title:'用户名', width:100, unresize: true}
+                ,{field:'question_id', title:'问题序号', width:100, edit: 'text',sort: true}
+                ,{field:'question_name', title:'具体问题', width:120, totalRow: true}
+                ,{field:'solution_add', title:'补充说明', width:120,  sort: true}
+                ,{field:'solution_name', title:'文件名', width:300, sort: true}
+            ]]
+
+            ,height: 1000
+
+
+            ,parseData: function(res){ //将原始数据解析成 table 组件所规定的数据
+
+                return {
+                    "code": 0, //解析接口状态
+                    "msg": "", //解析提示文本
+                    "count": res.total, //解析数据长度
+                    "data":res.data //解析数据列表
+                };
+            }
+        });
+
+        });
+    });
+</script>
+
+
+
+</body>

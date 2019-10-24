@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
+</head>
+<body>
+
+<p id="info"></p>
+
+<script>
+    function Substraction(begin,end) {
+
+        return Vector3(begin.x -end.x,begin.y - end.y,begin.z - end.z);
+
+    }
+
+    function Division(vector3,single) {
+
+
+        return Vector3(vector3.x/single,vector3.y/single,vector3.z/single);
+
+    }
+    function Distance(begin,end) {
+
+        return Math.sqrt(Math.pow((begin.x - end.x),2)+ Math.pow((begin.y - end.y),2)+ Math.pow((begin.z - end.z),2));
+
+
+    }
+    function Normal(vector3) {
+
+        var distance = Distance(vector3,Vector3(0,0,0));
+        return Division(vector3,distance);
+
+    }
+    function Vector3(x,y,z) {
+
+        var vector3 = {};
+        vector3.x = x;
+        vector3.y = y;
+        vector3.z = z;
+
+        return vector3;
+    }
+
+
+</script>
+
+</body>
+</html>

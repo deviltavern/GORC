@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>快速获取form的所有元素</title>
+    <script src="http://cdn.static.runoob.com/libs/jquery/1.10.2/jquery.min.js">
+    </script>
+    <script>
+        function myFunction(){
+            var postData = $("#formId").serialize();
+            var tmpDic={};
+            for(var i in postData.split("&")){
+                var row=postData.split("&")[i];
+                tmpDic[row.split("=")[0]]=decodeURIComponent(row.split("=")[1]);
+            }
+            console.log(postData);
+            console.log(tmpDic);
+        }
+
+
+        function seriValue2JSON(value) {
+            var tmpDic={};
+            for(var i in value.split("&")){
+                var row=value.split("&")[i];
+                tmpDic[row.split("=")[0]]=decodeURIComponent(row.split("=")[1]);
+            }
+
+            return tmpDic;
+
+        }
+    </script>
+</head>
+<body>
+
+<p>在下面的字段中输入一些文本，然后按按钮。</p>
+<form id="formId">
+    输入框1: <input type="text" name="fname" value="Donald"><br>
+    输入框2: <input type="text" name="lname" value="Duck">
+    <br><br>
+</form>
+<button onclick="myFunction()">点我</button>
+</body>
+</html>

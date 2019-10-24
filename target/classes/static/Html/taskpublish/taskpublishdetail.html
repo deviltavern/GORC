@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+    <style>
+
+        body{
+
+            background: whitesmoke;
+        }
+        .mainDiv{
+            position: absolute;
+            background: white;
+            top: 8%;
+            width: 35%;
+            height: 90%;
+            left: 32.5%;
+            border-radius: 4px;
+            box-shadow: 1px 1px  #888888;
+
+
+        }
+        .mainDiv_HeadDiv{
+            position: absolute;
+            width: 100%;
+            height: 22%;
+            background: rgb(230, 230 ,250);
+        }
+        .mainDiv_HeadDiv_LabelDiv{
+
+            position: absolute;
+            top: 5%;
+            width: 80%;
+            height: 15%;
+            font-size: 20px;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2{
+
+            position: absolute;
+            top: 24%;
+            width: 35%;
+            height: 9%;
+            background: #888888;
+        }
+        .mainDiv_HeadDiv_LabelDiv3{
+            position: absolute;
+            top: 40%;
+            width: 50%;
+            height: 9%;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_ReceiveBtnDiv{
+            position: absolute;
+            top: 40%;
+            width: 15%;
+            height:15%;
+            right: 5%;
+            text-align: center;
+            font-size: 20px;
+            background: #888888;
+            cursor: pointer;
+
+        }
+        .mainDiv_HeadDiv_ReceiverNumAccount{
+            position: absolute;
+            top: 63%;
+            width: 15%;
+            height:26%;
+            right: 5%;
+            background: #888888;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2_scoreDiv{
+            position: absolute;
+
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+
+        }
+        .mainDiv_HeadDiv_LabelDiv2_typeDiv{
+
+            position: absolute;
+            left: 33.5%;
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+        }
+        .mainDiv_HeadDiv_LabelDiv2_timeDiv
+        {
+            position: absolute;
+            left: 67%;
+            width: 33%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv3_div1{
+            position: absolute;
+            left: 0%;
+            width: 49.8%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+        .mainDiv_HeadDiv_LabelDiv3_div2{
+            position: absolute;
+            left: 50.2%;
+            width: 49.8%;
+            height:100%;
+            font-size: 10px;
+            color: white;
+            text-align: center;
+            background: #1b1e21;
+
+        }
+    </style>
+    <script>
+        window.onload = function (ev) {
+            absoluteWindow();
+            var headDiv = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+
+            var mainDiv_HeadDiv = div();
+            setCSS(mainDiv_HeadDiv,"mainDiv_HeadDiv");
+            setParent(mainDiv_HeadDiv,mainDiv);
+            drawLine(mainDiv_HeadDiv,"1px",Vector3(0,58),"100%",Color24(0,0,0));
+
+            var mainDiv_HeadDiv_LabelDiv = div();
+
+            setCSS(mainDiv_HeadDiv_LabelDiv,"mainDiv_HeadDiv_LabelDiv");
+            setParent(mainDiv_HeadDiv_LabelDiv,mainDiv_HeadDiv);
+            setText(mainDiv_HeadDiv_LabelDiv,"请输入任务名称");
+
+
+
+
+
+
+            var mainDiv_HeadDiv_LabelDiv2 = div();
+            setCSS(mainDiv_HeadDiv_LabelDiv2,"mainDiv_HeadDiv_LabelDiv3");
+            setParent(mainDiv_HeadDiv_LabelDiv2,mainDiv_HeadDiv);
+
+            var mainDiv_HeadDiv_LabelDiv2_scoreDiv = div();
+            setCSS(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"mainDiv_HeadDiv_LabelDiv2_scoreDiv");
+            setParent(mainDiv_HeadDiv_LabelDiv2_scoreDiv,mainDiv_HeadDiv_LabelDiv2);
+            setText(mainDiv_HeadDiv_LabelDiv2_scoreDiv,"请输入悬赏积分");
+
+            var mainDiv_HeadDiv_LabelDiv2_typeDiv = div();
+            setCSS(mainDiv_HeadDiv_LabelDiv2_typeDiv,"mainDiv_HeadDiv_LabelDiv2_typeDiv");
+            setParent(mainDiv_HeadDiv_LabelDiv2_typeDiv,mainDiv_HeadDiv_LabelDiv2);
+            setText(mainDiv_HeadDiv_LabelDiv2_typeDiv,"请选择任务类型");
+            var mainDiv_HeadDiv_LabelDiv2_timeDiv = div();
+            setCSS(mainDiv_HeadDiv_LabelDiv2_timeDiv,"mainDiv_HeadDiv_LabelDiv2_timeDiv");
+            setParent(mainDiv_HeadDiv_LabelDiv2_timeDiv,mainDiv_HeadDiv_LabelDiv2);
+            setText(mainDiv_HeadDiv_LabelDiv2_timeDiv,"请确定任务周期");
+
+            var mainDiv_HeadDiv_LabelDiv3 = div();
+            setCSS(mainDiv_HeadDiv_LabelDiv3,"mainDiv_HeadDiv_LabelDiv2");
+            setParent(mainDiv_HeadDiv_LabelDiv3,mainDiv_HeadDiv);
+
+            var mainDiv_HeadDiv_LabelDiv3_div1 = div();
+            var mainDiv_HeadDiv_LabelDiv3_div2 = div();
+            setText(mainDiv_HeadDiv_LabelDiv3_div1,"#random-任务id");
+            setText(mainDiv_HeadDiv_LabelDiv3_div2,"请确定工程师要求");
+            setCSS(mainDiv_HeadDiv_LabelDiv3_div1,"mainDiv_HeadDiv_LabelDiv3_div1");
+            setParent(mainDiv_HeadDiv_LabelDiv3_div1,mainDiv_HeadDiv_LabelDiv3);
+            setCSS(mainDiv_HeadDiv_LabelDiv3_div2,"mainDiv_HeadDiv_LabelDiv3_div2");
+            setParent(mainDiv_HeadDiv_LabelDiv3_div2,mainDiv_HeadDiv_LabelDiv3);
+
+
+
+            var mainDiv_HeadDiv_ReceiveBtnDiv = div();
+            setCSS(mainDiv_HeadDiv_ReceiveBtnDiv,"mainDiv_HeadDiv_ReceiveBtnDiv");
+            setParent(mainDiv_HeadDiv_ReceiveBtnDiv,mainDiv_HeadDiv);
+            setText(mainDiv_HeadDiv_ReceiveBtnDiv,"立即参加");
+            mainDiv_HeadDiv_ReceiveBtnDiv.onmousedown = function (ev1) {
+                window.location.href = "../userInfo/userInfoForCheck.html";
+            };
+
+            var mainDiv_HeadDiv_ReceiverNumAccount = div();
+            setCSS(mainDiv_HeadDiv_ReceiverNumAccount,"mainDiv_HeadDiv_ReceiverNumAccount");
+            setParent(mainDiv_HeadDiv_ReceiverNumAccount,mainDiv_HeadDiv);
+
+
+
+
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

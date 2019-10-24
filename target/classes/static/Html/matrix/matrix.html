@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,height=device-height, initial-scale=1.0,maximum-scale=1.0,user-scalable=no">
+    <meta name="viewport" content="target-densitydpi=device-dpi, width=750px, user-scalable=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <script src="../demo/frameDemo/FrameCirculation.js"></script>
+    <script src="../demo/mathTool/LMath.js"></script>
+
+
+    <script>
+
+        var elementList = new Array();
+
+
+        function createButton(width,height) {
+
+            var e1 = document.createElement("button");
+            var le = document.body.appendChild(e1);
+            le.style.borderRadius = 20+"px";
+            le.style.width = width+"px";
+            le.style.height = height+"px";
+            le.style.background = " #1bb0c6";
+            le.style.position = "absolute";
+
+            //le.draggable = "true";
+            le.pos = {};
+            le.pos.x = 0;
+            le.pos.y = 0;
+            le.setColor = function(r,g,b){
+
+                le.style.background = "rgb("+r+","+g+","+b+")";
+            }
+            le.setPosition = function (x,y) {
+
+                le.pos.x = x;
+                le.pos.y = y;
+                le.style.left =  le.pos.x+"px";
+                le.style.top = le.pos.y+"px";
+            }
+
+            return le;
+
+        }
+
+        window.onload = function (ev) {
+
+           var selectBtn = createButton(100,100);
+           var selectBtn2 = createButton(100,100);
+
+            var selectBtn3 = createButton(100,100);
+            selectBtn2.setPosition(200,200);
+            selectBtn3.setPosition(400,200);
+            elementList.push(selectBtn);
+            elementList.push(selectBtn2);
+            elementList.push(selectBtn3);
+
+            function clearColorForElementList() {
+                for(var i in elementList){
+
+                    elementList[i].setColor(66,77,280);
+                }
+            }
+            // selectBtn.addEventListener("drag", function(event) {
+            //     console.info("拖动！");
+            // })
+
+            var selectArray = [];
+            var selectIndex = 0;
+            var tempArray = [];
+            var allowMove = false;
+            selectBtn.onmousedown = function (ev1) {
+
+                allowMove = true;
+            }
+            selectBtn.onmouseup = function (ev1) {
+
+                allowMove = false;
+            }
+            var startX, startY, moveEndX, moveEndY, X, Y;
+           // selectBtn.ontouch = function(e){
+//
+//
+           // }
+            window.ontouchmove = function(event){
+                document.getElementById("info").innerText =  JSON.stringify(event.changedTouches[0].screenY);
+
+        }
+
+            // selectBtn.onmousemove = function (ev1) {
+            //
+            //     if (allowMove == true)
+            //     {
+            //         selectBtn.setPosition(getMouse(ev1).x-50,getMouse(ev1).y-50);
+            //
+            //        // document.getElementById("info").innerText = JSON.stringify(selectBtn.pos);
+            //     }
+            //
+            // }
+
+
+       //    selectBtn.ondrag = function (ev) {
+//
+       //       // selectBtn.setPosition(ev.clientX-50,ev.clientY-50);
+       //     //console.info(ev);
+       //        clearColorForElementList();
+       //        for (var i in elementList) {
+       //             var tp = {};
+       //             tp.dis = distance2D(getMouse(ev), elementList[i].pos);
+       //             tp.index = i;
+       //             tempArray.push(tp);
+//
+//
+//
+       //         }
+//
+       //        var  min = tempArray[0];
+       //         for (var disTemp in tempArray){
+//
+       //             if(min.dis>tempArray[disTemp].dis)
+       //             {
+       //                 min = tempArray[disTemp];
+       //                // console.info("change");
+       //             }
+       //         }
+       //        elementList[min.index].setColor(33,22,11);
+       //        // console.info(min);
+       //        tempArray.length = 0;
+//
+//
+       //        if(selectIndex>3){
+//
+       //            selectIndex = 0;
+       //        }
+       //        selectArray[selectIndex] = (min);
+       //        selectIndex++;
+//
+       //       // console.info(min);
+//
+//
+       //    }
+       //    selectBtn.ondragend = function (ev1) {
+//
+       //        //selectBtn.setPosition(ev1.clientX-50,ev1.clientY-50);
+       //       // console.info(min);
+//
+       //        var min = null;
+       //        if (selectIndex == 4){
+//
+       //            min = selectArray[0];
+       //        }else
+       //        {
+//
+       //            min = selectArray[selectIndex ];
+       //        }
+//
+       //        console.info(selectArray);
+       //        console.info(selectIndex);
+       //        console.info(min);
+       //        elementList[min.index].setColor(33,22,44);
+//
+       //    }
+//
+           op = function(){
+               console.info(allowMove);
+
+           }
+
+
+           frame();
+        }
+    </script>
+
+</head>
+<body>
+<div style="width:270px;height:255px;background: #eccf92">
+
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+    <button style="position: relative;left:0px;width: 50px;height: 50px;background: #aa1111"></button>
+
+
+</div>
+
+<p id = "info" style="position:absolute;left: 500px"></p>
+
+
+</body>
+</html>

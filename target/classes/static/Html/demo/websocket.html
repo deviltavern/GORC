@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../../js/websocket.js"></script>
+
+
+
+</head>
+<body>
+
+<button id = "inputBtn">send</button>
+
+<script>
+    var a = {};
+    a.useracc = "123";
+    a.pwd = "333";
+
+    window.onload = function(){
+
+
+        var btn = document.getElementById("inputBtn");
+        connect();
+        btn.onclick = function (ev) {
+
+           send(3,3,"hello world");
+
+
+
+        }
+
+
+    }
+
+
+</script>
+</body>
+</html>

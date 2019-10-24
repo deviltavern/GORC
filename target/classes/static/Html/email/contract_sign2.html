@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2contract_sign</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ButtonDemo0/button.js"></script>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <style>
+        .mainDiv{
+            width:70%;
+            position: absolute;
+            height: 100%;
+            /*border-radius: 40px;*/
+            background-size: 100%;
+            /*background-image: url("../../image/bjsx.jpg");*/
+            background-color: #ffffff;
+            box-shadow:5px 5px 5px -5px #000,
+            -5px 0 5px -5px #000;
+            left: 15%;
+            top: 6%;
+        }
+        .headLabel{
+            position: absolute;
+            left: 45%;
+        }
+        .hr{
+            position: absolute;
+            width: 100%;
+            top: 7%;
+            height: 1px;
+            margin-top:7px;
+            *margin: 0;
+            border: 0;
+            color: black;
+            background-color: black;
+        }
+        .themeDiv{
+            position: absolute;
+            left: 10%;
+            top: 10%;
+        }
+        .deadlineDiv{
+            position: absolute;
+            left: 50%;
+            top: 10%;
+        }
+        .clientADiv{
+            position: absolute;
+            left: 10%;
+            top: 15%;
+        }
+        .APhoneDiv{
+            position: absolute;
+            left: 50%;
+            top: 15%;
+        }
+        .clientBDiv{
+            position: absolute;
+            left: 10%;
+            top: 20%;
+        }
+        .BPhoneDiv{
+            position: absolute;
+            left: 50%;
+            top: 20%;
+        }
+        .extrasDiv{
+            position: absolute;
+            left: 10%;
+            top: 25%;
+        }
+        .addContractDiv{
+            position: absolute;
+            left: 50%;
+            top: 27%;
+        }
+        .ContractShowDiv{
+            position: absolute;
+            width: 82%;
+            height: 60%;
+            top: 33%;
+            left: 9%;
+
+            overflow-y: scroll;
+        }
+        .ContractShowImage1{
+            position: absolute;
+            width: 30%;
+
+            top: 1%;
+            left: 25%;
+        }
+        .ContractShowImage2{
+            position: absolute;
+            width: 100%;
+        }
+        .sendBtn{
+            position: absolute;
+            width: 10%;
+            height: 5%;
+            bottom: 1%;
+            left: 45%;
+            outline:0;
+            -webkit-appearance:none;
+            transition:all .3s;
+            -webkit-transition:all .3s;
+            box-sizing:border-box
+        }
+    </style>
+    <script>
+        Date.prototype.Format = function (fmt) { //author: meizz
+            var o = {
+                "M+": this.getMonth() + 1, //月份
+                "d+": this.getDate(), //日
+                "h+": this.getHours(), //小时
+                "m+": this.getMinutes(), //分
+                "s+": this.getSeconds(), //秒
+                "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+                "S": this.getMilliseconds() //毫秒
+            };
+            if (/(y+)/.test(fmt)) fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
+            for (var k in o)
+                if (new RegExp("(" + k + ")").test(fmt)) fmt = fmt.replace(RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length)));
+            return fmt;
+        };
+
+        function textDiv(textLabelContent,boxWidth,boxHeight) {
+            var mainDiv=div();
+            var label=document.createElement("label");
+            label.innerText=textLabelContent;
+            setParent(label,mainDiv);
+
+            var text=textInput();
+            text.style.width=boxWidth;
+            text.style.height=boxHeight;
+
+            setParent(text,mainDiv);
+
+            return mainDiv;
+        }
+        function textareaDiv(textLabelContent,boxWidth,boxHeight) {
+            var mainDiv=div();
+            mainDiv.style.position="absolute";
+            var label=document.createElement("label");
+
+            setParent(label,mainDiv);
+            label.innerText=textLabelContent;
+            // label.style.position="absolute";
+            // label.style.top="0px";
+
+            var text=textareaInput();
+            text.style.width=boxWidth;
+            // text.style.position="absolute";
+            // text.style.left="80px";
+            // text.style.rows="2";
+            // text.style.height=boxHeight;
+            setParent(text,mainDiv);
+            return mainDiv;
+        }
+        function dateDiv(textLabelContent,boxWidth,boxHeight) {
+            var mainDiv=div();
+            var label=document.createElement("label");
+            label.innerText=textLabelContent;
+            setParent(label,mainDiv);
+
+            var text=datetimeInput();
+            text.style.width=boxWidth;
+            text.style.height=boxHeight;
+            setParent(text,mainDiv);
+
+            return mainDiv;
+        }
+        function uploadDiv(textLabelContent,boxWidth,boxHeight){
+            var mainDiv=div();
+            var label=document.createElement("label");
+            label.innerText=textLabelContent;
+            setParent(label,mainDiv);
+
+            var addContractBtn=fileInput();
+            addContractBtn.style.width=boxWidth;
+            addContractBtn.style.height=boxHeight;
+            setParent(addContractBtn,mainDiv);
+
+            var ob={};
+            ob.div=mainDiv;
+            ob.btn=addContractBtn;
+            return ob;
+        }
+        function datetimeInput(){
+            var input = document.createElement("input");
+            input.type = "datetime-local";
+            input.placeholder="请选择日期和时间";
+            var tempDate=new Date();
+            tempDate.setDate(tempDate.getDate()+1);
+            input.value=tempDate.Format("yyyy-MM-ddThh:mm");
+            input.min=tempDate.Format("yyyy-MM-ddThh:mm");
+            return input;
+        }
+
+        window.onload=function (ev) {
+            loadCSS("../demo/ButtonDemo0/button.css");
+            // document.body.style.color="whitesmoke";
+            var headDiv=iframe("../hall/home_head/home_head3.html");
+            absoluteWindow();
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
+            var mainDiv=div();setCSS(mainDiv,"mainDiv");
+            var headLabel=hilabel("发起合同",2);
+            setParent(headLabel,mainDiv);setCSS(headLabel,"headLabel");
+            var hr=document.createElement("HR");
+            setParent(hr,mainDiv);setCSS(hr,"hr");
+            var themeDiv=textDiv("合同主题：","200px","20px");
+            setParent(themeDiv,mainDiv);setCSS(themeDiv,"themeDiv");
+            var deadlineDiv=dateDiv("合同到期时间：","200px","20px");
+            setParent(deadlineDiv,mainDiv);setCSS(deadlineDiv,"deadlineDiv");
+
+            var clientADiv=textDiv("签订甲方：","200px","20px");
+            setParent(clientADiv,mainDiv);setCSS(clientADiv,"clientADiv");
+            var APhoneDiv=textDiv("甲方联系方式：","200px","20px");
+            setParent(APhoneDiv,mainDiv);setCSS(APhoneDiv,"APhoneDiv");
+
+            var clientBDiv=textDiv("签订乙方：","200px","20px");
+            setParent(clientBDiv,mainDiv);setCSS(clientBDiv,"clientBDiv");
+            var BPhoneDiv=textDiv("乙方联系方式：","200px","20px");
+            setParent(BPhoneDiv,mainDiv);setCSS(BPhoneDiv,"BPhoneDiv");
+
+            var extrasDiv=textareaDiv("备注信息：","200px","60px");
+            setParent(extrasDiv,mainDiv);setCSS(extrasDiv,"extrasDiv");
+
+            var addContract=uploadDiv("上传合同：");
+            var addContractDiv=addContract.div;
+            var addContractBtn=addContract.btn;
+            setParent(addContractDiv,mainDiv);setCSS(addContractDiv,"addContractDiv");
+
+            var ContractShowImage=createimg("");
+            var ContractShowDiv=div();
+            setParent(ContractShowDiv,mainDiv);setCSS(ContractShowDiv,"ContractShowDiv");
+            setParent(ContractShowImage,ContractShowDiv);setCSS(ContractShowImage,"ContractShowImage1");
+
+            var sendBtn=button("发起签署");
+            setParent(sendBtn,mainDiv);setCSS(sendBtn,"layui-btn");setCSS(sendBtn,"sendBtn");
+            sendBtn.onmousedown = function (ev1) {
+                window.location.href  = "../describe/describe.html";
+            };
+
+
+            addContractBtn.onchange=function (ev1) {
+                console.log(addContractBtn.files[0]);
+                ContractShowImage.src=getObjectURL(addContractBtn.files[0]);
+                setCSS(ContractShowImage,"ContractShowImage2");
+            };
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

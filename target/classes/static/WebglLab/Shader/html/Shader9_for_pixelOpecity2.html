@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <style type="text/css">
+        div#canvas-frame {
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            height: 600px;
+            background-color: #EEEEEE;
+        }
+    </style>
+    <script src="../../core/three.js"></script>
+    <script src="../../core/BasicElementCreater.js"></script>
+    <script src="../../core/WebglManager.js"></script>
+
+    <script id="fragment_shader" type="x-shader/x-fragment">
+             uniform sampler2D u_Sampler;
+             varying vec2 v_TexCoord;
+             uniform float coe;
+             vec4 tp = vec4(1.0,1.0,1.0,1.0);
+             void main() {
+              float s = sin(coe)*(v_TexCoord.x-0.5)+cos(coe)*(v_TexCoord.y-0.5);
+              float t = -cos(coe)*(v_TexCoord.x-0.5) + sin(coe)*(v_TexCoord.y-0.5);
+
+               vec2 vtep = vec2(s+0.5,t+0.5);
+
+              gl_FragColor = texture2D(u_Sampler, vtep);
+             }
+
+    </script>
+    <script id="vertexShader" type="x-shader/x-vertex">
+
+          uniform float vt;
+          uniform mat4 u_MvpMatrix;
+          varying vec2 v_TexCoord;
+          void main() {
+
+           vec4 mvPosition = modelViewMatrix * vec4( position, 1.0 );
+
+
+           v_TexCoord = (mvPosition.xy + vec2(9,9))*0.05;
+
+           gl_Position = projectionMatrix * mvPosition;
+
+
+         }
+
+    </script>
+
+    <script >
+
+        window.onload = function (ev) {
+
+            create(document.getElementById("canvas-frame"));//创建了一个View，也就是指定了Camera，lisght，Scene,renderer
+            setViewport(20);//设定Camera的z值为20，保证我们的cube在裁剪空间里面
+            glContext.enable(glContext.BLEND);
+            glContext.blendFunc(glContext.SRC_ALPHA, glContext.ONE_MINUS_SRC_ALPHA);
+            brt = {
+                vt: { value: 1.0 },
+                coe:{value : 0.0}
+            };
+            var material = new THREE.ShaderMaterial({
+                uniforms :brt,
+                vertexShader: document.getElementById('vertexShader').textContent,
+                fragmentShader: document.getElementById('fragment_shader').textContent
+
+            });
+
+            var border =getBorder();
+            console.info(border);
+            geometryCachePush(Vector3(-border.x,-border.x,0));
+            geometryCachePush(Vector3(border.x,-border.x,0));
+            geometryCachePush(Vector3(border.x,border.x,0));
+            geometryCachePush(Vector3(-border.x,border.x,0));
+            var mesh = createMeshWithoutMaterial();
+            mesh.material =material;
+
+            var texture = glContext.createTexture();
+            // 创建 Image对象
+            var imgObj = new Image();
+            // 为 src 属性赋值
+            imgObj.src = "../../../image/webglBack.jpg";
+
+
+            imgObj.onload = function (ev) {
+
+                glContext.activeTexture(glContext.TEXTURE0);
+                glContext.bindTexture   (glContext.TEXTURE_2D,texture);
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MAG_FILTER, glContext.LINEAR);// 纹理放大方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_MIN_FILTER, glContext.LINEAR);// 纹理缩小方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_S,     glContext.CLAMP_TO_EDGE);// 纹理水平填充方式
+                glContext.texParameteri(glContext.TEXTURE_2D, glContext.TEXTURE_WRAP_T,     glContext.CLAMP_TO_EDGE);// 纹理垂直填充方式
+
+                glContext.texImage2D(glContext.TEXTURE_2D, 0, glContext.RGB, glContext.RGB, glContext.UNSIGNED_BYTE, imgObj);
+
+            }
+
+            op = function(){
+
+                brt.vt.value += 0.1;
+
+                brt.coe.value = 0;
+
+
+            }
+
+            frame();//循环渲染
+
+
+        }
+    </script>
+<body>
+
+
+<div id="canvas-frame"></div>
+
+
+</body>
+</html>

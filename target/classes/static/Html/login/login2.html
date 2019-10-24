@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../../WebglLab/core/three.js"></script>
+    <script src="scripts/WebglBackground.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="scripts/SheildDemo.js"></script>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <style>
+        .loginPanelPos{
+            position: absolute;
+            left: 40%;
+            top: 20%;
+            width: 15%;
+            height: 60%;
+            background-size:100% 100%;
+            background-image: url("../../image/bac2x.jpg");
+
+
+        }
+        .loginHead{
+            position: relative;
+            top:90%;
+            height: 10%;
+            width: 100%;
+           // background: #E5E5E5;
+
+
+        }
+        .userAccInput{
+            position: relative;
+            top: 20%;
+            left: 20%;
+            width: 60%;
+            height: 5%;
+            background: #eccf92;
+
+        }
+
+        .userPwdInput{
+            position: relative;
+            top: 21%;
+            left: 20%;
+            width: 60%;
+            height: 5%;
+            background: #eccf92;
+
+        }
+        .userLoginBtn{
+            position: relative;
+            top: 22%;
+            left: 20%;
+            width: 30%;
+            height: 5%;
+            background: #eccf92;
+
+        }
+        .userRegisterBtn{
+            position: relative;
+            top: 23%;
+            left: 20%;
+            width: 30%;
+            height: 5%;
+            background: #eccf92;
+
+        }
+
+        .h1v{
+            position: absolute;
+            left: 0px;
+            height: 60px;
+            width:  60px;
+
+            border-radius: 50%;
+
+            background-size:100% 100%;
+            background-image: url("../../image/qqIcon.jpg");
+
+        }
+        .h2v{
+            position: absolute;
+            left: 60px;
+            height: 60px;
+            width:  60px;
+
+            border-radius: 50%;
+
+            background-size:100% 100%;
+            background-image: url("../../image/qqIcon.jpg");
+
+        }
+
+
+        input{
+            width: 100%;
+            height: 100%;
+
+        }
+        button{
+            width: 100%;
+            height:100%;
+
+        }
+
+    </style>
+
+    <style>
+
+        .registerPage{
+            position: absolute;
+            top: 20%;
+            left: 60%;
+            width: 30%;
+            height: 25%;
+            background: #eccf92;
+
+        }
+
+        .registerHead{
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            background-size: 100%,100%;
+            background-image: url("../../image/qqIcon.jpg");
+
+        }
+
+        .registerUserAccInput{
+            position: absolute;
+            left: 10%;
+            top: 55px;
+            width: 80%;
+            height: 40px;
+
+            background: #884400;
+
+
+
+        }
+
+        .registerUserPwdInput{
+            position: absolute;
+            left: 10%;
+            top: 115px;
+            width: 80%;
+            height: 40px;
+
+            background: #884400;
+
+
+
+        }
+        .registerSuccessBtn{
+            position: absolute;
+            left: 10%;
+            top: 175px;
+            width: 60px;
+            height:  60px;
+            border-radius: 50%;
+            background-image: url("../../image/g1.png");
+            background-size: 100%,100%;
+
+
+
+        }
+        .registerFailedBtn{
+
+            position: absolute;
+            right: 10%;
+            top: 175px;
+            width: 60px;
+            height:  60px;
+            border-radius: 50%;
+            background-image: url("../../image/x2.png");
+            background-repeat: no-repeat;
+            background-size: 100%,100%;
+        }
+
+        .radiusBtn{
+            width: 100%;
+            height: 100%;
+
+            border-radius: 50px;
+            background: #88440000;
+            background-size: 100%,100%;
+
+        }
+
+
+    </style>
+
+
+</head>
+<body id="bsx">
+<div id="xs"></div>
+<div class="loginPanelPos" id = "loginPage">
+    <div class="loginHead">
+        <div class="h1v"></div>
+        <div class="h2v"></div>
+
+    </div>
+
+    <div class="userAccInput">
+        <input id = "loginUserAccInput" name="user_acc">
+    </div>
+    <div class="userPwdInput">
+        <input id = "loginUserPwdInput" name="user_pwd">
+    </div>
+    <div class="userLoginBtn">
+        <button id = "loginPageLoginBtn">login</button>
+
+    </div>
+    <div class="userRegisterBtn">
+        <button id = "loginPageRegisterBtn">register</button>
+
+    </div>
+</div>
+
+<div class="registerPage" id = "registerPage" style="display: none">
+
+
+    <div class="registerHead"></div>
+    <div class="registerUserAccInput">
+        <input placeholder="账号" id = "registerUserAccInput" name="registerUserAccInput">
+    </div>
+    <div class="registerUserPwdInput">
+
+        <input placeholder="密码" id ="registerUserPwdInput"  name="registerUserPwdInput">
+    </div>
+    <div class="registerSuccessBtn">
+        <button id = "registerSuccessBtn" class="radiusBtn"></button>
+
+    </div>
+    <div class="registerFailedBtn">
+
+        <button id = "registerFailedBtn" class="radiusBtn"></button>
+    </div>
+</div>
+
+<script>
+
+    window.onload = function(ev){
+
+        createBackground(document.getElementById("xs"))
+
+
+
+
+    }
+
+
+</script>
+
+<script src="scripts/LoginEvent.js"></script>
+</body>
+</html>

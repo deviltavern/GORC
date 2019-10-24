@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src=" ../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <style>
+        .mainDiv{
+            position: absolute;
+            width: 28%;
+            height: 70%;
+            background-image: url("../../image/des2.png");
+            background-size: 100%;
+            top: 15%;
+            left: 30%;
+
+
+
+        }
+        .subDiv{
+            position: absolute;
+            width: 200px;
+            height: 70px;
+            background:rgba(1,0,0,0);
+            cursor: pointer;
+
+        }
+
+    </style>
+    <script>
+        window.onload = function (ev) {
+            absoluteWindow();
+            var i3 = iframe("../hall/home_head/home_head3.html");
+            setPositionWithPercent(i3,Vector3(0,-2));
+
+            var mainDiv = div();
+            setCSS(mainDiv,"mainDiv");
+
+            function addDiv(vector3) {
+                var subDiv = div();
+                setParent(subDiv,mainDiv);
+                setCSS(subDiv,"subDiv");
+                setPositionWithPercent(subDiv,vector3);
+
+                return subDiv;
+            }
+            var  step1 = addDiv(Vector3(0,23));
+
+            step1.onmousedown = function () {
+
+                window.location.href = "../demo/contract_demo.html"
+            };
+            var  step2 = addDiv(Vector3(0,48));
+            var  step3 = addDiv(Vector3(0,70));
+            var  step4 = addDiv(Vector3(59,28));
+            var  step5 = addDiv(Vector3(59,48));
+            step5.onmousedown = function () {
+
+                window.location.href = "../demo/contract_demo.html"
+            };
+            var  step6 = addDiv(Vector3(55,67));
+            step6.onmousedown = function () {
+
+                window.location.href = "describe2.html"
+            };
+
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

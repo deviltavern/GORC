@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="SheildDemo.js"></script>
+    <link rel="stylesheet" type="text/css" href="SheildDemo.css">
+<!--    <script src="/static/Html/demo/frameDemo/FrameCirculation.js"></script>-->
+    <script src="../../../WebglLab/core/three.js"></script>
+    <script src="../../../WebglLab/core/stats.js"></script>
+    <script src="../../../js/Config.js"></script>
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
+
+    <script src="../frameDemo/FrameCirculation.js"></script>
+    <script src = "../ComboBox/Combox.js"></script>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+</head>
+<body>
+
+
+<!--<iframe  id="a1" name=""  allowTransparency="true" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="150" src="../../hall/home_head/home_head2.html" style="z-index: 20;filter:chroma(color=#ffffff)" ></iframe>-->
+    <img id="title_01" src="title1.png  "width="220px" height="285px">
+    <div id="bg_box" class="bg_box">
+
+
+    </div>
+
+
+
+<script>
+
+    window.onload = function (ev) {
+
+        var localInfo = localStorage.getItem("spxInfo");
+        console.info(localInfo);
+        bacgroundInit();
+       var headDiv =iframe("../../hall/home_head/home_head3.html");
+       setPositionWithPercent(headDiv,Vector3(0,-2));
+        var bg_box=document.getElementById("bg_box");
+
+        getDataFromServer("web前端");
+
+
+
+
+
+       var btn = createLabelButton("",0,"算法");
+        btn.onclick = function (ev1) {
+            console.info("click算法");
+            removeAll();
+            getDataFromServer("算法");
+
+        }
+       var btn_front = createLabelButton("",1,"web前端");
+        btn_front.onclick = function (ev1) {
+            removeAll();
+            getDataFromServer("web前端");
+        }
+        createLabelButton("",2,"web后端");
+        createLabelButton("",3,"unity");
+        createLabelButton("",4,"数据库");
+    }
+
+
+</script>
+</body>
+</html>

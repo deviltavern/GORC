@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../../../js/jquery-1.11.0.min.js"></script>
+    <script src="../ElementCreatorFrame/ZCCanvas.js"></script>
+    <script>
+        window.onload = function (ev) {
+
+            var girl =new Image();
+            girl.src = "../../../image/tamg.jpg";
+
+
+            var drawImgWidth = window.innerWidth*0.4;
+            var left1 = window.innerWidth*0.3;
+            var coewh = 1;
+            console.info(drawImgWidth);
+            var mainCanvas = canvas(drawImgWidth,drawImgWidth);
+
+
+
+
+
+            var ASignature = new Image();
+            ASignature.src = "../../../image/pen0.png";
+            girl.onload=function(){
+                console.info(girl.width/girl.height);
+                mainCanvas.context.drawImage(girl,0,0,mainCanvas.width/3,mainCanvas.width/3);
+
+            };
+
+            ASignature.onload = function (ev1) {
+
+                mainCanvas.context.drawImage(ASignature,0,0,window.innerWidth/3,window.innerHeight);
+
+            };
+            setCanvas(mainCanvas.context);
+
+            var allowDraw = false;
+            var allowDrawCounter = 0;
+            window.onmousedown = function (ev1) {
+
+                pointList.length = 0;
+                if(allowDrawCounter%2 == 0){
+
+                    allowDraw = true;
+                }else {
+
+                    allowDraw = false;
+                }
+                allowDrawCounter++;
+                console.info(allowDrawCounter)
+            };
+            var lastPoint = null;
+            window.onmousemove = function (ev1) {
+
+                if(allowDraw == true){
+
+                    if (pointList.length >=6){
+
+                        var tempLine = line(flushPointList());
+                        drawLine(tempLine);
+
+                         lastPoint = tempLine.data[tempLine.data.length-1];
+
+
+                        feedPoint(lastPoint);
+                    }
+                    feedPoint(getMouse(ev1));
+
+
+                }
+
+            };
+
+
+            var saveBtn = button("保存");
+            saveBtn.onmousedown = function (ev1) {
+
+               var data64 = getBase64ImageFromCanvas(mainCanvas.canvas);
+               var uploadData ={};
+               uploadData.key = data64;
+               $.post("http://localhost:8099/uploadImgDemo",uploadData,function (data) {
+               });
+
+            };
+
+
+
+
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

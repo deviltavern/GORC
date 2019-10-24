@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script>
+
+//        function Vector2(x,y) {
+//
+//            var temp = {};
+//            temp.x = x;
+//            temp.y = y;
+//            return temp;
+//        }
+//        function canvas(width,height,x,y) {
+//            var canvasObj = {};
+//
+//            var  e1 = document.createElement("canvas");
+//            var e2 = document.body.appendChild(e1);
+//            e2.style.width = width+"px";
+//            e2.style.height = height+"px";
+//            e2.style.position = "absolute";
+//            e2.style.top = y+"%";
+//            e2.style.left = x+"%";
+//
+//            e2.style.background = "rgb(123,123,123)";
+//
+//            e2.width = width;
+//            e2.height = height;
+//            canvasObj.canvas = e2;
+//            canvasObj.context = e2.getContext("2d");
+//
+//            canvasObj.origin = Vector2(width/2,height/2);
+//
+//
+//            return canvasObj;
+//
+//
+//        }
+
+    </script>
+    <script src="../ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="clockPlugin.js"></script>
+
+    <script>
+
+        window.onload = function (ev) {
+
+            initAnimation();
+            var cp = clock0(str2Date('2019-10-01 17:06:49'));
+
+
+            var div0 = div();
+
+            setParent(cp.parent,div0);
+            setPosition(cp.parent,Vector3(200,200));
+
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

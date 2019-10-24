@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="../../layui/css/layui.css"  media="all">
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+
+    <script>
+
+        $(document).ready(function(){
+
+            var logIndex = localStorage.getItem("logIndex");
+            var logPageValue = localStorage.getItem("logPageValue");
+
+            logPageValue = JSON.parse(logPageValue);
+            console.info(logPageValue);
+            var logIndexInt = parseInt(logIndex);
+            console.info(logIndexInt);
+
+
+            console.info("describe = "+logPageValue[logIndexInt].difficult_level);
+
+            $("#ld1").html(logPageValue[logIndexInt].describe);
+            $("#l1").html(logPageValue[logIndexInt].solve_strategy);
+            //console.info("iframe输出字符串 = "+logPageValue[logIndexInt].describe);
+            logIndexInt= logIndexInt+1;
+            $("#ld2").html(logPageValue[logIndexInt].describe);
+            $("#l2").html(logPageValue[logIndexInt].solve_strategy);
+
+            //console.info("iframe输出字符串 = "+logPageValue[logIndexInt].describe);
+            logIndexInt = logIndexInt+1;
+            localStorage.setItem("logIndex",logIndexInt+"");
+
+
+
+
+        });
+
+    </script>
+</head>
+<body>
+<div style="padding: 20px; background-color: #F2F2F2;width:100%;height:100px">
+    <div id="copyObject" class="layui-row layui-col-space15">
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header" id = "ld1">卡片面板</div>
+                <div class="layui-card-body" id="l1">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-md6">
+            <div class="layui-card">
+                <div class="layui-card-header"  id = "ld2">卡片面板</div>
+                <div class="layui-card-body" id="l2">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<script>
+
+
+
+
+
+
+</script>
+</body>
+</html>

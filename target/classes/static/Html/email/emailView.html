@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ButtonDemo0/button.js"></script>
+    <style>
+        .mainDiv{
+            width: 70%;
+            height: 60%;
+            position: absolute;
+            left: 15%;
+            top:20%;
+            background: #edcc92;
+            border-radius: 15px;
+            overflow: auto;
+
+
+        }
+        .subEmailDiv{
+
+            width: 80%;
+            height: 30%;
+            position: absolute;
+            left: 10%;
+            top:5%;
+            background: #92B8B1;
+            border-radius: 15px;
+
+
+        }
+
+        .emailTypeImg{
+
+            width: 9%;
+            height: 40%;
+            position: absolute;
+            left: 0%;
+            top:0%;
+            background: #FFB800;
+            border-radius: 30%;
+
+
+        }
+        .emailHead_h{
+
+
+
+            background: #FFB800;
+            border-radius: 5px;
+            text-align: center;
+
+
+
+        }
+        .emalSender_h2{
+
+
+
+            position: absolute;
+            right: 2%;
+            bottom:-7%;
+            background: #FFB800;
+            border-radius: 5px;
+            text-align: center;
+
+
+        }
+    </style>
+    <script>
+        function email(type) {
+            var email = {};
+            email.email_sender = "123";//发送人的账号
+            email.email_content = "...";//发送内容
+            email.email_id = getRandomUUID(12);//发送邮件的ID，每一封邮件ID唯一
+            email.email_attouchment = email.email_id;//附件，比如要上传的合同的pdf将会以资源的形式上传到Springboot，通过这个资源符去访问它
+            email.email_upload_time = new Date();//上传时间
+            email.email_type = type;
+            return email;
+        }
+
+
+        function  insSubEmailDiv(parent,index) {
+
+            var subEmailDiv = div();
+
+
+
+            var emailTypeImg = img();
+            var emailHead_h = hilabel("=.=",3);
+            var emalSender_h2 = hilabel("大风起兮",2);
+
+
+
+            setParent(subEmailDiv,parent);
+            setCSS(subEmailDiv,"subEmailDiv");
+            setStyle_Top(subEmailDiv,(5+index*31)+"%");
+            setParent(emailTypeImg,subEmailDiv);
+            setCSS(emailTypeImg,"emailTypeImg");
+            setParent(emailHead_h,subEmailDiv);
+            setCSS(emailHead_h,"emailHead_h");
+            setParent(emalSender_h2,subEmailDiv);
+            setCSS(emalSender_h2,"emalSender_h2");
+
+
+
+
+        }
+
+    </script>
+    <script>
+
+        window.onload = function (ev) {
+
+            console.info("123");
+            //--------------------------init --------------------
+            loadCSS("../demo/ButtonDemo0/button.css");
+
+
+            var mainDiv = div();
+
+            for (var i = 0;i<10;i++)
+            {
+                insSubEmailDiv(mainDiv,i);
+
+            }
+
+            setCSS(mainDiv,"mainDiv");
+
+
+
+        }
+    </script>
+</head>
+<body>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+.menuDiv_ButtonDiv{
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    height: 7%;
+    background: rgba(0,0,0,0);
+    cursor: pointer;
+
+}
+
+
+.menuDiv_ButtonDiv_LabelDiv{
+    position: absolute;
+    width: 100%;
+    height: 60%;
+    top: 20%;
+    font-size: 1rem;
+    cursor: pointer;
+    text-align: center;
+    background: rgba(0,0,0,0);
+
+
+}

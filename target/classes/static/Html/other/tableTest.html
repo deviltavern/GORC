@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>userinfopage</title>
+    <script src="https://cdn.staticfile.org/jquery/1.10.2/jquery.min.js"></script>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+
+    <script>
+
+
+        function table(width,caption) {
+
+            var d1 = document.createElement("div");
+            var ld = document.body.appendChild(d1);
+            ld.style.width = width+"px";
+            ld.style.margin = "0 auto";
+
+            var tb = document.createElement("table");
+
+            var ltb = ld.appendChild(tb);
+            ltb.style.alignment = "center";
+            ltb.style.width = "100%";
+
+            var cp = document.createElement("caption");
+            var lcp = tb.appendChild(cp);
+            lcp.style.textAlign = "center";
+            lcp.style.fontSize = "20px";
+           // lcp.
+            lcp.innerText = caption;
+            tb.cap = cp;
+
+
+
+            return tb;
+
+
+        }
+
+
+
+
+
+        function tr(parent,fontSize) {
+            var d1 = document.createElement("tr");
+            var ld = parent.appendChild(d1);
+            ld.style.fontSize = fontSize+"px";
+
+            return ld;
+
+        }
+
+        function tdwithImg(parent,src,text) {
+            var _td = document.createElement("td");
+            var ltd = parent.appendChild(_td);
+
+
+            ltd.style.verticalAlign= "bottom";
+
+             var d1 = document.createElement("img");
+             var ld1 = ltd.appendChild(d1);
+             ld1.style.position = "absolute";
+            ld1.src = src;
+            ld1.style.width = 30+"px";
+             // var d2 = document.createElement("p");
+             // var ld2 = ltd.appendChild(d2);
+
+             var d3 = document.createElement("nobr");
+
+             var ld3 = ltd.appendChild(d3);
+             ld3.style.position = "relative";
+             ld3.style.left = "40px";
+             ld3.style.fontSize = "25px";
+             ld3.innerText = text;
+
+
+            return _td;
+        }
+        function td(parent,text) {
+            var _td = document.createElement("td");
+            var ltd = parent.appendChild(_td);
+
+            ltd.style.verticalAlign= "bottom";
+            var d3 = document.createElement("nobr");
+            var ld3 = ltd.appendChild(d3);
+            ld3.style.position = "relative";
+            ld3.style.left = "40px";
+            ld3.style.fontSize = "25px";
+            ld3.innerText = text;
+            return _td;
+        }
+
+        function setRelaPosition(img,pos) {
+
+            img.style.position = "relative";
+            img.style.left = pos.x + "px";
+            img.style.top = pos.y+"px";
+
+        }
+        window.onload = function (ev) {
+
+            var df = "../../image/gold.jpeg";
+            var tb = table(400,"伍冬青村 ");
+            // setRelaPosition(tp.cap,Vector3(-100,getPosition(tp).y));
+            var tr1 = tr(tb,25);
+            var td1 = tdwithImg(tr1,df,"账户名：");
+            var td2 = td(tr1,"123");
+
+            var tr2 = tr(tb,25);
+            tdwithImg(tr2,df,"用户名：");
+            td(tr2,"罗解约");
+            var tr3 = tr(tb,25);
+            tdwithImg(tr3,df,"积分值：");
+            td(tr3,"9290");
+            var tr4 = tr(tb,25);
+            tdwithImg(tr4,df,"等级：");
+            td(tr4,"渡劫");
+
+
+
+
+        }
+
+    </script>
+    <style type="text/css">
+        .div1{
+            width: 100%;
+            height: 100%;
+            /*vertical-align: middle;*/
+            text-align: center;
+            padding: 25px;
+            margin: 0 auto;
+        }
+        .div2{
+            display: inline-block;
+            background-color: orangered;
+        }
+        .fontsize{
+            font-size: 25px;
+        }
+    </style>
+
+    <script>
+        $(document).ready(function () {
+            $('#bs').before('' +
+                '<iframe name="" frameborder="0" scrolling="no" marginwidth="0" marginheight="0" width="100%" height="60" src="../../Html/hall/home_head.html"></iframe>')
+
+        })
+    </script>
+</head>
+<body id="bs">
+
+</body>
+</html>
