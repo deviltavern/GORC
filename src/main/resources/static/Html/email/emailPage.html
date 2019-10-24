@@ -8,6 +8,8 @@
     <script src="../demo/Plugins/DivList/DivList.js"></script>
     <script src="../../js/Config.js"></script>
     <script src="../../js/jquery-1.11.0.min.js"></script>
+
+    <script src="../../js/GetDataFromTaskSystem.js"></script>
     <style>
 
         body{
@@ -22,6 +24,7 @@
             left: 5.5%;
             top: 17%;
             background: white;
+            overflow: auto;
 
         }
         .bodyLine1 {
@@ -46,6 +49,7 @@
             width: 60%;
             height: 60%;
             background: white;
+            overflow: auto;
 
 
 
@@ -347,7 +351,7 @@
          * @param infoIndex：对应的是数据库中这一条审核记录对应的分派任务的索引号
          * @param task_index:对应的是数据库中，这一条审核记录的索引号
          */
-        function insEmalDiv(infoDiv,type,overheadInfo,headInfo,index,infoIndex,task_index) {
+        function insEmalDiv(infoDiv,type,overheadInfo,headInfo,index,infoIndex,task_index,emailObject) {
 
 
 
@@ -356,6 +360,9 @@
             checkEmailDiv.infoIndex = infoIndex;
 
             checkEmailDiv.task_index = task_index;
+            checkEmailDiv.email = emailObject;
+            checkEmailDiv.opCode = emailObject.email_op_code;
+
             emailDivList.push(checkEmailDiv);
 
             setParent(checkEmailDiv,infoDiv);
@@ -383,8 +390,6 @@
             setText(checkEmailDivEmailHeadInfoDiv,headInfo);
 
 
-
-
                 checkEmailDiv.initPos = Vector3(2,15*index);
 
             checkEmailDiv.detailPos = Vector3(2,0);
@@ -410,9 +415,29 @@
                 //
                 // detailDiv.updateTaskDescribe(selectDiv.infoIndex);
 
-                window.location.href = "../userInfo/userInfoForCheck.html"
-            }
+                // window.location.href = "../userInfo/userInfoForCheck.html"
 
+                switch (checkEmailDiv.opCode) {
+                    case 20:
+                        //static/Html/demo/pngdemo/pngcanvasendforb.html
+                        window.location.href = "../demo/pngdemo/pngcanvasendforb.html";
+                        break;
+
+                    case 21:
+                        console.info("甲方确认");
+                        break;
+
+                    case 19:
+                        window.location.href = "../userInfo/userInfoForCheck.html";
+                        break;
+
+                    case 22:
+                        window.location.href = "../signatureprocess/signatureprocess.html";
+                        break;
+
+                }
+            };
+            return checkEmailDiv;
 
         }
 
@@ -659,80 +684,61 @@
                 clearEmailDivList();
                 var requestData = {};
                 requestData.type = type;
-                requestServer("/getApplicationInfoByStatus",function (ip) {
+                var userInfo = localStorage.getItem("spxInfo");
+                if(userInfo!= null){
 
-                    $.post(ip,requestData,function (data) {
+                    userInfo = JSON.parse(userInfo);
+                    var jsonData = { };
+                    userInfo.key = userInfo.user_acc;
+                    getEmailListByReceiver(userInfo,function (data) {
 
-                        dataCache = data;
-                        for (var i in dataCache){
-                            var di = dataCache[i];
-                            var showInfo = "用户：@"+di.task_sender_acc+"";
-                            if (di.task_type == 3){
+                        for (var i in data){
 
-                                di.task_type = "申请";
-                                showInfo = showInfo+"  的项目申请";
+                            /**
+                             * 修正email_type的值
+                             */
+                            switch (data[i].email_type) {
+
+                                case 0:
+
+                                    break;
+
+                                case 20:
+                                    data[i].email_type = "合同";
+                                    break;
+
+                                case 19:
+                                    data[i].email_type = "申请";
+                                    break;
                             }
 
-                            if (di.task_type == 2){
+                            //裁剪内容长度
 
-                                di.task_type = "合同";
-                                showInfo = showInfo+"  的合同签署";
+                            if(data[i].email_content.length>30){
+
+                                data[i].email_content = data[i].email_content.substr(0,35)+"...";
                             }
 
-                            di.task_sender_acc = "来自@"+di.task_sender_acc;
-                            insEmalDiv(infoDiv,di.task_type,  di.task_sender_acc,showInfo,i,di.task_application_content_index,di.task_index);
+                            data[i].email_receiver = "@ "+data[i].email_receiver;
+                           var emailBox = insEmalDiv(infoDiv,
+                                data[i].email_type,
+                                data[i].email_sender,
+                                data[i].email_content,
+                                i,
+                                0+"",
+                                data[i].email_id,
+                                data[i]
+                            );
+
 
                         }
-
-
-                        /**
-                         * 描述当前的审核页面是否存在消息
-                         */
-
-
-                        function showEmailInfoStatu() {
-                            var updateEmailTypeInfoDiv = div();
-                            setParent(updateEmailTypeInfoDiv,infoDiv);
-                            setCSS(updateEmailTypeInfoDiv,"updateEmailTypeInfoDiv");
-
-                            var updateEmailTypeInfoDiv_img = img();
-                            updateEmailTypeInfoDiv_img.src = "../../image/emptyBox2.png";
-                            setParent(updateEmailTypeInfoDiv_img,updateEmailTypeInfoDiv);
-                            setCSS(updateEmailTypeInfoDiv_img,"updateEmailTypeInfoDiv_img");
-                            var updateEmailTypeInfoDiv_describeLabel = hilabel("木有任何消息",3);
-
-                            setParent(updateEmailTypeInfoDiv_describeLabel,updateEmailTypeInfoDiv);
-                            setCSS(updateEmailTypeInfoDiv_describeLabel,"updateEmailTypeInfoDiv_describeLabel");
-                            updateEmailTypeInfoDiv.updateStatu = function(type){
-                                if (type === 0){
-                                    setText(updateEmailTypeInfoDiv_describeLabel,"木有任何消息");
-                                    showElement(updateEmailTypeInfoDiv);
-
-                                }else {
-
-                                    hideElement(updateEmailTypeInfoDiv);
-                                }
-
-
-                            };
-
-                            return updateEmailTypeInfoDiv;
-
-                        }
-                        if(emailContentTips!= null){
-
-
-                        }else {
-
-                            emailContentTips = showEmailInfoStatu();
-                        }
-
-
-                        emailContentTips.updateStatu(dataCache.length);
 
                     });
+                }else {
 
-                });
+                    window.location.href = "../userInfo/userlogin.html";
+                }
+
 
 
 

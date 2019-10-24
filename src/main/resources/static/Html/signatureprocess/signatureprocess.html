@@ -106,15 +106,18 @@
 
             var AUser = insDescribeInfo(mainDiv,Vector3(0,0),"甲方签字","1");
 
-           var BUser = insDescribeInfo(mainDiv,Vector3(30,0),"乙方签字","2");
+            var BUser = insDescribeInfo(mainDiv,Vector3(30,0),"乙方签字","2");
 
-           var AConfirm = insDescribeInfo(mainDiv,Vector3(60,0),"甲方确认","3");
-
+            var AConfirm = insDescribeInfo(mainDiv,Vector3(60,0),"甲方确认","3");
             var sigOver =insDescribeInfo(mainDiv,Vector3(90,0),"签署完毕","4");
 
             AUser.onmousedown = function(){
 
                 window.location.href = "../demo/pngdemo/pngcanvasend.html";
+
+            };
+            AConfirm.onmousedown = function(){
+                window.location.href = "auserconfirm.html";
 
             };
 

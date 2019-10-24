@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="en">
+<link>
+<meta charset="UTF-8">
+<title>Title</title>
+<script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+<script src="../../js/jquery-1.11.0.min.js"></script>
+<script src="../../js/Config.js"></script>
+<script src="../demo/ElementCreatorFrame/ZCCanvas.js"></script>
+<script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+<script src="../demo/ElementCreatorFrame/ZCCanvas.js"></script>
+<link rel="stylesheet" href="../demo/ElementCreatorFrame/ZCElementerEX.css">
+
+<script src=" ../../js/GetDataFromTaskSystem.js"></script>
+<style>
+    body{
+
+        background: whitesmoke;
+    }
+    .nameDiv{
+        position: absolute;
+        width: 10%;
+        height: 5%;
+        bottom: 22%;
+        background: #aa1111;
+        z-index: 10;
+
+    }
+    .showImg{
+        position: absolute;
+        width: 200px;
+        height: 400px;
+        left: 40%;
+        background: #aa1111;
+        transform: rotate(90deg);
+    }
+    .mainCanvas{
+        position: absolute;
+        left: 30%;
+
+
+    }
+    .menuBar{
+        width: 7%;
+        height: 60%;
+        top: 5%;
+        background: white;
+        position: absolute;
+        left: 26.5%;
+
+    }
+    .areaBox{
+        position: absolute;
+        width: 100px;
+        height: 35px;
+        background: #888888;
+        z-index: 15;
+    }
+    .occlusion{
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background: rgba(0,0,0,0.3);
+        z-index: 22;
+
+    }
+    .erweiMa{
+        position: absolute;
+        width: 300px;
+        height: 300px;
+        /*background-image: url("erw.jpg");*/
+        left: 40%;
+        top: 30%;
+        background-size: 100%;
+    }
+
+</style>
+<script>
+    function signatureBoard(parent,src) {
+
+        var signatureBoard = {};
+
+        var imgCanvas = null;
+        var bacground = new Image();
+        var contextWidth = 0;
+        var contextHeight = 0;
+        var showImg = img();
+        bacground.src = src;
+
+        bacground.onload = function (ev1) {
+
+            console.info("加载完毕！");
+
+            var proportion = bacground.width / bacground.height;
+            contextWidth = window.innerHeight * 0.8 * proportion;
+            contextHeight = window.innerHeight * 0.8;
+            imgCanvas = canvas(bacground.width, bacground.height);
+
+            var leftValue = (1- (bacground.width/window.innerWidth))/2;
+            if(leftValue>0){
+
+                imgCanvas.canvas.style.left = window.innerWidth*leftValue+"px";
+            }
+            imgCanvas.canvas.style.top = "5%";
+            imgCanvas.context.drawImage(bacground, 0, 0, bacground.width, bacground.height);
+            signatureBoard.imgCanvas = imgCanvas;
+            signatureBoard.canvas = imgCanvas.canvas;
+            setParent(imgCanvas.canvas,parent);
+            // imgCanvas = mainCanvas;
+
+            // setCSS(imgCanvas.canvas, "mainCanvas");
+
+            imgCanvas.signatureRes = showImg;
+
+
+            signatureBoard.writeSignature = function (src,position,rotation,func) {
+
+                imgCanvas.signatureRes = img();
+                imgCanvas.signatureRes.src = src;
+                imgCanvas.signatureRes.onload = function (ev2) {
+                    imgCanvas.context.translate(position.x, position.y);
+                    imgCanvas.context.rotate(rotation);
+                    imgCanvas.context.drawImage(imgCanvas.signatureRes, 0, 0, 50, 100);
+
+                    console.info("加载签名完毕！");
+
+                    func();
+                };
+
+            };
+        };
+
+        return signatureBoard;
+    }
+
+
+    function beginSignature(func) {
+        var animationOp = {};
+        var timeSecond = 0;
+        animationOp.doAnimation = function () {
+
+            timeSecond+= 1;
+            if(timeSecond>120){
+
+                // console.info("轮询请求");
+                timeSecond= 0;
+
+                requestServer("/requestSignatureStatus",function (ip) {
+                    var requestData = {};
+                    requestData.name = "罗继业";
+                    $.post(ip,requestData,function (data) {
+                        if(data.status === 1){
+
+                            //console.info(data.path);
+                            removeAnimation();
+                            func(data.path);
+                        }
+                    });
+                });
+            }
+
+        };
+
+        addAnimation(animationOp);
+    }
+</script>
+<script>
+    window.onload = function (ev) {
+        var headDiv = iframe("../hall/home_head/home_head3.html");
+
+
+        //setCSS(headDiv,"headDiv");
+        // setPositionWithPercent(headDiv,Vector3(0,-2));
+
+        var parent = mainContainer();
+        setParent(headDiv,parent);
+        setPositionWithPercent(headDiv,Vector3(0,-2));
+
+        var data = {};
+        data.name = "罗继业";
+        var sb = null;
+        requestServer("/requestSignatureStatus",function (ip) {
+            $.post(ip,data,function (reData) {
+                sb  = signatureBoard(parent, "http://localhost:8099/static/ImageCollector/"+reData.path2);
+            }) ;
+        });
+
+
+
+        var menuBar = div();
+        setCSS(menuBar, "menuBar");
+        setParent(menuBar, parent);
+
+        var selectSignPos = menuButton(menuBar, "选择签署位置", 0);
+        var signOver = menuButton(menuBar, "签署完毕", 0);
+
+        var areaBox = div();
+        var occlusion = div();
+        setCSS(areaBox,"areaBox");
+        setParent(areaBox,parent);
+        hideElement(areaBox);
+        var allowMove = false;
+        var signaturePosition = Vector3(0,0);
+
+        hideElement(selectSignPos);
+        selectSignPos.onmousedown = function(ev){
+
+            showElement(areaBox);
+
+            setPosition(areaBox,getMouse(ev));
+
+            allowMove = true;
+            beginSignature(function (path) {
+
+                hideElement(occlusion);
+                hideElement(areaBox);
+                sb.writeSignature("http://localhost:8099/static/ImageCollector/signature.png",  Vector3(500, 870), (-Math.PI / 2),
+                    function () {
+                        var data64 = getBase64ImageFromCanvas(sb.canvas);
+
+                        var uploadData ={};
+                        uploadData.key = data64;
+                        uploadData.opName = "罗继业";
+                        uploadData.code = 1;
+
+                        $.post("http://localhost:8099/uploadImgDemo",uploadData,function (data) {
+
+                            var jsonData = {
+                                "email_head_info": "合同签署",
+                                "email_receiver": "123",
+                                "email_type": 3,
+                                "email_content": "合同签署完毕",
+                                "email_append_source": "none"
+                            };
+                            jsonData.email_id = getRandomUUID(12);
+                            jsonData.email_receiver = "123";
+                            jsonData.email_sender = "456";
+                            jsonData.email_op_code = 22;
+                            sendEmail(jsonData,function (data) {
+                                var jumpTag = confirm("恭喜您(乙方)完成签署,是否留在当前页面");
+                                if(jumpTag == false){
+
+                                    window.location.href = "../../signatureprocess/signatureprocess.html";
+
+                                }
+                            });
+
+                            requestServer("/onSignature",function (ip) {
+                                var requestData = {};
+                                requestData.name = "罗继业";
+                                requestData.code = 2;
+                                $.post(ip,requestData,function (data) {
+
+
+
+                                });
+                            });
+
+
+                        });
+                    }
+                );
+
+
+            });
+
+            sb.canvas.onmousedown = function (ev1) {
+                allowMove = false;
+                console.info(getMouse(ev1));
+                showElement(occlusion);
+
+
+                requestServer("/onSignature",function (ip) {
+                    var requestData = {};
+                    requestData.name = "罗继业";
+                    requestData.code = 0;
+                    $.post(ip,requestData,function (data) {
+
+
+
+                    });
+                });
+            };
+        };
+
+
+
+
+        setCSS(occlusion,"occlusion");
+        setParent(occlusion,parent);
+
+        var erweiMa = div();
+        setCSS(erweiMa,"erweiMa");
+        setParent(erweiMa,occlusion);
+
+        hideElement(occlusion);
+
+        window.onmousemove = function (ev1) {
+
+
+            if(allowMove == true){
+
+                setPosition(areaBox,getMouse(ev1));
+                signaturePosition= getMouse(ev1);
+            }
+        };
+
+
+        signOver.onmousedown = function (ev1) {
+            console.info("签署完毕！");
+            requestServer("/onSignature",function (ip) {
+                var requestData = {};
+                requestData.name = "罗继业";
+                requestData.code = 4;
+                $.post(ip,requestData,function (data) {
+
+                   var confirmInfo = confirm("验证成功，留下？");
+
+                   if(confirmInfo !== true){
+
+                       window.location.href = "signatureprocess.html"
+                   }
+                });
+            });
+
+        };
+
+        initAnimation();
+
+
+
+
+
+
+
+    };
+</script>
+
+</head>
+<body>
+
+</body>
+</html>

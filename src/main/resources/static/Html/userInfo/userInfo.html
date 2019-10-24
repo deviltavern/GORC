@@ -344,7 +344,13 @@
             font-size: 13px;
             background: rgba(0,0,0,0);
         }
+        .quitBtn{
+            position: absolute;
+            bottom: 0%;
+            right: 0%;
+            background: #aa1111;
 
+        }
     </style>
     <script>
         //缓存
@@ -377,6 +383,15 @@
                 setPositionWithPercent(lineDiv,vector3);
                 return lineDiv;
             }
+
+            var quitBtn = button("退出");
+            setParent(quitBtn,mainDiv);
+            setCSS(quitBtn,"quitBtn");
+
+            quitBtn.onmousedown = function (ev1) {
+              localStorage.setItem("spxInfo",null);
+              window.location.href = "userlogin.html";
+            };
             var mainDiv_HeadLabelDiv = div();
             setParent(mainDiv_HeadLabelDiv,mainDiv);
             setCSS(mainDiv_HeadLabelDiv,"mainDiv_HeadLabelDiv");

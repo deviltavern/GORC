@@ -175,7 +175,16 @@
             var parent = mainContainer();
             setParent(headDiv,parent);
             setPositionWithPercent(headDiv,Vector3(0,-2));
-            var sb = signatureBoard(parent, "flh.jpg");
+
+            var data = {};
+            data.name = "罗继业";
+            var sb = null;
+            requestServer("/requestSignatureStatus",function (ip) {
+               $.post(ip,data,function (reData) {
+                   sb  = signatureBoard(parent, "http://localhost:8099/static/ImageCollector/"+reData.path1);
+               }) ;
+            });
+
 
 
             var menuBar = div();
@@ -203,50 +212,47 @@
 
                     hideElement(occlusion);
                     hideElement(areaBox);
-                    sb.writeSignature("http://localhost:8099/static/ImageCollector/signature.png",  Vector3(260, 870), (-Math.PI / 2),
+                    sb.writeSignature("http://localhost:8099/static/ImageCollector/signature.png",  Vector3(500, 870), (-Math.PI / 2),
                     function () {
                         var data64 = getBase64ImageFromCanvas(sb.canvas);
 
                         var uploadData ={};
                         uploadData.key = data64;
                         uploadData.opName = "罗继业";
-                        uploadData.code = 0;
+                        uploadData.code = 1;
+
                         $.post("http://localhost:8099/uploadSignatureHTImg",uploadData,function (data) {
 
                            var jsonData = {
                                 "email_head_info": "合同签署",
-                                "email_receiver": "yk",
+                                "email_receiver": "123",
                                 "email_type": 3,
-                                "email_content": "合同签署",
+                                "email_content": "合同签署完毕",
                                 "email_append_source": "none"
                             };
                             jsonData.email_id = getRandomUUID(12);
-                            jsonData.email_receiver = "456";
-                            jsonData.email_sender = "123";
-                            jsonData.email_op_code = 20;
-
+                            jsonData.email_receiver = "123";
+                            jsonData.email_sender = "456";
+                            jsonData.email_op_code = 22;
                            sendEmail(jsonData,function (data) {
-
-                               requestServer("/onSignature",function (ip) {
-                                   var requestData = {};
-                                   requestData.name = "罗继业";
-                                   requestData.code = 2;
-                                   $.post(ip,requestData,function (data) {
-
-
-
-                                   });
-                               });
-                               var jumpTag = confirm("恭喜您(甲方)完成签署,是否留在当前页面");
+                               var jumpTag = confirm("恭喜您(乙方)完成签署,是否留在当前页面");
                                if(jumpTag == false){
-
-
 
                                    window.location.href = "../../signatureprocess/signatureprocess.html";
 
                                }
                            });
 
+                            requestServer("/onSignature",function (ip) {
+                                var requestData = {};
+                                requestData.name = "罗继业";
+                                requestData.code = 2;
+                                $.post(ip,requestData,function (data) {
+
+
+
+                                });
+                            });
 
 
                         });
@@ -300,7 +306,7 @@
 
             signOver.onmousedown = function (ev1) {
                 console.info("签署完毕！");
-                sb.writeSignature("signature.png", Vector3(260, 870), (-Math.PI / 2));
+                sb.writeSignature("signature.png", Vector3(500, 870), (-Math.PI / 2));
 
             };
 
