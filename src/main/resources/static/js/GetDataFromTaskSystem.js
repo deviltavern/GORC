@@ -26,6 +26,8 @@ function getTaskListByType(type,func) {
 
 }
 
+
+
 function login(userData,func) {
 
     requestServer("/loginEvent",function (ip) {
