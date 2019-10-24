@@ -3,6 +3,7 @@ package com.main.activity.signature;
 
 import com.main.Tool.JqueryRequestTool;
 import com.main.Tool.folder.FolderTool;
+import net.sf.json.JSONObject;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
@@ -18,30 +19,37 @@ import java.util.UUID;
 public class NameSignature {
 
     public static String  tempPath;
-    public static Map<String,String> hashMap = new HashMap<>();
+    public static Map<String,SignatureObject> hashMap = new HashMap<>();
     @PostMapping("/uploadSignature")
-    public void uploadSignature(MultipartFile file, String name) throws IOException {
+    public String  uploadSignature(MultipartFile file, String name) throws IOException {
 
         String fileName = "signature";
-        String path = FolderTool.getImageCollectorPath()+fileName+".png";
+        String path = FolderTool.getImageCollectorPath() + fileName + ".png";
         file.transferTo(new File(path));
-        System.out.println(name+":上传成功！");
+        System.out.println(name + ":上传成功！");
         tempPath = path;
-        if(hashMap.containsKey(name)){
-            hashMap.remove(name);
+        if (hashMap.containsKey(name)) {
+            hashMap.get(name).status = 1;
+            hashMap.get(name).path1 = fileName + ".png";
+            return "success";
         }
-        hashMap.put(name,"already");
 
+        return "failed";
 
     }
 
-    @PostMapping("/requestSignatureStatus")
-    public String requestSignatureStatus(String name){
 
-        if(hashMap.containsKey(name)){
-            return hashMap.get(name);
+
+
+    @PostMapping("/requestSignatureStatus")
+    public JSONObject requestSignatureStatus(String name){
+
+
+        if(hashMap.containsKey(name) == true) {
+            return JSONObject.fromObject(hashMap.get(name));
         }
-        return "there is no value";
+
+        return null;
     }
 
     @PostMapping("/onSignature")
@@ -50,7 +58,11 @@ public class NameSignature {
         if(hashMap.containsKey(name)){
             hashMap.remove(name);
         }
-        hashMap.put(name,"null");
+
+        hashMap.put(name,new SignatureObject());
+        hashMap.get(name).id = name;
+        hashMap.get(name).status = 0;
+        System.out.println("onSignature" + hashMap.get(name).toString());
 
 
     }

@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+
+    <script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/GetDataFromTaskSystem.js"></script>
+    <style>
+        .mainDiv{
+            width: 320px;
+            height: 400px;
+            position: absolute;
+            right: 10%;
+            top: 5%;
+            background: white;
+
+            box-shadow: 1px 1px 1px 1px rgb(123,123,123);
+
+        }
+        .mainDiv_subDiv{
+            width: 70%;
+            height: 20px;
+            background: #FFB800;
+            position: absolute;
+            top: 20%;
+            left: 15%;
+
+
+        }
+        .mainDiv_subDiv_input{
+
+            width: 100%;
+            height: 100%;
+
+        }
+        .loginBtn{
+
+            width: 70%;
+            height: 30px;
+            background: whitesmoke;
+            position: absolute;
+            top: 50%;
+            left: 15%;
+        }
+    </style>
+    <script>
+
+        function loginPage(parent) {
+
+            var page = {};
+
+            var mainDiv = div();
+            setParent(mainDiv,parent);
+            setCSS(mainDiv,'mainDiv');
+            function insTextInput(parent,value,position) {
+                var mainDiv_subDiv = div();
+                setParent(mainDiv_subDiv,parent);
+                setCSS(mainDiv_subDiv,"mainDiv_subDiv");
+
+                var mainDiv_subDiv_input = textInput();
+
+                setParent(mainDiv_subDiv_input,mainDiv_subDiv);
+                setCSS(mainDiv_subDiv_input,"mainDiv_subDiv_input");
+                mainDiv_subDiv_input.placeholder = value;
+                setPositionWithPercent(mainDiv_subDiv,position);
+                mainDiv_subDiv.input = mainDiv_subDiv_input;
+                return mainDiv_subDiv;
+            }
+            var userAccInput =  insTextInput(mainDiv,"账号/邮箱/手机",Vector3(15,20));
+             var userPwdInput = insTextInput(mainDiv,"密码",Vector3(15,28));
+
+            var loginBtn = button("登录");
+            setParent(loginBtn,mainDiv);
+            setCSS(loginBtn,"loginBtn");
+
+            page.userAccInput = userAccInput;
+            page.userPwdInput = userPwdInput;
+            page.loginBtn = loginBtn;
+
+            page.getData = function () {
+              var data = {};
+              data.user_acc = userAccInput.input.value;
+              data.user_pwd = userPwdInput.input.value;
+
+              return data;
+            };
+
+            return page;
+        }
+
+    </script>
+    <script>
+        window.onload = function (ev) {
+
+            var parent = mainContainer();
+            drawLine(parent,"1px",Vector3(0,75),"100%",Color24(123,123,123));
+
+            var page =  loginPage(parent);
+
+            page.loginBtn.onmousedown = function () {
+                login(page.getData(),function (data) {
+
+                    console.info(data);
+                    localStorage.setItem("spxInfo",JSON.stringify(data));
+
+                    window.location.href = "../homepage/main.html";
+                    /**
+                     * 在这里它将会从服务器获得一些重要的数据
+                     *
+                     */
+                });
+            };
+
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>

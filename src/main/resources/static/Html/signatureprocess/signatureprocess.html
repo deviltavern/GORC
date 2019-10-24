@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../demo/ElementCreatorFrame/ZCElementerEX.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <style>
+        .mainDiv{
+            width :55%;
+            height: 10%;
+            position: absolute;
+            background: rgba(0,0,0,0);
+            top: 5%;
+            left: 22.5%;
+
+        }
+        .mainDiv_subDiv{
+            position: absolute;
+            top: 10px;
+            width: 90px;
+            height: 90px;
+            background:rgba(0,0,0,0);
+            cursor: pointer;
+
+
+
+        }
+        .mainDiv_subDiv_circle{
+            position: absolute;
+            width: 50%;
+            height: 50%;
+            background: rgb(123,123,123);
+            border-radius: 50%;
+            top: 10%;
+            left: 25%;
+            font-size: 35px;
+            text-align: center;
+
+        }
+        .mainDiv_subDiv_label{
+
+            position: absolute;
+            width: 100%;
+            height: 20px;
+
+            background:rgba(0,0,0,0);
+            bottom: 0%;
+            text-align: center;
+
+        }
+        .mainDiv_line{
+            position: absolute;
+            width: 12%;
+            height: 1px;
+            border-radius: 50%;
+            background:black;
+            top: 50%;
+            left: 8%;
+
+        }
+    </style>
+    <script>
+        window.onload = function (ev) {
+            var parent  = mainContainer();
+            var headDiv = iframe("../hall/home_head/home_head3.html");
+            setParent(headDiv,parent);
+            setPositionWithPercent(headDiv,Vector3(0,-2));
+
+            var mainDiv = div();
+            setParent(mainDiv,parent);
+            setCSS(mainDiv,"mainDiv");
+
+
+            // var mainDiv_line = div();
+            // setParent(mainDiv_line,mainDiv);
+            // setCSS(mainDiv_line,"mainDiv_line");
+            drawLine(mainDiv,"1px",Vector3(6.5,35),"25%","black");
+
+            drawLine(mainDiv,"1px",Vector3(36.8,35),"25%","black");
+
+            drawLine(mainDiv,"1px",Vector3(66.8,35),"25%","black");
+
+            function insDescribeInfo(parent,position,str1,str2) {
+                var mainDiv_subDiv = div();
+                setParent(mainDiv_subDiv,parent);
+                setCSS(mainDiv_subDiv,"mainDiv_subDiv");
+
+
+                setPositionWithPercent(mainDiv_subDiv,position);
+                var mainDiv_subDiv_label = div();
+                setParent(mainDiv_subDiv_label,mainDiv_subDiv);
+                setCSS(mainDiv_subDiv_label,"mainDiv_subDiv_label");
+                setText(mainDiv_subDiv_label,str1);
+                var mainDiv_subDiv_circle = div();
+                setParent(mainDiv_subDiv_circle,mainDiv_subDiv);
+                setCSS(mainDiv_subDiv_circle,"mainDiv_subDiv_circle");
+                setText(mainDiv_subDiv_circle,str2);
+                mainDiv_subDiv.over = function (color) {
+                    mainDiv_subDiv_circle.style.background = color;
+                };
+                return mainDiv_subDiv;
+            }
+
+            var AUser = insDescribeInfo(mainDiv,Vector3(0,0),"甲方签字","1");
+
+           var BUser = insDescribeInfo(mainDiv,Vector3(30,0),"乙方签字","2");
+
+           var AConfirm = insDescribeInfo(mainDiv,Vector3(60,0),"甲方确认","3");
+
+            var sigOver =insDescribeInfo(mainDiv,Vector3(90,0),"签署完毕","4");
+
+            AUser.onmousedown = function(){
+
+                window.location.href = "../demo/pngdemo/pngcanvasend.html";
+
+            };
+
+            requestServer("/requestSignatureStatus",function (ip) {
+                var requestData = {};
+                requestData.name = "罗继业";
+                $.post(ip,requestData,function (data) {
+                    if(data.status === 1){
+
+                        //console.info(data.path);
+                        AUser.over(Color24(255 ,222 ,173));
+                    }
+
+                    if (data.status === 2){
+
+                        AUser.over(Color24(255 ,222 ,173));
+                        BUser.over(Color24(255 ,222 ,173));
+                    }
+
+                    if (data.status === 3){
+
+                        AUser.over(Color24(255 ,222 ,173));
+                        BUser.over(Color24(255 ,222 ,173));
+                        AConfirm.over(Color24(255 ,222 ,173));
+
+                    }
+                    if (data.status === 4){
+                        AUser.over(Color24(255 ,222 ,173));
+                        BUser.over(Color24(255 ,222 ,173));
+                        AConfirm.over(Color24(255 ,222 ,173));
+                        sigOver.over(Color24(255 ,222 ,173));
+
+                    }
+
+                });
+            });
+        };
+
+    </script>
+</head>
+<body>
+
+</body>
+</html>

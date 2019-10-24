@@ -403,12 +403,12 @@
                 setPositionWithPercent(mainDiv_InfoDiv,vector3);
             }
 
-            InsMainDIvInfoDiv(mainDiv,"ID ","1234567",Vector3(10,17));
+            InsMainDIvInfoDiv(mainDiv,"ID ",userInfo.user_acc,Vector3(10,17));
             InsMainDIvInfoDiv(mainDiv,"Level ","S",Vector3(10,25));
             InsMainDIvInfoDiv(mainDiv,"Gold ","9822",Vector3(10,33));
 
             drawLine(mainDiv,"1px",Vector3(10,42),"90%",Color24(1,0,0));
-            InsMainDIvInfoDiv(mainDiv,"昵称: ","李二蛋",Vector3(10,47));
+            InsMainDIvInfoDiv(mainDiv,"昵称: ",userInfo.user_name,Vector3(10,47));
             InsMainDIvInfoDiv(mainDiv,"性别: ","男",Vector3(10,55));
             InsMainDIvInfoDiv(mainDiv,"生日: ","1998.3.3",Vector3(10,63));
             InsMainDIvInfoDiv(mainDiv,"简介: ","感冒好累...................",Vector3(10,71));
@@ -501,53 +501,6 @@
 
                 }
             }
-
-            
-            // singleOp = function(){
-            //     between+= 1;
-
-                // if(between>1000){
-
-                    // between = 0;
-
-                    // var data = localStorage.getItem("emailInfo");
-
-                    // if (data != null){
-                    //     var d2 = JSON.parse(data);
-
-                        // emailCache = d2;
-                        // for(var i in emailCache){
-
-                        //     insEmailItemDiv(i,emailCache[i].email_head_info);
-                        // }
-
-
-                //     }
-                // }
-
-            // }
-
-            // requestServer("/getUserModel",function (ip) {
-            //     var reData = {};
-            //     reData.user_acc = userInfo.user_acc;
-            //
-            //     $.post(ip,reData,function (dataFromServer) {
-            //         nameInfo.innerText = dataFromServer.user_name;
-            //         levelInfo.innerText = dataFromServer.user_stage;
-            //         scoreInfo.innerText = dataFromServer.user_gold;
-            //         permissionInfo.innerText = dataFromServer.user_permission_level;
-            //
-            //     });
-            //
-            // });
-
-
-
-
-            //
-            // console.info(nameLabel.tagName);
-            //
-            // console.info(localStorage.getItem("emailInfo"));
 
 
         }

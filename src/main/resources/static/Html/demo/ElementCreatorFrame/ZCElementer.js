@@ -116,7 +116,7 @@ function  mainContainer() {
     container.style.margin = "0 auto";
     container.style.position = "relative";
     container.style.background = "whitesmoke";
-
+    document.body.style.background = "whitesmoke";
 
     return container;
 }
@@ -650,6 +650,13 @@ var animationEventArray = new Array();
 function addAnimation(element) {
     animationEventArray.push(element);
 
+}
+
+function removeAnimation(element) {
+
+    // animationEventArray.slice(animationEventArray.indexOf(element),1);
+
+    animationEventArray.length = 0;
 }
 function initAnimation() {
     op = function () {

@@ -608,23 +608,27 @@
 
             //absoluteWindow();
 
-            var container = div();
+            var parent = mainContainer();
 
-            setCSS(container,"container");
+
             var bodyLine1 = div();
             setCSS(bodyLine1,"bodyLine1");
+            setParent(bodyLine1,parent);
 
             loadCSS("../demo/Plugins/DivList/DivList.css");
             var headLabel = iframe("../hall/home_head/home_head3.html");
-
+            setParent(headLabel,parent);
             setPositionWithPercent(headLabel,Vector3(0,-2));
 
             var bodyDescribeLabel = hilabel("邮箱",1);
 
             var mainDiv = div();
             var infoDiv = div();
+            setParent(mainDiv,parent);
+            setParent(infoDiv,parent);
+            setParent(bodyDescribeLabel,parent);
 
-            setParent(bodyDescribeLabel,document.body);
+
             setCSS(bodyDescribeLabel,"bodyDescribeLabel");
             setCSS(infoDiv,"infoDiv");
             setCSS(mainDiv,"mainDiv");

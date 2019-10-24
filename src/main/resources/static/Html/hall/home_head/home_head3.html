@@ -174,7 +174,14 @@
             insSubImg(mainDiv,8,"../../../image/ICON.png","subDivImgDiv","img1");
             var myself = insSubImg(mainDiv,15,"../../../image/headImg3.jpg","subDivImgDivForMe","img2");
             myself.onmousedown =function (ev) {
-                window.parent.location.href = "../../userInfo/userInfo.html"
+
+                if (localStorage.getItem("spxInfo") != null){
+                    window.parent.location.href = "../../userInfo/userInfo.html"
+                }else {
+
+                    window.parent.location.href = "../../userInfo/userlogin.html"
+                }
+
             };
 
 

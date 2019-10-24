@@ -2,6 +2,7 @@ package com.main.activity.email;
 
 import com.main.Tool.JqueryRequestTool;
 import com.main.dao.DataBaseOP;
+import com.sun.org.apache.bcel.internal.generic.RET;
 import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 import org.springframework.web.HttpRequestHandler;
@@ -83,6 +84,39 @@ public class EmailController {
         return reObj;
 
 
+    }
+
+
+    @PostMapping("/getEmailListByReceiver")
+    public JSONArray getEmailListByReceiver(String key) throws Exception {
+        //
+        String sql = "select * from email_list where email_receiver = '"+key+"'";
+        JSONArray object = DataBaseOP.request(sql);
+
+
+        return object;
+
+    }
+    @PostMapping("/getEmailListBySender")
+    public JSONArray getEmailListBySender(String key) throws Exception {
+
+        String sql = "select * from email_list where email_sender = '"+key+"'";
+        JSONArray object = DataBaseOP.request(sql);
+
+
+        return object;
+    }
+
+    @PostMapping("/sendEmail")
+    public String sendEmail(HttpServletRequest handler) throws Exception {
+
+        JqueryRequestTool tool = new JqueryRequestTool(handler);
+
+        String sql = tool.getInsertSql("email_list");
+
+        DataBaseOP.requestNoReturn(sql);
+
+        return "success";
     }
 
 

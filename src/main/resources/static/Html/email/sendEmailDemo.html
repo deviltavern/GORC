@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="../demo/ElementCreatorFrame/ZCElementer.js"></script>
+    <script src="../../js/Config.js"></script>
+    <script src="../../js/jquery-1.11.0.min.js"></script>
+    <script src="../../js/GetDataFromTaskSystem.js"></script>
+    <script >
+        window.onload = function (ev) {
+            var btn = button("测试");
+            btn.onmousedown = function (ev1) {
+
+                var  jsonData = {
+                    "email_id": "gggg",
+                    "email_head_info": "kkkkkkkkkkkkkkkkkkkkkkkkkkk",
+                    "email_receiver": "123123xs",
+                    "email_type": 3,
+                    "email_content": "23333333333",
+                    "email_append_source": "none",
+                    "email_sender": "yk"
+                };
+                sendEmail(jsonData,function (data) {
+
+                    console.info(data);
+                })
+            };
+        };
+    </script>
+</head>
+<body>
+
+</body>
+</html>
